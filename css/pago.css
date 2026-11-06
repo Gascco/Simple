@@ -186,9 +186,12 @@ body, span, small, label, input, button, div, a, p {
     color: #777777;
 }
 
-.btn-confirm-order:hover:not(:disabled) {
-    background-color: #3E2723;
-    color: var(--color-white);
+.btn-confirm-order:hover:not(:disabled),
+.btn-confirm-order:focus-visible:not(:disabled) {
+    background-color: #3E2723 !important;
+    border-color: #3E2723 !important;
+    color: #FFFFFF !important;
+    opacity: 1;
 }
 
 .modal-custom-content {
