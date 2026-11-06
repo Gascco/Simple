@@ -117,7 +117,7 @@ router.post('/pedidos',caja,wrap(async(req,res)=>{
   const [result]=await db.execute('INSERT INTO pedidos (canal,entrega,cliente_id,usuario_id,estado,referencia_externa,codigo_entrega,notas) VALUES (?,?,?,?,?,?,?,?)',
    [canal,entrega,clienteId,req.session.user.id,estado,String(req.body.referencia_externa||'').slice(0,120)||null,String(req.body.codigo_entrega||'').slice(0,40)||null,String(req.body.notas||'').slice(0,2000)]);
   await replaceItems(db,result.insertId,req.body.items,envio);
-  await db.execute('UPDATE pedidos SET codigo=? WHERE id=?',[String(result.insertId).padStart(4,'0'),result.insertId]);
+  await db.execute('UPDATE pedidos SET codigo=? WHERE id=?',['V'+String(result.insertId).padStart(4,'0'),result.insertId]);
   await db.execute('INSERT INTO historial_estados (pedido_id,usuario_id,estado_nuevo) VALUES (?,?,?)',[result.insertId,req.session.user.id,estado]);
   return result.insertId;
  });
