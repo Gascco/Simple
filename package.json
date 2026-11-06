@@ -8,7 +8,8 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "setup": "node scripts/setup.js",
-    "check": "node --check src/server.js && node --check src/routes.js && node --check scripts/setup.js && node --check scripts/seed.js"
+    "check": "node --check src/server.js && node --check src/routes.js && node --check scripts/setup.js && node --check scripts/seed.js",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=20"
