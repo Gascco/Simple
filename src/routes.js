@@ -157,6 +157,9 @@ router.post('/pedidos/:id/pago',caja,wrap(async(req,res)=>{
   if(o.canal!=='tienda'||o.estado!=='pendiente_pago')throw fail(409,'Este pedido no admite pago');
   const recibido=round(req.body.recibido),ref=String(req.body.referencia||'').trim().slice(0,120);
   if(metodo==='efectivo'){if(!Number.isFinite(recibido)||recibido<o.total)throw fail(400,'Efectivo insuficiente');}
+  else if(req.body.simulado===true && process.env.NODE_ENV!=='production') {
+    if(!ref.startsWith('SIM-'))throw fail(400,'Falta referencia de la simulación');
+  }
   else if(req.body.confirmacion_manual!==true||!ref)throw fail(400,'Verifica el pago y proporciona referencia');
   await db.execute('INSERT INTO pagos (pedido_id,metodo,monto,recibido,vuelto,referencia,registrado_por) VALUES (?,?,?,?,?,?,?)',
    [id,metodo,o.total,metodo==='efectivo'?recibido:null,metodo==='efectivo'?round(recibido-o.total):0,ref||null,req.session.user.id]);
