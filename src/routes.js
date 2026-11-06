@@ -166,6 +166,20 @@ router.post('/pedidos/:id/pago',caja,wrap(async(req,res)=>{
  });res.json(result);
 }));
 router.get('/banners',caja,wrap(async(req,res)=>{const [rows]=await pool.query('SELECT * FROM banners ORDER BY orden,id');res.json(rows);}));
+
+router.get('/banners/disponibilidad',caja,wrap(async(req,res)=>{
+ const [rows]=await pool.query('SELECT imagen,titulo,activo FROM banners ORDER BY orden,id');
+ res.json(rows);
+}));
+router.put('/banners/disponibilidad',caja,wrap(async(req,res)=>{
+ const imagen=String(req.body.imagen||'').trim(),titulo=String(req.body.titulo||'').trim();
+ if(!imagen.startsWith('/Img/')||imagen.length>350||!titulo||titulo.length>140||typeof req.body.activo!=='boolean')
+   throw fail(400,'Datos del banner inválidos');
+ const [result]=await pool.execute(
+  'INSERT INTO banners (titulo,imagen,activo) VALUES (?,?,?) ON DUPLICATE KEY UPDATE activo=VALUES(activo),titulo=VALUES(titulo)',
+  [titulo,imagen,req.body.activo?1:0]);
+ res.json({ok:true,imagen,activo:req.body.activo});
+}));
 router.post('/banners',requireRole('administrador'),wrap(async(req,res)=>{
  const titulo=String(req.body.titulo||'').trim(),imagen=String(req.body.imagen||'').trim();
  if(!titulo||!imagen.startsWith('/Img/'))throw fail(400,'Título o imagen inválida');
