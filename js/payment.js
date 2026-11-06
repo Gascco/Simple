@@ -78,8 +78,10 @@ document.addEventListener('DOMContentLoaded',async()=>{
    label.textContent='(La transacción expirará en '+Math.max(seconds,0)+' s)';
    if(seconds<=0){showError();return;}
    if(elapsed>=10){
-    stopTimer();modal.hide();
-    await savePayment(true);
+    stopTimer();
+    modal.hide();
+    completedExternal=true;
+    validate();
    }
   },1000);
  }
@@ -103,7 +105,11 @@ document.addEventListener('DOMContentLoaded',async()=>{
  });
  byId('btnCancelTarjeta').addEventListener('click',()=>{attempt++;showError();});
  byId('btnCancelYape').addEventListener('click',()=>{attempt++;showError();});
- confirm.addEventListener('click',()=>{if(method==='efectivo'&&!confirm.disabled)savePayment(false);});
+ confirm.addEventListener('click',()=>{
+  if(confirm.disabled||processing||paid)return;
+  if(method==='efectivo')void savePayment(false);
+  else if(completedExternal)void savePayment(true);
+ });
  byId('btnAceptarExito').addEventListener('click',()=>{if(!paid)return;location.href='/caja.html';});
  validate();
 });
