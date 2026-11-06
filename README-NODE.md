@@ -1,6 +1,6 @@
 # Simple Market Saludable — Node.js y MySQL
 
-Esta rama convierte el prototipo HTML/CSS/JavaScript en una aplicación con API Express y datos MySQL. Se mantiene el diseño original de Caja, Login, Roles, Pago, Cocina y Pedidos de Caja; las pantallas de WhatsApp y PedidosYa usan un editor de pedidos manuales conectado a MySQL, y Banners dispone de su propia administración.
+Esta rama convierte el prototipo HTML/CSS/JavaScript en una aplicación con API Express y datos MySQL. Se mantiene el diseño original de Caja, Login, Roles, Pago, Cocina y Pedidos de Caja; las pantallas originales de WhatsApp y PedidosYa conservan su HTML, tarjetas y modales de Figma mientras utilizan pedidos guardados en MySQL. Banners conserva el diseño original y permite marcar productos agotados.
 
 ## Requisitos
 Node.js 20 o superior, MySQL 8 o superior, puerto 3000 disponible.
@@ -26,15 +26,15 @@ Nota: .env está excluido mediante .gitignore. No subas contraseñas ni credenci
 - Pago: recibe el ID del pedido, consulta importes reales y registra efectivo, recibido y vuelto en MySQL. Tarjeta/Yape/Plin no son procesados automáticamente: exigen verificación manual del cobro y referencia.
 - Cocina: lista pedidos reales, inicia preparación y marca listo; actualización automática cada 10 segundos.
 - Pedidos de caja: estados de espera, preparación, listo y entregado; historial y filtros; actualización cada 12 segundos.
-- WhatsApp/PedidosYa: alta y edición manual de pedidos con cliente, dirección, productos y personalizaciones. No reciben mensajes ni órdenes automáticas de estas plataformas.
-- Banners: consulta, alta y visibilidad en MySQL; altas y modificaciones requieren rol administrador.
+- WhatsApp/PedidosYa: recuperan sus diseños originales; muestran pedidos de prueba precargados y permiten confirmar, modificar y despachar según su estado. No reciben mensajes ni órdenes automáticas de estas plataformas.
+- Banners: se mantiene el panel original con 18 productos/ingredientes; haz clic sobre cada tarjeta para marcar Agotado o Disponible. La disponibilidad persiste en MySQL. /banners_tv.html muestra los mismos banners en modo pantalla, sin controles de edición.
 
 ## Principales endpoints
 POST /api/auth/login; GET /api/auth/me; POST /api/auth/logout
 GET /api/productos; GET /api/ingredientes
 GET /api/pedidos; GET /api/pedidos/:id; POST /api/pedidos
 PUT /api/pedidos/:id/items; PATCH /api/pedidos/:id/estado; POST /api/pedidos/:id/pago
-GET /api/banners; POST /api/banners; PATCH /api/banners/:id
+GET /api/banners; GET /api/banners/disponibilidad; PUT /api/banners/disponibilidad
 PATCH /api/productos/:id; GET /api/usuarios; POST /api/usuarios
 
 ## Secuencia de prueba
@@ -49,3 +49,17 @@ PATCH /api/productos/:id; GET /api/usuarios; POST /api/usuarios
 No se procesan tarjetas, Yape ni Plin directamente; el registro de un pago externo requiere confirmar previamente el cobro real. No se emiten comprobantes electrónicos SUNAT. Para producción, agregar integración de pagos, documentación fiscal, HTTPS, auditoría de operaciones, respaldos, controles CSRF adicionales y pruebas end-to-end.
 
 **No se ha comprobado una conexión a tu servidor MySQL local desde este entorno.** Debes ejecutar instalación y pruebas en tu equipo.
+
+## Actualización desde una instalación anterior de esta rama
+
+Si ya clonaste el proyecto, ejecuta en PowerShell desde la carpeta Simple:
+
+```powershell
+git pull origin feat/node-mysql-persistencia
+npm run setup
+npm start
+```
+
+La inicialización **no borra pedidos existentes** y añade solo los ejemplos que falten (identificados por DEMO-SIMPLE). Incluye 10 pedidos de muestra repartidos entre Tienda, WhatsApp y PedidosYa en estados distintos, además de 18 tarjetas de banner inicializadas según los estados del diseño original. No debes eliminar tu archivo local .env.
+
+Para un televisor inicia sesión como usuario autorizado y abre /banners_tv.html; puedes usar F11 para pantalla completa.
