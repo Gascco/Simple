@@ -50,7 +50,7 @@ async function allOrders(query){
  if(query.estado){const s=String(query.estado).split(',');if(!s.every(x=>statuses.includes(x)))throw fail(400,'Estado inválido');sql+=' AND p.estado IN ('+s.map(()=>'?').join(',')+')';params.push(...s);}
  const [rows]=await pool.execute(sql+' ORDER BY p.id DESC LIMIT 250',params);
  if(rows.length){
-  const ids=rows.map(x=>x.id),[items]=await pool.query('SELECT d.*,p.imagen FROM detalle_pedidos d LEFT JOIN productos p ON p.id=d.producto_id WHERE d.pedido_id IN ('+ids.map(()=>'?').join(',')+') ORDER BY d.id',ids);
+  const ids=rows.map(x=>x.id),[items]=await pool.query('SELECT d.*,p.imagen,p.descripcion AS descripcion_producto FROM detalle_pedidos d LEFT JOIN productos p ON p.id=d.producto_id WHERE d.pedido_id IN ('+ids.map(()=>'?').join(',')+') ORDER BY d.id',ids);
   const groups=new Map();
   for(const item of items){if(!groups.has(item.pedido_id))groups.set(item.pedido_id,[]);groups.get(item.pedido_id).push(item);}
   rows.forEach(o=>o.items=groups.get(o.id)||[]);
@@ -62,7 +62,7 @@ router.get('/pedidos/:id',wrap(async(req,res)=>{
  if(!validId(req.params.id))throw fail(400,'Id inválido');
  const [[order]]=await pool.execute('SELECT p.*,c.nombre AS cliente,c.telefono,c.direccion FROM pedidos p LEFT JOIN clientes c ON c.id=p.cliente_id WHERE p.id=?',[req.params.id]);
  if(!order)throw fail(404,'Pedido no encontrado');
- const [items]=await pool.execute('SELECT d.*,p.imagen FROM detalle_pedidos d LEFT JOIN productos p ON p.id=d.producto_id WHERE d.pedido_id=? ORDER BY d.id',[req.params.id]);
+ const [items]=await pool.execute('SELECT d.*,p.imagen,p.descripcion AS descripcion_producto FROM detalle_pedidos d LEFT JOIN productos p ON p.id=d.producto_id WHERE d.pedido_id=? ORDER BY d.id',[req.params.id]);
  res.json({...order,items});
 }));
 async function trx(fn){
