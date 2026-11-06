@@ -699,7 +699,18 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+          try {
+            const products=await Simple.api('/productos');
+            const esc=Simple.escape;
+            for(const pane of document.querySelectorAll('.tab-pane-custom[id^="tab-"]')){
+              const category=pane.id.slice(4);
+              if(category==='personalizados')continue;
+              const row=pane.querySelector('.row');if(!row)continue;
+              row.innerHTML=products.filter(p=>p.categoria===category).map(p=>'<div class="col-12 col-md-4"><div class="card product-card h-100 border-0 p-2 shadow-sm"><img src="'+encodeURI(p.imagen||'')+'" class="card-img-top rounded-3" alt="'+esc(p.nombre)+'"><div class="card-body p-2 d-flex flex-column justify-content-between"><div><h6 class="product-title m-0">'+esc(p.nombre)+'</h6><span class="product-price">S/. '+Number(p.precio).toFixed(2)+'</span></div><div class="d-flex justify-content-end mt-2"><div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill"><button class="btn btn-qty-circle btn-minus" data-name="'+esc(p.nombre)+'" data-price="'+p.precio+'">-</button><span class="fw-bold modal-qty-val" id="qty-'+esc(p.nombre)+'">0</span><button class="btn btn-qty-circle btn-plus" data-name="'+esc(p.nombre)+'" data-price="'+p.precio+'" data-details="'+esc(p.descripcion)+'">+</button></div></div></div></div></div>').join('');
+            }
+          }catch(err){alert('No se puede cargar el catálogo: '+err.message);return;}
+
             const tabs = document.querySelectorAll('#categoryTabs .nav-link');
             const tabPanes = document.querySelectorAll('.tab-pane-custom');
             tabs.forEach(tab => {
@@ -917,16 +928,19 @@
 
             const btnCheckout = document.getElementById('btnCheckout');
             if (btnCheckout) {
-                btnCheckout.addEventListener('click', () => {
+                btnCheckout.addEventListener('click', async () => {
                     if (cart.length === 0) return;
 
-                    localStorage.setItem('simple_cart', JSON.stringify(cart));
-
-                    window.location.href = 'pago.html';
+                    btnCheckout.disabled=true;
+                    try {
+                      const {id}=await Simple.api('/pedidos',{method:'POST',body:JSON.stringify({canal:'tienda',items:cart})});
+                      location.href='/pago.html?pedido='+id;
+                    }catch(err){alert(err.message);btnCheckout.disabled=false;}
                 });
             }
 
         }); 
 </script>
+<script src="/js/shared.js"></script>
 </body>
 </html>
