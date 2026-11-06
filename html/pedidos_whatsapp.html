@@ -879,22 +879,36 @@
             </div>
         </div>
     </div>
+    <script src="/js/shared.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             let activeOrderType = 'delivery';
-            let currentOrderProducts = [
-                {
-                    id: 'custom-init',
-                    name: 'Parfait Personalizado',
-                    price: 18.50,
-                    qty: 1,
-                    img: '../Img/Parfait Clásico.jpg',
-                    isCustom: true,
-                    yogurts: ['Arándano (1 Opc)'],
-                    frutas: ['Fresa', 'Platano', 'Kiwi', 'Mango', 'Aguaymanto'],
-                    note: ''
-                }
-            ];
+            let currentOrderProducts = [];
+            let dbOrders = [];
+            let currentDbOrder = null;
+            function fromDbItem(i){
+                let p=i.personalizacion;
+                if(typeof p==='string'){try{p=JSON.parse(p);}catch{p=null;}}
+                return {name:i.nombre_producto,price:Number(i.precio_unitario),qty:i.cantidad,
+                    img:i.imagen?'../Img/'+i.imagen.split('/').pop():'../Img/Parfait Clásico.jpg',
+                    isCustom:!!p,yogurts:p?.yogurts||[],frutas:[...(p?.frutas||[]),...(p?.toppings||[])],
+                    personalizacion:p,note:i.nota||''};
+            }
+            async function saveOrderItems(){
+                if(!currentDbOrder||!['pendiente','aceptado'].includes(currentDbOrder.estado))throw Error('El pedido ya no permite cambios');
+                await Simple.api('/pedidos/'+currentDbOrder.id+'/items',{method:'PUT',
+                    body:JSON.stringify({items:currentOrderProducts.map(i=>({
+                        name:i.name,qty:i.qty,note:i.note||'',personalizacion:i.personalizacion||null
+                    }))})});
+            }
+            async function loadOrders(){
+                dbOrders=await Simple.api('/pedidos?canal=whatsapp');
+                const list=document.querySelector('.orders-sidebar .orders-list');
+                list.innerHTML=dbOrders.map(o=>'<div class="order-item p-3 border-bottom d-flex align-items-center justify-content-between" role="button" data-db="'+o.id+'" data-type="'+o.entrega+'" data-id="#'+Simple.escape(o.codigo)+'" data-client="'+Simple.escape(o.cliente||'')+'" data-phone="'+Simple.escape(o.telefono||'')+'" data-address="'+Simple.escape(o.direccion||'')+'"><div class="d-flex align-items-center gap-3"><div class="avatar-placeholder rounded-circle"></div><div><div class="fw-bold text-dark">'+Simple.escape(o.telefono||'')+'</div><small class="text-muted">'+Simple.escape(o.cliente||'')+' • #'+Simple.escape(o.codigo)+'</small></div></div><span class="badge bg-secondary">'+Simple.escape(o.estado)+'</span></div>').join('');
+                const first=list.querySelector('.order-item');
+                if(first)first.click();
+                else{currentDbOrder=null;currentOrderProducts=[];renderOrderUI();document.getElementById('orderTitle').innerText='No hay pedidos WhatsApp';}
+            }
 
             const mainProductsContainer = document.getElementById('mainOrderProductsContainer');
             const billItemsContainer = document.getElementById('billItemsContainer');
@@ -1023,8 +1037,9 @@
             const orderAddress = document.getElementById('orderAddress');
             const orderBadgeType = document.getElementById('orderBadgeType');
 
-            orderItems.forEach(item => {
-                item.addEventListener('click', () => {
+            document.querySelector('.orders-sidebar .orders-list').addEventListener('click', (e) => {
+                    const item=e.target.closest('.order-item');if(!item)return;
+                    const orderItems=document.querySelectorAll('.orders-sidebar .orders-list .order-item');
                     orderItems.forEach(i => i.classList.remove('active-order'));
                     item.classList.add('active-order');
                     activeOrderType = item.getAttribute('data-type');
@@ -1046,9 +1061,10 @@
                         orderBadgeType.className = 'badge bg-dark rounded-pill px-3 py-2';
                         orderAddress.disabled = true;
                     }
+                    currentDbOrder=dbOrders.find(o=>o.id===Number(item.dataset.db))||null;
+                    currentOrderProducts=currentDbOrder?currentDbOrder.items.map(fromDbItem):[];
                     renderOrderUI();
                 });
-            });
 
             const modalTabs = document.querySelectorAll('.custom-app-tabs .nav-link');
             const modalPanes = document.querySelectorAll('.modal-pane');
@@ -1179,7 +1195,8 @@
                         img: '../Img/Parfait Clásico.jpg',
                         isCustom: true,
                         yogurts: [...modalCustomSelection.yogurts],
-                        frutas: [...modalCustomSelection.frutas, ...modalCustomSelection.toppings]
+                        frutas: [...modalCustomSelection.frutas, ...modalCustomSelection.toppings],
+                        personalizacion: {yogurts:[...modalCustomSelection.yogurts],frutas:[...modalCustomSelection.frutas],toppings:[...modalCustomSelection.toppings]}
                     });
                     modalCustomSelection = { yogurts: [], frutas: [], toppings: [] };
                     customCards.forEach(c => c.classList.remove('selected'));
@@ -1254,8 +1271,14 @@
 
             document.getElementById('btnConfirmarModificación').addEventListener('click', () => {
                 if (activeItemIndex !== null && currentOrderProducts[activeItemIndex]) {
-                    currentOrderProducts[activeItemIndex].yogurts = editSelection.yogurts.length > 0 ? editSelection.yogurts : ['Griego'];
-                    currentOrderProducts[activeItemIndex].frutas = [...editSelection.frutas, ...editSelection.toppings];
+                    const item=currentOrderProducts[activeItemIndex];
+                    item.personalizacion = {
+                        yogurts:editSelection.yogurts.length ? [...editSelection.yogurts] : (item.personalizacion?.yogurts||['Griego']),
+                        frutas:editSelection.frutas.length ? [...editSelection.frutas] : (item.personalizacion?.frutas||[]),
+                        toppings:editSelection.toppings.length ? [...editSelection.toppings] : (item.personalizacion?.toppings||[])
+                    };
+                    item.yogurts=item.personalizacion.yogurts;
+                    item.frutas=[...item.personalizacion.frutas,...item.personalizacion.toppings];
                     renderOrderUI();
                     showLeftToast("Se modificó el producto correctamente");
                 }
@@ -1266,8 +1289,15 @@
 
             const btnConfirmOrder = document.getElementById('btnConfirmOrder');
             if (btnConfirmOrder) {
-                btnConfirmOrder.addEventListener('click', () => {
-                    if (currentOrderProducts.length === 0) return;
+                btnConfirmOrder.addEventListener('click', async () => {
+                    if (currentOrderProducts.length === 0||!currentDbOrder) return;
+                    try{
+                        if(['pendiente','aceptado'].includes(currentDbOrder.estado))await saveOrderItems();
+                        if(currentDbOrder.estado==='pendiente'){
+                            await Simple.api('/pedidos/'+currentDbOrder.id+'/estado',{method:'PATCH',body:JSON.stringify({estado:'aceptado'})});
+                            currentDbOrder.estado='aceptado';
+                        }
+                    }catch(error){alert(error.message);return;}
 
                     const modalCarga = new bootstrap.Modal(document.getElementById('modalConfirmandoOrden'));
                     const modalConfirmada = new bootstrap.Modal(document.getElementById('modalOrdenConfirmada'));
@@ -1314,6 +1344,7 @@
                     }, 1800);
                 });
             }
+            loadOrders().catch(error=>alert(error.message));
         });
     </script>
 </body>

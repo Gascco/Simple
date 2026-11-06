@@ -404,91 +404,48 @@
             </div>
         </div>
     </div>
+    <script src="/js/shared.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            let pyaOrders = [
-                {
-                    id: '#1001',
-                    client: 'Juan Pérez',
-                    phone: '+999 999 999',
-                    time: '11:00',
-                    code: '442',
-                    status: 'En preparación',
-                    isConfirmed: true,
-                    isDispatched: false, 
-                    products: [
-                        {
-                            name: 'Parfait Personalizado',
-                            price: 19.50,
-                            qty: 1,
-                            img: '../Img/Parfait Clásico.jpg',
-                            isCustom: true,
-                            yogurts: ['Natural (1 Opc)'],
-                            frutas: ['Fresa', 'Platano', 'Kiwi', 'Mango']
-                        },
-                        {
-                            name: 'Jugo probiótico de fresa',
-                            price: 18.50,
-                            qty: 1,
-                            img: '../Img/J-Fresa.jpg',
-                            isCustom: false,
-                            options: ['Jugo (1 Opc)']
-                        }
-                    ]
-                },
-                {
-                    id: '#1002',
-                    client: 'Juan Pérez',
-                    phone: '+999 999 999',
-                    time: '11:00',
-                    code: '123',
-                    status: 'Por Aceptar',
-                    isConfirmed: false,
-                    isDispatched: false,
-                    products: [
-                        {
-                            name: 'Parfait Clásico (Personalizado)',
-                            price: 17.50,
-                            qty: 1,
-                            img: '../Img/Parfait Clásico.jpg',
-                            isCustom: true,
-                            yogurts: ['Cacao (1 Opc)'],
-                            frutas: ['Fresa', 'Kiwi']
-                        },
-                        {
-                            name: 'Jugo probiótico de arandano',
-                            price: 19.90,
-                            qty: 1,
-                            img: '../Img/J-Arandano.jpg',
-                            isCustom: false,
-                            options: ['Jugo (1 Opc)']
-                        }
-                    ]
-                },
-                {
-                    id: '#1003',
-                    client: 'Juan Pérez',
-                    phone: '+999 777 666',
-                    time: '11:00',
-                    code: '456',
-                    status: 'Por Aceptar',
-                    isConfirmed: false,
-                    isDispatched: false,
-                    products: [
-                        {
-                            name: 'Parfait Personalizado',
-                            price: 18.50,
-                            qty: 1,
-                            img: '../Img/Parfait Clásico.jpg',
-                            isCustom: true,
-                            yogurts: ['Griego'],
-                            frutas: ['Fresa', 'Granola artesanal']
-                        }
-                    ]
+            let pyaOrders = [];
+            let activeOrderIndex = 0;
+            const toProducts = o => o.items.map(i => {
+                let custom=i.personalizacion;
+                if(typeof custom==='string'){try{custom=JSON.parse(custom);}catch{custom=null;}}
+                return {name:i.nombre_producto,price:Number(i.precio_unitario),qty:i.cantidad,
+                    img:i.imagen?'../Img/'+i.imagen.split('/').pop():'../Img/Parfait Clásico.jpg',
+                    isCustom:!!custom,yogurts:custom?.yogurts||[],frutas:[...(custom?.frutas||[]),...(custom?.toppings||[])],
+                    options:custom?null:[],personalizacion:custom,note:i.nota||''};
+            });
+            async function saveCurrent(order){
+                await Simple.api('/pedidos/'+order.dbId+'/items',{method:'PUT',body:JSON.stringify({
+                    items:order.products.map(i=>({name:i.name,qty:i.qty,note:i.note||'',personalizacion:i.personalizacion||null}))
+                })});
+            }
+            async function loadOrders(preferId){
+                const list=await Simple.api('/pedidos?canal=pedidosya');
+                pyaOrders=list.map(o=>({
+                    id:'#'+o.codigo,dbId:o.id,client:o.cliente||'Sin cliente',phone:o.telefono||'',
+                    time:new Date(o.creado_en).toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'}),
+                    code:o.codigo_entrega||'',state:o.estado,
+                    status:({pendiente:'Por Aceptar',aceptado:'Confirmado',preparando:'En preparación',listo:'Listo',despachado:'Despachado',entregado:'Entregado'})[o.estado]||o.estado,
+                    isConfirmed:!['pendiente','cancelado'].includes(o.estado),
+                    isDispatched:['despachado','entregado'].includes(o.estado),
+                    products:toProducts(o)
+                }));
+                activeOrderIndex=preferId?Math.max(0,pyaOrders.findIndex(o=>o.dbId===preferId)):0;
+                renderOrdersSidebar();
+                if(pyaOrders.length)renderActiveOrderDetails();
+                else{
+                    pyaOrdersList.innerHTML='<p class="p-3 text-muted">No hay pedidos</p>';
+                    pyaProductsContainer.innerHTML='';
+                    billItemsContainer.innerHTML='';
+                    btnConfirmOrderPYA.disabled=true;
+                    btnDespachar.disabled=true;
                 }
-            ];
+            }
 
-            let activeOrderIndex = 1;
+
 
             const pyaOrdersList = document.getElementById('pyaOrdersList');
             const pyaProductsContainer = document.getElementById('pyaProductsContainer');
@@ -639,11 +596,10 @@
                 });
 
                 document.querySelectorAll('.btn-remove-pya-item').forEach(btn => {
-                    btn.addEventListener('click', () => {
+                    btn.addEventListener('click', async () => {
                         const idx = parseInt(btn.getAttribute('data-index'));
-                        currentOrder.products.splice(idx, 1);
-                        renderActiveOrderDetails();
-                        showLeftToast("Se eliminó un producto del pedido");
+                        const old=currentOrder.products.slice();currentOrder.products.splice(idx,1);
+                        try{await saveCurrent(currentOrder);renderActiveOrderDetails();showLeftToast('Se eliminó un producto del pedido');}catch(error){currentOrder.products=old;alert(error.message);renderActiveOrderDetails();}
                     });
                 });
 
@@ -664,7 +620,7 @@
                 } else {
                     btnDespachar.classList.remove('despachado');
                     btnDespachar.innerText = 'Despachar Pedido';
-                    btnDespachar.disabled = false;
+                    btnDespachar.disabled = currentOrder.state !== 'listo';
                 }
 
                 if (currentOrder.isConfirmed) {
@@ -682,9 +638,10 @@
                 }
             }
 
-            btnConfirmOrderPYA.addEventListener('click', () => {
+            btnConfirmOrderPYA.addEventListener('click', async () => {
                 const currentOrder = pyaOrders[activeOrderIndex];
                 if (currentOrder && !currentOrder.isConfirmed) {
+                    try{await Simple.api('/pedidos/'+currentOrder.dbId+'/estado',{method:'PATCH',body:JSON.stringify({estado:'aceptado'})});currentOrder.state='aceptado';}catch(error){alert(error.message);return;}
                     const modalCarga = new bootstrap.Modal(document.getElementById('modalConfirmandoOrden'));
                     const modalConfirmada = new bootstrap.Modal(document.getElementById('modalOrdenConfirmada'));
 
@@ -749,9 +706,10 @@
 
             const btnAceptarDespachoModal = document.getElementById('btnAceptarDespachoModal');
             if (btnAceptarDespachoModal) {
-                btnAceptarDespachoModal.addEventListener('click', () => {
+                btnAceptarDespachoModal.addEventListener('click', async () => {
                     const currentOrder = pyaOrders[activeOrderIndex];
                     if (currentOrder) {
+                        try{await Simple.api('/pedidos/'+currentOrder.dbId+'/estado',{method:'PATCH',body:JSON.stringify({estado:'despachado'})});currentOrder.state='despachado';}catch(error){alert(error.message);return;}
                         currentOrder.isDispatched = true;
                         renderOrdersSidebar();
                         renderActiveOrderDetails();
@@ -819,13 +777,17 @@
                 }
             });
 
-            document.getElementById('btnConfirmarModificación').addEventListener('click', () => {
+            document.getElementById('btnConfirmarModificación').addEventListener('click', async () => {
                 const currentOrder = pyaOrders[activeOrderIndex];
                 if (activeItemIndex !== null && currentOrder && currentOrder.products[activeItemIndex]) {
-                    currentOrder.products[activeItemIndex].yogurts = editSelection.yogurts.length > 0 ? editSelection.yogurts : ['Griego'];
-                    currentOrder.products[activeItemIndex].frutas = [...editSelection.frutas, ...editSelection.toppings];
-                    renderActiveOrderDetails();
-                    showLeftToast("Se modificó la orden correctamente");
+                    const product=currentOrder.products[activeItemIndex],before=JSON.parse(JSON.stringify(product));
+                    const original=product.personalizacion||{yogurts:product.yogurts,frutas:product.frutas,toppings:[]};
+                    product.personalizacion={yogurts:editSelection.yogurts.length?editSelection.yogurts:original.yogurts,
+                      frutas:editSelection.frutas.length?editSelection.frutas:original.frutas,toppings:editSelection.toppings};
+                    product.yogurts=product.personalizacion.yogurts;
+                    product.frutas=[...product.personalizacion.frutas,...product.personalizacion.toppings];
+                    try{await saveCurrent(currentOrder);renderActiveOrderDetails();showLeftToast('Se modificó la orden correctamente');}
+                    catch(error){currentOrder.products[activeItemIndex]=before;alert(error.message);renderActiveOrderDetails();}
                 }
 
                 const modalEl = document.getElementById('modalModificarPersonalizado');
@@ -833,8 +795,7 @@
                 if (modalInstance) modalInstance.hide();
             });
 
-            renderOrdersSidebar();
-            renderActiveOrderDetails();
+            loadOrders().catch(error=>alert(error.message));
         });
     </script>
 </body>

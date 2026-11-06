@@ -1,0 +1,61 @@
+.order-recipe-modal .modal-content {
+    border-radius: 16px;
+}
+.order-recipe-modal .order-detail-header {
+    background-color: rgba(211, 184, 160, 0.40);
+    border-radius: 6px 20px 20px 6px;
+}
+.order-recipe-modal .section-label {
+    color: #333333;
+    font-size: 18px;
+}
+.order-recipe-modal .ingredient-card {
+    background: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    width: 135px;
+    padding: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+.order-recipe-modal .ingredient-img {
+    width: 100%;
+    height: 95px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 6px;
+}
+.order-recipe-modal .ingredient-name {
+    display: block;
+    font-weight: 600;
+    color: #333333;
+}
+.order-recipe-modal .recipe-box {
+    background-color: rgba(211, 184, 160, 0.30);
+    min-height: 300px;
+    border: 1px solid rgba(211, 184, 160, 0.50);
+}
+.order-recipe-modal .recipe-steps {
+    line-height: 1.6;
+    color: #333333;
+}
+.order-recipe-modal .note-input {
+    background: #fafafa;
+    border: 1px solid #e2e2e2;
+    padding: 10px 16px;
+}
+.ingredient-placeholder {
+    background-color: #f3ece6;
+    padding: 5px;
+    color: #333333;
+}
+body :is(small, .small, .badge, .order-time, .item-details, .ingredient-name) {
+    font-size: 14px !important;
+}
+body :is(.order-card, .recipe-container, .order-recipe-modal) :is(span, p, li, label, input, button, em) {
+    font-size: max(14px, 1rem);
+}
+body :is(.order-card, .recipe-container, .order-recipe-modal) h5,
+body :is(.order-card, .recipe-container, .order-recipe-modal) .section-label {
+    font-size: 18px;
+}
