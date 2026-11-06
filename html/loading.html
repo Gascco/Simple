@@ -21,8 +21,14 @@
 
 
     <script>
+        const destination = new URLSearchParams(window.location.search).get('dest');
+        const allowedDestinations = {
+            roles: '/roles.html',
+            caja: '/caja.html',
+            cocina: '/cocina.html'
+        };
         setTimeout(() => {
-            window.location.href = "/roles.html";
+            window.location.replace(allowedDestinations[destination] || allowedDestinations.roles);
         }, 3000);
     </script>
 
