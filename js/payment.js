@@ -22,9 +22,17 @@ document.addEventListener('DOMContentLoaded',async()=>{
  const modalYape=new bootstrap.Modal(byId('modalYapeEspera'));
  const modalError=new bootstrap.Modal(byId('modalErrorPago'));
  const modalExito=new bootstrap.Modal(byId('modalPagoExitoso'));
+ const modalOrdenConfirmada=new bootstrap.Modal(byId('modalOrdenConfirmada'));
  const methods=[['btnEfectivo','efectivo'],['btnTarjeta','tarjeta'],['btnYapePlin','yape']];
  let method='efectivo',digits='',timer=null,seconds=59,processing=false,paid=false,attempt=0,completedExternal=false;
  function stopTimer(){if(timer){clearInterval(timer);timer=null;}}
+ function showAfterHide(current,next){
+  const element=current._element;
+  if(element.classList.contains('show')){
+   element.addEventListener('hidden.bs.modal',()=>next.show(),{once:true});
+   current.hide();
+  }else next.show();
+ }
  function setActive(value){
   method=value;
   for(const [button,key] of methods)byId(button).classList.toggle('active',key===value);
@@ -49,19 +57,20 @@ document.addEventListener('DOMContentLoaded',async()=>{
     {metodo:'efectivo',recibido:Number(input.value)};
   try{
    await Simple.api('/pedidos/'+id+'/pago',{method:'POST',body:JSON.stringify(payload)});
-   paid=true;completedExternal=true;modalExito.show();
+   paid=true;completedExternal=true;modalOrdenConfirmada.show();
   }catch(err){
-   completedExternal=false;
+   if(!external)completedExternal=false;
    modalError.show();
-   console.error('Error al registrar el pago simulado:',err);
+   console.error('Error al registrar el pago:',err);
   }finally{processing=false;validate();}
  }
  function showError(){
   stopTimer();
-  if(method==='tarjeta')modalTarjeta.hide();
-  if(method==='yape')modalYape.hide();
   completedExternal=false;
-  validate();modalError.show();
+  validate();
+  if(method==='tarjeta')showAfterHide(modalTarjeta,modalError);
+  else if(method==='yape')showAfterHide(modalYape,modalError);
+  else modalError.show();
  }
  function simulateExternal(kind){
   if(paid||processing)return;
@@ -79,9 +88,9 @@ document.addEventListener('DOMContentLoaded',async()=>{
    if(seconds<=0){showError();return;}
    if(elapsed>=10){
     stopTimer();
-    modal.hide();
     completedExternal=true;
     validate();
+    showAfterHide(modal,modalExito);
    }
   },1000);
  }
@@ -110,6 +119,14 @@ document.addEventListener('DOMContentLoaded',async()=>{
   if(method==='efectivo')void savePayment(false);
   else if(completedExternal)void savePayment(true);
  });
- byId('btnAceptarExito').addEventListener('click',()=>{if(!paid)return;location.href='/caja.html';});
+ byId('btnAceptarExito').addEventListener('click',()=>{
+  modalExito.hide();
+  validate();
+ });
+ byId('btnAceptarOrden').addEventListener('click',()=>{
+  if(!paid)return;
+  modalOrdenConfirmada.hide();
+  location.href='/caja.html';
+ });
  validate();
 });
