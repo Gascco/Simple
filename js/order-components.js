@@ -117,7 +117,13 @@
     }
     return {ingredientsHtml:sections.join(''),stepsHtml:steps.join(''),note:(order.items||[]).map(i=>i.nota||'').filter(Boolean).join(' · ')};
   }
-  const api={escapeText,norm,custom,recipe,summary,badge,timeAgo,stageKitchen,stageCash,productCardItems,ingredientCard,recipeViews};
+  function recipeEntryTransition(estado){
+    return estado==='aceptado'?'preparando':null;
+  }
+  function recipeFinishTransition(estado){
+    return estado==='preparando'?'listo':null;
+  }
+  const api={escapeText,norm,custom,recipe,summary,badge,timeAgo,stageKitchen,stageCash,productCardItems,ingredientCard,recipeViews,recipeEntryTransition,recipeFinishTransition};
   root.SimpleOrders=api;
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);
