@@ -69,3 +69,11 @@ Para un televisor inicia sesión como usuario autorizado y abre /banners_tv.html
 La pantalla de Pago mantiene los modales de espera de tarjeta y Yape/Plin. Tras unos 10 segundos se muestra el éxito y se registra un pago simulado en MySQL. Al pulsar Cancelar se muestra el modal de error y el pedido sigue pendiente de pago. El efectivo también se guarda una sola vez después de confirmar. No existe una pasarela de cobro real.
 
 La boleta de Caja se corrigió para que agregar varias unidades o productos distintos no cause un error cuando se elimina temporalmente el mensaje del carrito vacío.
+
+## Cocina y Pedidos de Caja — diseño original
+
+Las dos pantallas conservan sus columnas y clases CSS originales. Las tarjetas se generan desde MySQL dentro de las columnas existentes, sin reemplazar el diseño. Al pulsar una tarjeta, Cocina muestra su vista original de receta y Pedidos de Caja abre un detalle con imágenes de yogur, frutas y toppings; se visualizan separadamente todos los productos del pedido. Las recetas para productos estándar usan los ingredientes descritos en el catálogo; las personalizaciones usan el JSON almacenado en detalle_pedidos.
+
+Los pedidos pendientes de aceptación de WhatsApp y PedidosYa se muestran solo en «En Espera» de Caja. Cocina **no muestra** pedidos con estado pendiente: aparecen allí una vez aceptados. Los estados de Cocina son aceptado → En Espera, preparando → En Preparación y listo → Listo. Se incluyen estilos para garantizar textos de al menos 14 px.
+
+Para comprobar estados, recetas y estructura, ejecuta `npm test` después de `npm install`. Estas pruebas no reemplazan la validación visual en el navegador.
