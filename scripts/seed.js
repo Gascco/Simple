@@ -17,7 +17,7 @@ async function seed() {
   }
   const [cats] = await pool.query('SELECT id,slug FROM categorias');
   const catIds = Object.fromEntries(cats.map(x => [x.slug,x.id]));
-  const html = fs.readFileSync(path.join(__dirname, '../html/caja.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '../html/caja.html'), 'utf8').split('<script>')[0];
   const regex = /class="card product-card[\s\S]*?<img src="([^"]+)"[\s\S]*?<h6 class="product-title[^"]*">([^<]+)<\/h6>[\s\S]*?class="btn btn-qty-circle btn-plus" data-name="([^"]+)" data-price="([^"]+)" data-details="([^"]+)"/g;
   let m;
   let products = 0;
