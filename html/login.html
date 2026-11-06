@@ -21,9 +21,9 @@
                 </div>
 
                 <div class="card login-card border-0 p-4 shadow-sm">
-                    <form action="loading.html" method="get">
+                    <form id="loginForm">
                         <div class="mb-3">
-                            <input type="text" class="form-control custom-input" placeholder="Usuario" required>
+                            <input type="text" class="form-control custom-input" id="usernameInput" placeholder="Usuario" required>
                         </div>
 
                         <div class="mb-3 position-relative">
@@ -47,6 +47,16 @@
     </div>
 
     <script>
+        document.getElementById('loginForm').addEventListener('submit', async e => {
+          e.preventDefault();
+          const btn=e.target.querySelector('button[type="submit"]');btn.disabled=true;
+          try {
+            const response=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({usuario:document.getElementById('usernameInput').value,password:document.getElementById('passwordInput').value})});
+            const result=await response.json();
+            if(!response.ok)throw Error(result.error||'No se pudo ingresar');
+            location.href='/roles.html';
+          } catch(err){alert(err.message);btn.disabled=false;}
+        });
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#passwordInput');
 
