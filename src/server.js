@@ -26,7 +26,7 @@ app.use('/CSS',express.static(path.join(__dirname,'../css')));
 const pages={'login.html':null,'loading.html':null,'roles.html':['administrador','caja','cocina'],
 'caja.html':['administrador','caja'],'pago.html':['administrador','caja'],
 'pedidos_caja.html':['administrador','caja'],'pedidos_whatsapp.html':['administrador','caja'],
-'pedidos_pedidosya.html':['administrador','caja'],'banners_caja.html':['administrador','caja'],
+'pedidos_pedidosya.html':['administrador','caja'],'banners_caja.html':['administrador','caja'],'banners_tv.html':['administrador','caja'],
 'cocina.html':['administrador','cocina']};
 app.get('/',(req,res)=>res.redirect(req.session.user?'/roles.html':'/login.html'));
 for(const [file,roles] of Object.entries(pages)){
