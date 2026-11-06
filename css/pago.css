@@ -172,6 +172,11 @@ body, span, small, label, input, button, div, a, p {
     color: var(--color-brand-brown);
 }
 
+#lblTipoComprobante {
+    color: #595959 !important;
+    font-size: 14px;
+}
+
 .btn-confirm-order {
     background-color: #5C3D1E;
     color: var(--color-white);
