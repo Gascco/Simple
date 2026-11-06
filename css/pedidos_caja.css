@@ -1,0 +1,245 @@
+:root {
+    --color-dark-bg: #111111;
+    --color-white: #FFFFFF;
+    --color-gray-light: #F6F6F6;
+    --color-gray-card: #E4E4E4;
+    --color-gray-border: #CCCCCC;
+    --color-text-dark: #333333;
+    --color-text-muted: #747474;
+    --color-brand-brown: #B17B4A;
+    --color-brand-beige: #D3B8A0;
+    --color-badge-tienda: #D0A16A;
+    --color-badge-whatsapp: #64B161;
+    --color-badge-pedidosya: #FC304B;
+    --color-ready-teal: #38ACA1;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-white);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--color-text-dark);
+    font-size: 14px;
+}
+
+body, span, small, label, input, button, div, a, p, li {
+    font-size: 14px;
+}
+
+.topbar-nav {
+    background-image: url('../Img/FondoNav.png');
+    background-color: var(--color-dark-bg);
+    background-size: cover;
+    background-position: center 20%;
+    color: var(--color-white);
+    min-height: 65px;
+}
+
+.nav-logo {
+    max-height: 28px;
+    width: auto;
+}
+
+.nav-pill-btn {
+    background-color: var(--color-white);
+    color: var(--color-text-dark);
+    border: 1px solid var(--color-white);
+    padding: 0.45rem 1.4rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.nav-pill-btn.active {
+    background-color: var(--color-brand-brown);
+    color: var(--color-white);
+    border-color: var(--color-brand-brown);
+}
+
+.btn-nav-tienda {
+    background-color: var(--color-white);
+    color: var(--color-text-dark);
+    border-radius: 20px;
+    padding: 0.45rem 1.6rem;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-nav-tienda:hover {
+    background-color: var(--color-brand-brown);
+    color: var(--color-white);
+}
+
+.topbar-clock-section {
+    border-left: 2px solid rgba(255, 255, 255, 0.4);
+    padding-left: 1.2rem;
+    color: var(--color-white);
+}
+
+.topbar-clock {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.search-box input {
+    border: 1px solid var(--color-gray-border);
+    font-size: 14px;
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+}
+
+.btn-filter {
+    border: 1px solid var(--color-brand-beige);
+    background-color: var(--color-white);
+    color: var(--color-text-dark);
+    border-radius: 20px;
+    padding: 0.4rem 1.4rem;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.btn-filter.active, .btn-filter:hover {
+    background-color: var(--color-brand-brown);
+    color: var(--color-white);
+    border-color: var(--color-brand-brown);
+}
+
+.column-header {
+    border: 1px solid var(--color-text-dark);
+    border-radius: 25px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+}
+
+.header-history {
+    background-color: #F3ECE6;
+    border-color: transparent;
+}
+
+.header-ready {
+    background-color: #EAEAEA;
+    border-color: transparent;
+}
+
+.order-card {
+    border-radius: 12px !important;
+    border: 1px solid var(--color-gray-border);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+
+.waiting-card {
+    border-left: 5px solid #D40000 !important;
+}
+
+.prep-card {
+    border-left: 5px solid var(--color-dark-bg) !important;
+}
+
+.ready-card {
+    border-left: 5px solid var(--color-ready-teal) !important;
+    background-color: #FBFBFB;
+}
+
+.history-card {
+    background-color: #EBEBEB;
+    border: 1px solid #DDDDDD;
+}
+
+.order-id {
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.order-time {
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+.item-title {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.item-details {
+    padding-left: 1.2rem;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.badge-tienda {
+    background-color: var(--color-badge-tienda);
+    color: var(--color-white);
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    font-size: 14px;
+}
+
+.badge-whatsapp {
+    background-color: var(--color-badge-whatsapp);
+    color: var(--color-white);
+    border-radius: 12px;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    font-size: 14px;
+}
+
+.badge-pedidosya {
+    background-color: var(--color-badge-pedidosya);
+    color: var(--color-white);
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    font-size: 14px;
+}
+
+.btn-action-gray {
+    background-color: var(--color-gray-card);
+    color: var(--color-text-dark);
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    padding: 0.5rem;
+}
+
+.btn-action-gray:hover {
+    background-color: var(--color-brand-brown); 
+    color: var(--color-white); 
+}
+
+.btn-action-dark {
+    background-color: var(--color-dark-bg);
+    color: var(--color-white);
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    padding: 0.5rem;
+}
+
+.btn-action-dark:hover {
+    background-color: var(--color-brand-brown); 
+}
+
+.btn-action-disabled {
+    background-color: var(--color-white);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-gray-border);
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0.5rem;
+}

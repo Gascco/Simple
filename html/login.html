@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Market Saludable - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../CSS/login.css">
+</head>
+<body>
+
+    <div class="login-bg d-flex justify-content-end">
+        
+        <div class="login-sidebar-overlay d-flex flex-column justify-content-center align-items-center">
+            
+            <div class="login-card-container w-100">
+                
+                <div class="text-center mb-4">
+                    <img src="../Img/Logo2.png" alt="Simple Market Saludable" class="brand-logo img-fluid">
+                </div>
+
+                <div class="card login-card border-0 p-4 shadow-sm">
+                    <form action="loading.html" method="get">
+                        <div class="mb-3">
+                            <input type="text" class="form-control custom-input" placeholder="Usuario" required>
+                        </div>
+
+                        <div class="mb-3 position-relative">
+                            <input type="password" class="form-control custom-input pe-5" id="passwordInput" placeholder="Contraseña" required>
+                            <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3 password-toggle" id="togglePassword"></i>
+                        </div>
+
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input custom-checkbox" id="rememberMe">
+                            <label class="form-check-label remember-label" for="rememberMe">Recordar Contraseña</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-custom-submit w-100 py-2">Ingresar</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#passwordInput');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('bi-eye');
+            this.classList.toggle('bi-eye-slash');
+        });
+    </script>
+</body>
+</html>

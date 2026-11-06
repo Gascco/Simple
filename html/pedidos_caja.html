@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pedidos - Simple Market Saludable</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../CSS/pedidos_caja.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header class="topbar-nav d-flex align-items-center justify-content-between px-4 py-2">
+        <div class="d-flex align-items-center gap-3">
+            <img src="../Img/Logo2 - copia.png" alt="Simple" class="nav-logo me-3">
+            
+            <div class="d-flex gap-2">
+                <button class="nav-pill-btn active" id="btnTabActivos">Pedidos Activos</button>
+                <button class="nav-pill-btn" id="btnTabHistorial">Historial de Pedidos</button>
+            </div>
+        </div>
+        
+        <div class="d-flex align-items-center gap-4">
+            <a href="caja.html" class="btn-nav-tienda">Tienda</a>
+            <div class="topbar-clock-section">
+                <span class="topbar-clock" id="liveClock">14:35:10</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid px-4 py-3 flex-grow-1">
+        <!-- Barra de Búsqueda y Filtros -->
+        <div class="row align-items-center mb-4 g-3">
+            <div class="col-12 col-md-4">
+                <div class="search-box position-relative">
+                    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                    <input type="text" id="searchInput" class="form-control rounded-pill ps-5" placeholder="Buscar Pedido">
+                </div>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="d-flex flex-wrap gap-2 justify-content-start" id="filterContainer">
+                    <button class="btn btn-filter active" data-filter="all">Todos</button>
+                    <button class="btn btn-filter" data-filter="tienda">Tienda</button>
+                    <button class="btn btn-filter" data-filter="whatsapp">WhatsApp</button>
+                    <button class="btn btn-filter" data-filter="pedidosya">PedidosYa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA 1: PEDIDOS ACTIVOS -->
+        <div class="row g-4" id="viewPedidosActivos">
+            <!-- Columna 1: En Espera -->
+            <div class="col-12 col-lg-4">
+                <div class="column-header mb-3">En Espera</div>
+                <div class="orders-list d-flex flex-column gap-3">
+                    <div class="card order-card waiting-card" data-origin="tienda" data-id="0042">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0042</span>
+                                    <span class="badge badge-tienda">Tienda</span>
+                                </div>
+                                <span class="order-time">Hace 2 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Griego</li>
+                                <li>Frutas: Fresa, Arándano, Mango, Kiwi, Coco</li>
+                                <li>Toppins: Miel, Maní</li>
+                            </ul>
+                            <button class="btn btn-action-gray w-100">Iniciar Preparación</button>
+                        </div>
+                    </div>
+
+                    <div class="card order-card waiting-card" data-origin="pedidosya" data-id="0043">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0043</span>
+                                    <span class="badge badge-pedidosya">PedidosYa</span>
+                                </div>
+                                <span class="order-time">Hace 5 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Vainilla</li>
+                                <li>Frutas: Fresa, Mango, Plátano, Papaya, Melocotón</li>
+                            </ul>
+                            <button class="btn btn-action-gray w-100">Iniciar Preparación</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna 2: En Preparación -->
+            <div class="col-12 col-lg-4">
+                <div class="column-header mb-3">En Preparación</div>
+                <div class="orders-list d-flex flex-column gap-3">
+                    <div class="card order-card prep-card" data-origin="whatsapp" data-id="0040">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0040</span>
+                                    <span class="badge badge-whatsapp">WhatsApp</span>
+                                </div>
+                                <span class="order-time">Hace 8 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Arándano</li>
+                                <li>Frutas: Fresa, Plátano, Kiwi, Mango, Aguaymanto</li>
+                            </ul>
+                            <button class="btn btn-action-dark w-100">Marcar como Listo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna 3: Listo -->
+            <div class="col-12 col-lg-4">
+                <div class="column-header header-ready mb-3">Listo</div>
+                <div class="orders-list d-flex flex-column gap-3">
+                    <div class="card order-card ready-card" data-origin="tienda" data-id="0038">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0038</span>
+                                    <span class="badge badge-tienda">Tienda</span>
+                                </div>
+                                <span class="order-time">Listo hace 1 min</span>
+                            </div>
+                            <h6 class="item-title text-decoration-line-through mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3 opacity-75">
+                                <li>Yogurt: Griego</li>
+                                <li>Frutas: Fresa, Arándano, Mango, Plátano, Kiwi</li>
+                            </ul>
+                            <button class="btn btn-action-disabled w-100" disabled>Listo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA 2: HISTORIAL DE PEDIDOS -->
+        <div class="d-none" id="viewHistorialPedidos">
+            <div class="row justify-content-center mb-4">
+                <div class="col-12 col-md-6">
+                    <div class="column-header header-history">Entregados</div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-4 card-history-item" data-origin="tienda" data-id="0042">
+                    <div class="card order-card history-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0042</span>
+                                    <span class="badge badge-tienda">Tienda</span>
+                                </div>
+                                <span class="order-time">Hace 2 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Griego</li>
+                                <li>Frutas: Fresa, Arándano, Mango, Kiwi, Coco</li>
+                                <li>Toppins: Miel, Maní</li>
+                            </ul>
+                            <button class="btn btn-action-disabled w-100" disabled>Entregado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 card-history-item" data-origin="tienda" data-id="0042">
+                    <div class="card order-card history-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0042</span>
+                                    <span class="badge badge-tienda">Tienda</span>
+                                </div>
+                                <span class="order-time">Hace 2 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Griego</li>
+                                <li>Frutas: Fresa, Arándano, Mango, Kiwi, Coco</li>
+                                <li>Toppins: Miel, Maní</li>
+                            </ul>
+                            <button class="btn btn-action-disabled w-100" disabled>Entregado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 card-history-item" data-origin="whatsapp" data-id="0042">
+                    <div class="card order-card history-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0042</span>
+                                    <span class="badge badge-whatsapp">WhatsApp</span>
+                                </div>
+                                <span class="order-time">Hace 2 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Griego</li>
+                                <li>Frutas: Fresa, Arándano, Mango, Kiwi, Coco</li>
+                                <li>Toppins: Miel, Maní</li>
+                            </ul>
+                            <button class="btn btn-action-disabled w-100" disabled>Entregado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 card-history-item" data-origin="whatsapp" data-id="0042">
+                    <div class="card order-card history-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0042</span>
+                                    <span class="badge badge-whatsapp">WhatsApp</span>
+                                </div>
+                                <span class="order-time">Hace 2 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Griego</li>
+                                <li>Frutas: Fresa, Arándano, Mango, Kiwi, Coco</li>
+                                <li>Toppins: Miel, Maní</li>
+                            </ul>
+                            <button class="btn btn-action-disabled w-100" disabled>Entregado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 card-history-item" data-origin="pedidosya" data-id="0042">
+                    <div class="card order-card history-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0042</span>
+                                    <span class="badge badge-pedidosya">PedidosYa</span>
+                                </div>
+                                <span class="order-time">Hace 2 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Griego</li>
+                                <li>Frutas: Fresa, Arándano, Mango, Kiwi, Coco</li>
+                                <li>Toppins: Miel, Maní</li>
+                            </ul>
+                            <button class="btn btn-action-disabled w-100" disabled>Entregado</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Reloj en vivo
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('liveClock').textContent = `${hours}:${minutes}:${seconds}`;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            // Pestañas Principales (Pedidos Activos / Historial)
+            const btnTabActivos = document.getElementById('btnTabActivos');
+            const btnTabHistorial = document.getElementById('btnTabHistorial');
+            const viewActivos = document.getElementById('viewPedidosActivos');
+            const viewHistorial = document.getElementById('viewHistorialPedidos');
+
+            btnTabActivos.addEventListener('click', () => {
+                btnTabActivos.classList.add('active');
+                btnTabHistorial.classList.remove('active');
+                viewActivos.classList.remove('d-none');
+                viewHistorial.classList.add('d-none');
+                applyFilters();
+            });
+
+            btnTabHistorial.addEventListener('click', () => {
+                btnTabHistorial.classList.add('active');
+                btnTabActivos.classList.remove('active');
+                viewHistorial.classList.remove('d-none');
+                viewActivos.classList.add('d-none');
+                applyFilters();
+            });
+
+            // Filtros y Búsqueda
+            const filterButtons = document.querySelectorAll('#filterContainer .btn-filter');
+            const searchInput = document.getElementById('searchInput');
+            let currentFilter = 'all';
+            let currentSearch = '';
+
+            function applyFilters() {
+                const activeCards = document.querySelectorAll('#viewPedidosActivos .order-card');
+                const historyCards = document.querySelectorAll('#viewHistorialPedidos .card-history-item');
+
+                const filterCard = (card) => {
+                    const origin = card.getAttribute('data-origin');
+                    const id = card.getAttribute('data-id') || '';
+                    const textContent = card.innerText.toLowerCase();
+                    const matchesFilter = (currentFilter === 'all') || (origin === currentFilter);
+                    const matchesSearch = id.includes(currentSearch) || textContent.includes(currentSearch);
+
+                    if (matchesFilter && matchesSearch) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                };
+
+                if (!viewActivos.classList.contains('d-none')) {
+                    activeCards.forEach(filterCard);
+                } else {
+                    historyCards.forEach(filterCard);
+                }
+            }
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.getAttribute('data-filter');
+                    applyFilters();
+                });
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                currentSearch = e.target.value.toLowerCase().trim();
+                applyFilters();
+            });
+        });
+    </script>
+</body>
+</html>

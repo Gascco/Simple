@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos WhatsApp - Simple Market Saludable</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Imprima&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../CSS/caja.css">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <header class="topbar-nav d-flex align-items-center justify-content-between px-4 py-2">
+        <div class="d-flex align-items-center gap-3">
+            <a href="roles.html">
+                <img src="../Img/LogoN - copia.png" alt="Simple" class="nav-logo">
+            </a>
+            <div class="channel-selector d-flex gap-2 ms-3">
+                <a href="caja.html" class="btn btn-channel btn-tienda-channel text-decoration-none">Tienda</a>
+                <a href="pedidos_caja.html" class="btn btn-channel btn-pedidos-channel text-decoration-none" data-channel="pedidos">Pedidos</a>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <div class="d-flex gap-2">
+                <button class="btn btn-platform btn-whatsapp btn-whatsapp-active d-flex align-items-center gap-2">
+                    <span class="icon-whatsapp"></span>
+                    <span>WhatsApp</span>
+                </button>
+                <a href="pedidos_pedidosya.html" class="btn btn-platform btn-pedidosya d-flex align-items-center gap-2 text-decoration-none">
+                    <span class="icon-pedidosya"></span>
+                    <span>PedidosYa</span>
+                </a>
+            </div>
+            <div class="dropdown user-profile-dropdown">
+                <div class="user-profile d-flex align-items-center gap-3" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                    <div class="text-start">
+                        <div class="fw-bold user-name">Usuario</div>
+                        <div class="role-subtitle">Cajero</div>
+                    </div>
+                    <i class="bi bi-chevron-down toggle-chevron fs-5"></i>
+                </div>
+                <ul class="dropdown-menu dropdown-menu-end custom-user-menu border-0 p-3 shadow-lg">
+                    <li class="d-flex align-items-center justify-content-between mb-2">
+                        <div class="text-start">
+                            <div class="fw-bold dropdown-user-name">Usuario</div>
+                            <div class="dropdown-role-subtitle">Cajero</div>
+                        </div>
+                        <i class="bi bi-chevron-up toggle-chevron-dropdown fs-5 ms-3"></i>
+                    </li>
+                    <li><hr class="dropdown-divider-custom my-3"></li>
+                    <li>
+                        <a class="dropdown-item logout-link d-flex align-items-center gap-2 p-0" href="login.html">
+                            <i class="bi bi-box-arrow-right logout-icon fs-4"></i>
+                            <span class="logout-text">Cerrar Sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid px-0 flex-grow-1">
+        <div class="row g-0 h-100">
+            <div class="col-12 col-md-3 border-end bg-white orders-sidebar">
+                <div class="p-3 d-flex align-items-center justify-content-between border-bottom gap-2">
+                    <div class="input-group input-group-sm search-box">
+                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control border-start-0 shadow-none" placeholder="Buscar pedido...">
+                    </div>
+                    <button class="btn btn-light btn-sm text-secondary border-0"><i class="bi bi-funnel fs-5"></i></button>
+                </div>
+                <div class="orders-list">
+                    <div class="order-item p-3 border-bottom active-order d-flex align-items-center justify-content-between" role="button" data-type="delivery" data-id="#1001" data-client="Juan Pérez" data-phone="+999 999 999" data-address="Calle Los Cedros 123">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar-placeholder rounded-circle"></div>
+                            <div>
+                                <div class="fw-bold text-dark">+999 999 999</div>
+                                <small class="text-muted">Delivery • #1001</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-muted">11:00</div>
+                            <span class="badge rounded-circle bg-success px-2 py-1">1</span>
+                        </div>
+                    </div>
+                    <div class="order-item p-3 border-bottom d-flex align-items-center justify-content-between" role="button" data-type="recogida" data-id="#1002" data-client="Maria Garcia" data-phone="+999 888 777" data-address="Recojo en Tienda">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar-placeholder rounded-circle"></div>
+                            <div>
+                                <div class="fw-bold text-dark">+999 888 777</div>
+                                <small class="text-muted">Recojo en Tienda • #1002</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-muted">11:05</div>
+                            <span class="badge rounded-circle bg-success px-2 py-1">1</span>
+                        </div>
+                    </div>
+                    <div class="order-item p-3 border-bottom d-flex align-items-center justify-content-between" role="button" data-type="delivery" data-id="#1003" data-client="Carlos López" data-phone="+999 777 666" data-address="Av. Balta 456">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar-placeholder rounded-circle"></div>
+                            <div>
+                                <div class="fw-bold text-dark">+999 777 666</div>
+                                <small class="text-muted">Delivery • #1003</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-muted">11:12</div>
+                            <span class="badge rounded-circle bg-success px-2 py-1">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <main class="col-12 col-md-6 px-4 py-3 bg-white d-flex flex-column justify-content-between overflow-auto" style="height: calc(100vh - 65px);">
+                <div>
+                    <div class="order-header-banner p-3 rounded-3 mb-4 d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="fw-bold m-0" id="orderTitle" style="font-size: 18px;">Pedido #1001 - Juan Pérez</h5>
+                            <span class="text-muted d-block mt-1" id="orderPhone">+999 999 999</span>
+                            <div class="mt-2">
+                                <small class="fw-semibold text-secondary d-block">Dirección de Envío</small>
+                                <input type="text" class="form-control form-control-sm border-0 rounded-pill px-3 mt-1 shadow-sm" id="orderAddress" value="Calle Los Cedros 123">
+                            </div>
+                        </div>
+                        <div>
+                            <span class="badge bg-dark rounded-pill px-3 py-2" id="orderBadgeType">Delivery</span>
+                        </div>
+                    </div>
+                    <div id="mainOrderProductsContainer" class="d-flex flex-column gap-3"></div>
+                    <div class="text-center mt-4 mb-4">
+                        <button class="btn btn-secondary btn-sm rounded-pill px-4 py-2 fw-semibold" data-bs-toggle="modal" data-bs-target="#modalAddProduct">+ Agregar Producto</button>
+                    </div>
+                </div>
+            </main>
+            <aside class="col-12 col-md-3 bg-white border-start sidebar-full-height">
+                <div class="bill-summary-card p-4 d-flex flex-column h-100">
+                    <h5 class="fw-bold mb-4" style="font-size: 18px;">Resumen de boleta</h5>
+                    <div class="bill-items-list mb-4 flex-grow-1 overflow-auto" id="billItemsContainer"></div>
+                    <div class="bill-totals-section pt-3 border-top mt-auto">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Subtotal</span>
+                            <span class="fw-semibold" id="lblSubtotal">S/. 0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">IGV (18%)</span>
+                            <span class="fw-semibold" id="lblIgv">S/. 0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Envío</span>
+                            <span class="fw-semibold" id="lblEnvio">S/. 1.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="fw-bold fs-5">Total</span>
+                            <span class="fw-bold fs-4 color-brand" id="lblTotal">S/. 0.00</span>
+                        </div>
+                        <button class="btn btn-continue-purchase w-100 py-3 rounded-3 fw-bold" id="btnConfirmOrder">
+                            Confirmar Orden
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    <div class="modal fade" id="modalAddProduct" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen p-3">
+            <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden style-app-modal">
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn btn-light rounded-circle border-0 me-2" data-bs-dismiss="modal"><i class="bi bi-chevron-left fs-5 color-brand-app"></i></button>
+                </div>
+                <div class="modal-body p-4 d-flex gap-3 overflow-hidden">
+                    <div class="flex-grow-1 overflow-auto pe-2">
+                        <ul class="nav nav-pills custom-app-tabs gap-2 mb-4 justify-content-start">
+                            <li class="nav-item">
+                                <button class="nav-link active rounded-pill px-4" data-modal-tab="app-parfaits">Parfaits & Bowls</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link rounded-pill px-4" data-modal-tab="app-postres">Postres Thanisfit</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link rounded-pill px-4" data-modal-tab="app-yogures">Yogures</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link rounded-pill px-4" data-modal-tab="app-bebidas">Bebidas</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link rounded-pill px-4" data-modal-tab="app-personalizados">Personalizados</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="modal-pane active" id="app-parfaits">
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Parfait Clásico.jpg" class="card-img-top rounded-3 modal-card-img" alt="Parfait Clásico">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Parfait Clásico</h6>
+                                                <span class="text-muted">S/. 18.50</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Parfait Clásico" data-price="18.50" data-img="../Img/Parfait Clásico.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Parfait Clásico">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Parfait Clásico" data-price="18.50" data-img="../Img/Parfait Clásico.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Parfait de Fresa & Griego.jpg" class="card-img-top rounded-3 modal-card-img" alt="Parfait de Fresa">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Parfait de Fresa & Griego</h6>
+                                                <span class="text-muted">S/. 19.90</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Parfait de Fresa & Griego" data-price="19.90" data-img="../Img/Parfait de Fresa & Griego.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Parfait de Fresa & Griego">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Parfait de Fresa & Griego" data-price="19.90" data-img="../Img/Parfait de Fresa & Griego.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Protein Parfait Bowl.jpg" class="card-img-top rounded-3 modal-card-img" alt="Protein Bowl">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Protein Parfait Bowl</h6>
+                                                <span class="text-muted">S/. 22.00</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Protein Parfait Bowl" data-price="22.00" data-img="../Img/Protein Parfait Bowl.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Protein Parfait Bowl">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Protein Parfait Bowl" data-price="22.00" data-img="../Img/Protein Parfait Bowl.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Açai Power Bowl.jpg" class="card-img-top rounded-3 modal-card-img" alt="Açai Power Bowl">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Açai Power Bowl</h6>
+                                                <span class="text-muted">S/. 24.50</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Açai Power Bowl" data-price="24.50" data-img="../Img/Açai Power Bowl.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Açai Power Bowl">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Açai Power Bowl" data-price="24.50" data-img="../Img/Açai Power Bowl.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Yogurt Cacao Bliss.jpg" class="card-img-top rounded-3 modal-card-img" alt="Yogurt Cacao Bliss">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Yogurt Cacao Bliss</h6>
+                                                <span class="text-muted">S/. 15.00</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Yogurt Cacao Bliss" data-price="15.00" data-img="../Img/Yogurt Cacao Bliss.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Yogurt Cacao Bliss">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Yogurt Cacao Bliss" data-price="15.00" data-img="../Img/Yogurt Cacao Bliss.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Salad Fruit Bowl Especial.jpg" class="card-img-top rounded-3 modal-card-img" alt="Salad Fruit Bowl">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Salad Fruit Bowl Especial</h6>
+                                                <span class="text-muted">S/. 17.00</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Salad Fruit Bowl Especial" data-price="17.00" data-img="../Img/Salad Fruit Bowl Especial.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Salad Fruit Bowl Especial">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Salad Fruit Bowl Especial" data-price="17.00" data-img="../Img/Salad Fruit Bowl Especial.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-pane d-none" id="app-postres">
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Carrot cake.jpg" class="card-img-top rounded-3 modal-card-img" alt="Carrot cake">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Carrot cake</h6>
+                                                <span class="text-muted">S/. 14.50</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Carrot cake" data-price="14.50" data-img="../Img/Carrot cake.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Carrot cake">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Carrot cake" data-price="14.50" data-img="../Img/Carrot cake.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Chocovegana.jpg" class="card-img-top rounded-3 modal-card-img" alt="Chocovegana">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Chocovegana</h6>
+                                                <span class="text-muted">S/. 14.90</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Chocovegana" data-price="14.90" data-img="../Img/Chocovegana.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Chocovegana">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Chocovegana" data-price="14.90" data-img="../Img/Chocovegana.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Cheesecake de maracuyá.jpg" class="card-img-top rounded-3 modal-card-img" alt="Cheesecake maracuya">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Cheesecake de maracuyá</h6>
+                                                <span class="text-muted">S/. 15.00</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Cheesecake de maracuyá" data-price="15.00" data-img="../Img/Cheesecake de maracuyá.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Cheesecake de maracuyá">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Cheesecake de maracuyá" data-price="15.00" data-img="../Img/Cheesecake de maracuyá.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Cheesecake de frutos rojos.jpg" class="card-img-top rounded-3 modal-card-img" alt="Cheesecake frutos rojos">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Cheesecake de frutos rojos</h6>
+                                                <span class="text-muted">S/. 16.50</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Cheesecake de frutos rojos" data-price="16.50" data-img="../Img/Cheesecake de frutos rojos.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Cheesecake de frutos rojos">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Cheesecake de frutos rojos" data-price="16.50" data-img="../Img/Cheesecake de frutos rojos.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Pye de limón.jpg" class="card-img-top rounded-3 modal-card-img" alt="Pye de limon">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Pye de limón</h6>
+                                                <span class="text-muted">S/. 12.00</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Pye de limón" data-price="12.00" data-img="../Img/Pye de limón.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Pye de limón">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Pye de limón" data-price="12.00" data-img="../Img/Pye de limón.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Empanada de pavo.jpg" class="card-img-top rounded-3 modal-card-img" alt="Empanada de pavo">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Empanada de pavo</h6>
+                                                <span class="text-muted">S/. 17.00</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Empanada de pavo" data-price="17.00" data-img="../Img/Empanada de pavo.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Empanada de pavo">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Empanada de pavo" data-price="17.00" data-img="../Img/Empanada de pavo.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-pane d-none" id="app-yogures">
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Y-Griego.jpg" class="card-img-top rounded-3 modal-card-img" alt="Yogurt Natural">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Natural sin endulzar</h6>
+                                                <div class="d-flex gap-1 my-1">
+                                                    <span class="badge border text-dark font-normal">1/4L 3.50</span>
+                                                    <span class="badge border text-dark font-normal">1/2L 6.00</span>
+                                                    <span class="badge border text-dark font-normal">1L 10.00</span>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Natural sin endulzar (1L)" data-price="10.00" data-img="../Img/Y-Griego.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Natural sin endulzar (1L)">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Natural sin endulzar (1L)" data-price="10.00" data-img="../Img/Y-Griego.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Y-Griego.jpg" class="card-img-top rounded-3 modal-card-img" alt="Yogurt Natural Endulzado">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Natural endulzado</h6>
+                                                <div class="d-flex gap-1 my-1">
+                                                    <span class="badge border text-dark font-normal">1/4L 3.50</span>
+                                                    <span class="badge border text-dark font-normal">1/2L 6.00</span>
+                                                    <span class="badge border text-dark font-normal">1L 10.00</span>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Natural endulzado (1L)" data-price="10.00" data-img="../Img/Y-Griego.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Natural endulzado (1L)">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Natural endulzado (1L)" data-price="10.00" data-img="../Img/Y-Griego.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Y-Griego.jpg" class="card-img-top rounded-3 modal-card-img" alt="Griego">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Griego</h6>
+                                                <div class="d-flex gap-1 my-1">
+                                                    <span class="badge border text-dark font-normal">1/4L 3.50</span>
+                                                    <span class="badge border text-dark font-normal">1/2L 6.00</span>
+                                                    <span class="badge border text-dark font-normal">1L 10.00</span>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Griego (1L)" data-price="10.00" data-img="../Img/Y-Griego.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Griego (1L)">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Griego (1L)" data-price="10.00" data-img="../Img/Y-Griego.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Y-Fresa.jpg" class="card-img-top rounded-3 modal-card-img" alt="Fresa">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Fresa</h6>
+                                                <div class="d-flex gap-1 my-1">
+                                                    <span class="badge border text-dark font-normal">1/4L 3.50</span>
+                                                    <span class="badge border text-dark font-normal">1/2L 6.00</span>
+                                                    <span class="badge border text-dark font-normal">1L 10.00</span>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Fresa (1L)" data-price="10.00" data-img="../Img/Y-Fresa.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Fresa (1L)">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Fresa (1L)" data-price="10.00" data-img="../Img/Y-Fresa.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Y-Arandano.jpg" class="card-img-top rounded-3 modal-card-img" alt="Arandano">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Arandano</h6>
+                                                <div class="d-flex gap-1 my-1">
+                                                    <span class="badge border text-dark font-normal">1/4L 3.50</span>
+                                                    <span class="badge border text-dark font-normal">1/2L 6.00</span>
+                                                    <span class="badge border text-dark font-normal">1L 10.00</span>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Arandano (1L)" data-price="10.00" data-img="../Img/Y-Arandano.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Arandano (1L)">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Arandano (1L)" data-price="10.00" data-img="../Img/Y-Arandano.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/Y-Cacao.jpg" class="card-img-top rounded-3 modal-card-img" alt="Cacao">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Cacao</h6>
+                                                <div class="d-flex gap-1 my-1">
+                                                    <span class="badge border text-dark font-normal">1/4L 3.50</span>
+                                                    <span class="badge border text-dark font-normal">1/2L 6.00</span>
+                                                    <span class="badge border text-dark font-normal">1L 10.00</span>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Cacao (1L)" data-price="10.00" data-img="../Img/Y-Cacao.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Cacao (1L)">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Cacao (1L)" data-price="10.00" data-img="../Img/Y-Cacao.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-pane d-none" id="app-bebidas">
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/J-Fresa.jpg" class="card-img-top rounded-3 modal-card-img" alt="Jugo Fresa">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Jugo probiotico de fresa</h6>
+                                                <span class="text-muted">S/. 24.50</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Jugo probiotico de fresa" data-price="24.50" data-img="../Img/J-Fresa.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Jugo probiotico de fresa">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Jugo probiotico de fresa" data-price="24.50" data-img="../Img/J-Fresa.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/J-Arandano.jpg" class="card-img-top rounded-3 modal-card-img" alt="Jugo Arandano">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Jugo probiotico de arandano</h6>
+                                                <span class="text-muted">S/. 19.90</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Jugo probiotico de arandano" data-price="19.90" data-img="../Img/J-Arandano.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Jugo probiotico de arandano">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Jugo probiotico de arandano" data-price="19.90" data-img="../Img/J-Arandano.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/J-Mango.jpg" class="card-img-top rounded-3 modal-card-img" alt="Jugo Mango">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Jugo probiotico de mango</h6>
+                                                <span class="text-muted">S/. 22.00</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Jugo probiotico de mango" data-price="22.00" data-img="../Img/J-Mango.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Jugo probiotico de mango">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Jugo probiotico de mango" data-price="22.00" data-img="../Img/J-Mango.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/B-Fresa.jpg" class="card-img-top rounded-3 modal-card-img" alt="Batido Fresa">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Batido probiotico de fresa</h6>
+                                                <span class="text-muted">S/. 24.50</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Batido probiotico de fresa" data-price="24.50" data-img="../Img/B-Fresa.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Batido probiotico de fresa">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Batido probiotico de fresa" data-price="24.50" data-img="../Img/B-Fresa.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/B-Tuna.jpg" class="card-img-top rounded-3 modal-card-img" alt="Batido Tuna">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Batido probiotico de tuna</h6>
+                                                <span class="text-muted">S/. 15.00</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Batido probiotico de tuna" data-price="15.00" data-img="../Img/B-Tuna.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Batido probiotico de tuna">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Batido probiotico de tuna" data-price="15.00" data-img="../Img/B-Tuna.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="card border-0 rounded-4 p-3 shadow-sm bg-white text-start">
+                                            <img src="../Img/B-Arandano.jpg" class="card-img-top rounded-3 modal-card-img" alt="Batido Arandano">
+                                            <div class="card-body p-0 mt-3">
+                                                <h6 class="fw-bold m-0 text-dark">Batido probiotico de arandano</h6>
+                                                <span class="text-muted">S/. 17.00</span>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                        <button class="btn btn-qty-circle btn-modal-minus" data-name="Batido probiotico de arandano" data-price="17.00" data-img="../Img/B-Arandano.jpg">-</button>
+                                                        <span class="fw-bold modal-qty-val" id="mqty-Batido probiotico de arandano">0</span>
+                                                        <button class="btn btn-qty-circle btn-modal-plus" data-name="Batido probiotico de arandano" data-price="17.00" data-img="../Img/B-Arandano.jpg">+</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-pane d-none" id="app-personalizados">
+                                <div class="bg-white rounded-4 p-4 text-start">
+                                    <h6 class="fw-bold mb-3">Yogurt Base</h6>
+                                    <div class="d-flex gap-3 overflow-auto pb-3 mb-4">
+                                        <div class="text-center custom-select-card" data-category="yogurt" data-name="Griego"><img src="../Img/Y-Griego.jpg" class="rounded-3"><span class="d-block mt-1">Griego</span></div>
+                                        <div class="text-center custom-select-card" data-category="yogurt" data-name="Arándano"><img src="../Img/Y-Arandano.jpg" class="rounded-3"><span class="d-block mt-1">Arandano</span></div>
+                                        <div class="text-center custom-select-card" data-category="yogurt" data-name="Fresa"><img src="../Img/Y-Fresa.jpg" class="rounded-3"><span class="d-block mt-1">Fresa</span></div>
+                                        <div class="text-center custom-select-card" data-category="yogurt" data-name="Cacao"><img src="../Img/Y-Cacao.jpg" class="rounded-3"><span class="d-block mt-1">Cacao</span></div>
+                                    </div>
+                                    <h6 class="fw-bold mb-3">Frutas</h6>
+                                    <div class="d-flex gap-3 overflow-auto pb-3 mb-4">
+                                        <div class="text-center custom-select-card" data-category="fruta" data-name="Fresa"><img src="../Img/Fresa.jpg" class="rounded-3"><span class="d-block mt-1">Fresa</span></div>
+                                        <div class="text-center custom-select-card" data-category="fruta" data-name="Plátano"><img src="../Img/Platano.jpg" class="rounded-3"><span class="d-block mt-1">Platano</span></div>
+                                        <div class="text-center custom-select-card" data-category="fruta" data-name="Kiwi"><img src="../Img/Kiwi.jpg" class="rounded-3"><span class="d-block mt-1">Kiwi</span></div>
+                                        <div class="text-center custom-select-card" data-category="fruta" data-name="Aguaymanto"><img src="../Img/Aguaymanto.jpg" class="rounded-3"><span class="d-block mt-1">Aguaymanto</span></div>
+                                        <div class="text-center custom-select-card" data-category="fruta" data-name="Arándano"><img src="../Img/Arandano.jpg" class="rounded-3"><span class="d-block mt-1">Arandano</span></div>
+                                    </div>
+                                    <h6 class="fw-bold mb-3">Toppins</h6>
+                                    <div class="d-flex gap-3 overflow-auto pb-3">
+                                        <div class="text-center custom-select-card" data-category="topping" data-name="Granola artesanal"><img src="../Img/Granola.jpg" class="rounded-3"><span class="d-block mt-1">Granola artesanal</span></div>
+                                        <div class="text-center custom-select-card" data-category="topping" data-name="Miel de abeja"><img src="../Img/Miel.jpg" class="rounded-3"><span class="d-block mt-1">Miel de abeja</span></div>
+                                        <div class="text-center custom-select-card" data-category="topping" data-name="Algarrobina"><img src="../Img/Algarrobina.jpg" class="rounded-3"><span class="d-block mt-1">Algarobina</span></div>
+                                        <div class="text-center custom-select-card" data-category="topping" data-name="Almendras"><img src="../Img/Almendras.jpg" class="rounded-3"><span class="d-block mt-1">Alemendras</span></div>
+                                        <div class="text-center custom-select-card" data-category="topping" data-name="Maní"><img src="../Img/Mani.jpg" class="rounded-3"><span class="d-block mt-1">Maní</span></div>
+                                    </div>
+                                    <div class="text-end mt-4">
+                                        <button class="btn btn-add-custom px-4 rounded-pill py-2" id="btnModalAddCustom" disabled>
+                                            Agregar Parfait Personalizado (S/. 18.50)
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-cart-sidebar d-none flex-column justify-content-between p-3 bg-white rounded-4 shadow-sm border ms-2">
+                        <div>
+                            <h6 class="fw-bold mb-3 border-bottom pb-2">Productos a agregar</h6>
+                            <div class="modal-cart-list overflow-auto" id="modalCartList" style="max-height: 400px;"></div>
+                        </div>
+                        <div class="pt-3 border-top mt-auto text-center">
+                            <div class="d-flex justify-content-between fw-bold mb-3">
+                                <span>Total Parcial:</span>
+                                <span class="color-brand" id="modalCartTotal">S/. 0.00</span>
+                            </div>
+                            <button class="btn btn-app-confirm w-100 rounded-pill py-2 fw-bold" data-bs-dismiss="modal" id="btnConfirmModalSelection">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalModificarPersonalizado" tabindex="-1" aria-labelledby="modalModificarPersonalizadoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+                <div class="modal-header border-0 pb-0 pt-3 px-4">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 pt-1">
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark mb-3">Yogurt Base</h6>
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-yogurt" data-name="Griego">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Y-Griego.jpg" alt="Griego" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Griego</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-yogurt" data-name="Arándano">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Y-Arandano.jpg" alt="Arándano" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Arandano</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-yogurt" data-name="Fresa">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Y-Fresa.jpg" alt="Fresa" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Fresa</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-yogurt" data-name="Cacao">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Y-Cacao.jpg" alt="Cacao" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Cacao</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-3 opacity-25" style="color: var(--color-brand-brown);">
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark mb-3">Frutas</h6>
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-2 g-md-3">
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Fresa">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Fresa.jpg" alt="Fresa" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Fresa</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Plátano">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Platano.jpg" alt="Plátano" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Platano</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Kiwi">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Kiwi.jpg" alt="Kiwi" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Kiwi</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Aguaymanto">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Aguaymanto.jpg" alt="Aguaymanto" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Aguaymanto</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Arándano">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Arandano.jpg" alt="Arándano" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Arandano</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-3 opacity-25" style="color: var(--color-brand-brown);">
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark mb-3">Toppins</h6>
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-2 g-md-3">
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Granola artesanal">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Granola.jpg" alt="Granola" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Granola artesanal</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Miel de abeja">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Miel.jpg" alt="Miel" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Miel de abeja</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Algarrobina">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Algarrobina.jpg" alt="Algarrobina" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Algarobina</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Almendras">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Almendras.jpg" alt="Almendras" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Alemendras</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Maní">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Mani.jpg" alt="Maní" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100">Maní</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end mt-4">
+                        <button type="button" class="btn btn-confirm-custom px-5 py-2 rounded-pill fw-bold" id="btnConfirmarModificación">
+                            Confirmar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container-left">
+        <div id="dynamicToastLeft" class="toast-custom-left">
+            <i class="bi bi-check-circle-fill"></i>
+            <span id="toastMessageLeft">Producto agregado al pedido</span>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalConfirmandoOrden" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
+            <div class="modal-content modal-rounded-custom text-center shadow-lg">
+                <h4 class="fw-bold my-3 text-dark" style="font-size: 22px;">Confirmando Orden</h4>
+                <div class="my-4 py-2">
+                    <div class="loading-spinner-circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalOrdenConfirmada" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
+            <div class="modal-content modal-rounded-custom text-center shadow-lg p-4">
+                <h4 class="fw-bold mb-3 text-dark" style="font-size: 22px;">Orden Confirmada</h4>
+                <div class="mb-3">
+                    <i class="bi bi-check-lg text-success" style="font-size: 50px;"></i>
+                </div>
+                
+                <div class="text-start mb-3" style="font-size: 14px;">
+                    <div class="text-muted fw-semibold" id="confirmOrderNum">N° de Orden: #1001</div>
+                    <div class="fw-bold text-dark fs-6 mt-1">Datos de Cliente</div>
+                    <div class="text-secondary" id="confirmClientName">Nombre: Juan Pérez</div>
+                    <div class="text-secondary" id="confirmClientPhone">Num. Teléfono: +999 999 999</div>
+                    <div class="text-secondary" id="confirmClientAddress">Dirección: Calle Los Cedros 123</div>
+                </div>
+                
+                <hr class="my-2 opacity-25" style="color: #1B4D3E;">
+
+                <div class="modal-items-summary overflow-auto mb-3 pe-1 text-start" id="confirmModalItemsList" style="max-height: 180px;">
+                </div>
+
+                <hr class="my-2 opacity-25" style="color: #1B4D3E;">
+
+                <div class="text-start mb-4" style="font-size: 14px;">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">Subtotal</span>
+                        <span class="fw-semibold" id="confirmSubtotal">S/. 0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">IGV (18%)</span>
+                        <span class="fw-semibold" id="confirmIgv">S/. 0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Envío</span>
+                        <span class="fw-semibold" id="confirmEnvio">S/. 1.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                        <span class="fw-bold fs-5 text-dark">Total</span>
+                        <span class="fw-bold fs-4 text-dark" id="confirmTotal">S/. 0.00</span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-confirm-accept" id="btnModalAceptarConfirmacion" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalConfirmarDespacho" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
+            <div class="modal-content modal-rounded-custom text-center shadow-lg p-4">
+                <h4 class="fw-bold mb-3 text-dark" style="font-size: 20px;">¿Despachar Pedido?</h4>
+                <div class="my-2">
+                    <i class="bi bi-box-seam text-secondary" style="font-size: 48px;"></i>
+                </div>
+                <p class="text-muted px-2 mb-4" style="font-size: 14px;">
+                    El estado cambiará a <strong>"Pedido Despachado"</strong> y se notificará al repartidor.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <button class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-dark rounded-pill px-4 py-2 fw-bold" id="btnAceptarDespachoModal">Sí, Despachar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let activeOrderType = 'delivery';
+            let currentOrderProducts = [
+                {
+                    id: 'custom-init',
+                    name: 'Parfait Personalizado',
+                    price: 18.50,
+                    qty: 1,
+                    img: '../Img/Parfait Clásico.jpg',
+                    isCustom: true,
+                    yogurts: ['Arándano (1 Opc)'],
+                    frutas: ['Fresa', 'Platano', 'Kiwi', 'Mango', 'Aguaymanto'],
+                    note: ''
+                }
+            ];
+
+            const mainProductsContainer = document.getElementById('mainOrderProductsContainer');
+            const billItemsContainer = document.getElementById('billItemsContainer');
+            const lblSubtotal = document.getElementById('lblSubtotal');
+            const lblIgv = document.getElementById('lblIgv');
+            const lblEnvio = document.getElementById('lblEnvio');
+            const lblTotal = document.getElementById('lblTotal');
+
+            function showLeftToast(message) {
+                const toast = document.getElementById('dynamicToastLeft');
+                const toastMsg = document.getElementById('toastMessageLeft');
+                if (toast && toastMsg) {
+                    toastMsg.innerText = message;
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000);
+                }
+            }
+
+            function renderOrderUI() {
+                mainProductsContainer.innerHTML = '';
+                billItemsContainer.innerHTML = '';
+                let rawTotal = 0;
+
+                currentOrderProducts.forEach((item, index) => {
+                    const itemTotal = item.price * item.qty;
+                    rawTotal += itemTotal;
+
+                    const card = document.createElement('div');
+                    card.className = 'card border rounded-3 p-3 position-relative item-pedido-container';
+
+                    let customHTML = '';
+                    if (item.isCustom) {
+                        customHTML = `
+                            <div class="bg-light p-3 rounded-3 mb-3">
+                                <div class="mb-2">
+                                    <span class="fw-bold d-block">Yogurt</span>
+                                    <small class="text-secondary">✓ ${item.yogurts.join(' ')}</small>
+                                </div>
+                                <hr class="my-2 text-muted">
+                                <div>
+                                    <span class="fw-bold d-block">Frutas & Toppings</span>
+                                    <small class="text-secondary">✓ ${item.frutas.join(' ✓ ')}</small>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    card.innerHTML = `
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="${item.img}" class="rounded-2" style="width:36px; height:36px; object-fit:cover;" alt="${item.name}">
+                                <h6 class="fw-bold m-0 item-nombre" style="font-size: 15px;">${item.name} ${item.qty > 1 ? `(${item.qty}x)` : ''}</h6>
+                            </div>
+                            <div class="d-flex gap-2 align-items-center">
+                                ${item.isCustom ? `<button class="btn btn-secondary btn-sm rounded-pill px-3 btn-agregar-modificacion" data-index="${index}">+ Agregar Modificación</button>` : ''}
+                                <button class="btn btn-outline-danger btn-sm rounded-circle border-0 btn-remove-item" data-index="${index}"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        ${customHTML}
+                        <div>
+                            <label class="fw-bold mb-1">Nota</label>
+                            <input type="text" class="form-control form-control-sm rounded-pill px-3 border note-input" data-index="${index}" value="${item.note || ''}" placeholder="Nota del cliente...">
+                        </div>
+                    `;
+                    mainProductsContainer.appendChild(card);
+
+                    const billItem = document.createElement('div');
+                    billItem.className = 'bill-item d-flex align-items-start justify-content-between mb-3 pb-2 border-bottom';
+
+                    let detailsText = item.isCustom 
+                        ? `Yogurt: ${item.yogurts.join(', ')}<br>Frutas/Toppings: ${item.frutas.join(', ')}` 
+                        : 'Producto Estándar';
+
+                    billItem.innerHTML = `
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-light text-dark border px-2 py-1 align-self-start fw-bold">${item.qty}x</span>
+                            <div>
+                                <h6 class="m-0 fw-bold" style="font-size: 15px;">${item.name}</h6>
+                                <small class="text-muted d-block">${detailsText}</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold">S/. ${itemTotal.toFixed(2)}</span>
+                            <i class="bi bi-trash text-muted btn-remove-item" data-index="${index}" style="cursor:pointer;"></i>
+                        </div>
+                    `;
+                    billItemsContainer.appendChild(billItem);
+                });
+
+                document.querySelectorAll('.btn-remove-item').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        currentOrderProducts.splice(idx, 1);
+                        renderOrderUI();
+                        showLeftToast("Se eliminó un producto del pedido");
+                    });
+                });
+
+                document.querySelectorAll('.note-input').forEach(input => {
+                    input.addEventListener('change', () => {
+                        const idx = parseInt(input.getAttribute('data-index'));
+                        if (currentOrderProducts[idx]) {
+                            currentOrderProducts[idx].note = input.value;
+                        }
+                    });
+                });
+
+                const envioCost = activeOrderType === 'delivery' ? 1.00 : 0.00;
+                const grandTotal = rawTotal + envioCost;
+                const subtotal = grandTotal / 1.18;
+                const igv = grandTotal - subtotal;
+
+                lblSubtotal.innerText = `S/. ${subtotal.toFixed(2)}`;
+                lblIgv.innerText = `S/. ${igv.toFixed(2)}`;
+                lblEnvio.innerText = `S/. ${envioCost.toFixed(2)}`;
+                lblTotal.innerText = `S/. ${grandTotal.toFixed(2)}`;
+            }
+
+            renderOrderUI();
+
+            const orderItems = document.querySelectorAll('.order-item');
+            const orderTitle = document.getElementById('orderTitle');
+            const orderPhone = document.getElementById('orderPhone');
+            const orderAddress = document.getElementById('orderAddress');
+            const orderBadgeType = document.getElementById('orderBadgeType');
+
+            orderItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    orderItems.forEach(i => i.classList.remove('active-order'));
+                    item.classList.add('active-order');
+                    activeOrderType = item.getAttribute('data-type');
+                    const id = item.getAttribute('data-id');
+                    const client = item.getAttribute('data-client');
+                    const phone = item.getAttribute('data-phone');
+                    const address = item.getAttribute('data-address');
+
+                    orderTitle.innerText = `Pedido ${id} - ${client}`;
+                    orderPhone.innerText = phone;
+                    orderAddress.value = address;
+
+                    if (activeOrderType === 'delivery') {
+                        orderBadgeType.innerText = 'Delivery';
+                        orderBadgeType.className = 'badge bg-dark rounded-pill px-3 py-2';
+                        orderAddress.disabled = false;
+                    } else {
+                        orderBadgeType.innerText = 'Recojo en Tienda';
+                        orderBadgeType.className = 'badge bg-dark rounded-pill px-3 py-2';
+                        orderAddress.disabled = true;
+                    }
+                    renderOrderUI();
+                });
+            });
+
+            const modalTabs = document.querySelectorAll('.custom-app-tabs .nav-link');
+            const modalPanes = document.querySelectorAll('.modal-pane');
+
+            modalTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    modalTabs.forEach(t => t.classList.remove('active'));
+                    modalPanes.forEach(p => p.classList.add('d-none'));
+                    tab.classList.add('active');
+                    const targetPane = document.getElementById(tab.getAttribute('data-modal-tab'));
+                    if (targetPane) targetPane.classList.remove('d-none');
+                });
+            });
+
+            let modalCart = [];
+            const modalSidebar = document.querySelector('.modal-cart-sidebar');
+            const modalCartList = document.getElementById('modalCartList');
+            const modalCartTotal = document.getElementById('modalCartTotal');
+
+            function renderModalCart() {
+                modalCartList.innerHTML = '';
+                if (modalCart.length === 0) {
+                    modalSidebar.classList.add('d-none');
+                    modalSidebar.classList.remove('d-flex');
+                    return;
+                }
+                modalSidebar.classList.remove('d-none');
+                modalSidebar.classList.add('d-flex');
+                let total = 0;
+                modalCart.forEach((item) => {
+                    const sub = item.price * item.qty;
+                    total += sub;
+                    const el = document.createElement('div');
+                    el.className = 'd-flex justify-content-between align-items-center mb-2 pb-2 border-bottom';
+                    el.innerHTML = `
+                        <div>
+                            <span class="fw-bold">${item.qty}x</span> ${item.name}
+                        </div>
+                        <span class="fw-bold">S/. ${sub.toFixed(2)}</span>
+                    `;
+                    modalCartList.appendChild(el);
+                });
+                modalCartTotal.innerText = `S/. ${total.toFixed(2)}`;
+            }
+
+            document.querySelectorAll('.btn-modal-plus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const name = btn.getAttribute('data-name');
+                    const price = parseFloat(btn.getAttribute('data-price'));
+                    const img = btn.getAttribute('data-img');
+
+                    const item = modalCart.find(i => i.name === name);
+                    if (item) {
+                        item.qty += 1;
+                    } else {
+                        modalCart.push({ name, price, qty: 1, img, isCustom: false });
+                    }
+                    const valSpan = document.getElementById(`mqty-${name}`);
+                    if (valSpan) valSpan.innerText = item ? item.qty : 1;
+                    renderModalCart();
+                });
+            });
+
+            document.querySelectorAll('.btn-modal-minus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const name = btn.getAttribute('data-name');
+                    const item = modalCart.find(i => i.name === name);
+                    if (item) {
+                        item.qty -= 1;
+                        if (item.qty <= 0) {
+                            modalCart = modalCart.filter(i => i.name !== name);
+                        }
+                        const valSpan = document.getElementById(`mqty-${name}`);
+                        if (valSpan) valSpan.innerText = item ? item.qty : 0;
+                        renderModalCart();
+                    }
+                });
+            });
+
+            let modalCustomSelection = { yogurts: [], frutas: [], toppings: [] };
+            const btnModalAddCustom = document.getElementById('btnModalAddCustom');
+            const customCards = document.querySelectorAll('#app-personalizados .custom-select-card');
+
+            customCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.getAttribute('data-category');
+                    const name = card.getAttribute('data-name');
+                    if (category === 'yogurt') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            modalCustomSelection.yogurts = modalCustomSelection.yogurts.filter(y => y !== name);
+                        } else if (modalCustomSelection.yogurts.length < 2) {
+                            card.classList.add('selected');
+                            modalCustomSelection.yogurts.push(name);
+                        }
+                    } else if (category === 'fruta') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            modalCustomSelection.frutas = modalCustomSelection.frutas.filter(f => f !== name);
+                        } else if (modalCustomSelection.frutas.length < 2) {
+                            card.classList.add('selected');
+                            modalCustomSelection.frutas.push(name);
+                        }
+                    } else if (category === 'topping') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            modalCustomSelection.toppings = modalCustomSelection.toppings.filter(t => t !== name);
+                        } else if (modalCustomSelection.toppings.length < 3) {
+                            card.classList.add('selected');
+                            modalCustomSelection.toppings.push(name);
+                        }
+                    }
+
+                    if (modalCustomSelection.yogurts.length >= 1 && modalCustomSelection.frutas.length >= 1 && modalCustomSelection.toppings.length >= 1) {
+                        btnModalAddCustom.disabled = false;
+                    } else {
+                        btnModalAddCustom.disabled = true;
+                    }
+                });
+            });
+
+            if (btnModalAddCustom) {
+                btnModalAddCustom.addEventListener('click', () => {
+                    modalCart.push({
+                        name: 'Parfait Personalizado',
+                        price: 18.50,
+                        qty: 1,
+                        img: '../Img/Parfait Clásico.jpg',
+                        isCustom: true,
+                        yogurts: [...modalCustomSelection.yogurts],
+                        frutas: [...modalCustomSelection.frutas, ...modalCustomSelection.toppings]
+                    });
+                    modalCustomSelection = { yogurts: [], frutas: [], toppings: [] };
+                    customCards.forEach(c => c.classList.remove('selected'));
+                    btnModalAddCustom.disabled = true;
+                    renderModalCart();
+                });
+            }
+
+            document.getElementById('btnConfirmModalSelection').addEventListener('click', () => {
+                modalCart.forEach(mItem => {
+                    const existing = currentOrderProducts.find(p => p.name === mItem.name && !p.isCustom && !mItem.isCustom);
+                    if (existing) {
+                        existing.qty += mItem.qty;
+                    } else {
+                        currentOrderProducts.push({ ...mItem });
+                    }
+                });
+                modalCart = [];
+                document.querySelectorAll('.modal-qty-val').forEach(span => span.innerText = '0');
+                renderModalCart();
+                renderOrderUI();
+                showLeftToast("Se agregaron productos al pedido");
+            });
+
+            let activeItemIndex = null;
+            let editSelection = { yogurts: [], frutas: [], toppings: [] };
+
+            document.querySelectorAll('.custom-edit-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.getAttribute('data-category');
+                    const name = card.getAttribute('data-name');
+
+                    if (category === 'edit-yogurt') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            editSelection.yogurts = editSelection.yogurts.filter(y => y !== name);
+                        } else if (editSelection.yogurts.length < 2) {
+                            card.classList.add('selected');
+                            editSelection.yogurts.push(name);
+                        }
+                    } else if (category === 'edit-fruta') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            editSelection.frutas = editSelection.frutas.filter(f => f !== name);
+                        } else if (editSelection.frutas.length < 2) {
+                            card.classList.add('selected');
+                            editSelection.frutas.push(name);
+                        }
+                    } else if (category === 'edit-topping') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            editSelection.toppings = editSelection.toppings.filter(t => t !== name);
+                        } else if (editSelection.toppings.length < 3) {
+                            card.classList.add('selected');
+                            editSelection.toppings.push(name);
+                        }
+                    }
+                });
+            });
+
+            document.body.addEventListener('click', (e) => {
+                const btnMod = e.target.closest('.btn-agregar-modificacion');
+                if (btnMod) {
+                    activeItemIndex = parseInt(btnMod.getAttribute('data-index'));
+                    document.querySelectorAll('.custom-edit-card').forEach(c => c.classList.remove('selected'));
+                    editSelection = { yogurts: [], frutas: [], toppings: [] };
+
+                    const modalEdit = new bootstrap.Modal(document.getElementById('modalModificarPersonalizado'));
+                    modalEdit.show();
+                }
+            });
+
+            document.getElementById('btnConfirmarModificación').addEventListener('click', () => {
+                if (activeItemIndex !== null && currentOrderProducts[activeItemIndex]) {
+                    currentOrderProducts[activeItemIndex].yogurts = editSelection.yogurts.length > 0 ? editSelection.yogurts : ['Griego'];
+                    currentOrderProducts[activeItemIndex].frutas = [...editSelection.frutas, ...editSelection.toppings];
+                    renderOrderUI();
+                    showLeftToast("Se modificó el producto correctamente");
+                }
+                const modalEl = document.getElementById('modalModificarPersonalizado');
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) modalInstance.hide();
+            });
+
+            const btnConfirmOrder = document.getElementById('btnConfirmOrder');
+            if (btnConfirmOrder) {
+                btnConfirmOrder.addEventListener('click', () => {
+                    if (currentOrderProducts.length === 0) return;
+
+                    const modalCarga = new bootstrap.Modal(document.getElementById('modalConfirmandoOrden'));
+                    const modalConfirmada = new bootstrap.Modal(document.getElementById('modalOrdenConfirmada'));
+
+                    modalCarga.show();
+
+                    setTimeout(() => {
+                        modalCarga.hide();
+
+                        document.getElementById('confirmOrderNum').innerText = `N° de Orden: #${document.getElementById('orderTitle').innerText.split('#')[1] || '1001'}`;
+                        document.getElementById('confirmClientName').innerText = `Nombre: ${document.getElementById('orderTitle').innerText.split('-')[1] || 'Juan Pérez'}`;
+                        document.getElementById('confirmClientPhone').innerText = `Num. Teléfono: ${document.getElementById('orderPhone').innerText}`;
+                        document.getElementById('confirmClientAddress').innerText = `Dirección: ${document.getElementById('orderAddress').value}`;
+
+                        const listContainer = document.getElementById('confirmModalItemsList');
+                        listContainer.innerHTML = '';
+                        let rawTotal = 0;
+                        currentOrderProducts.forEach(item => {
+                            const itemSub = item.price * item.qty;
+                            rawTotal += itemSub;
+                            const row = document.createElement('div');
+                            row.className = 'd-flex justify-content-between align-items-center mb-2';
+                            row.innerHTML = `
+                                <div>
+                                    <span class="badge bg-light text-dark border px-2 py-1 align-self-start fw-bold me-1">${item.qty}x</span>
+                                    <span class="fw-bold">${item.name}</span>
+                                </div>
+                                <span class="fw-bold">S/. ${itemSub.toFixed(2)}</span>
+                            `;
+                            listContainer.appendChild(row);
+                        });
+
+                        const envio = activeOrderType === 'delivery' ? 1.00 : 0.00;
+                        const grandTotal = rawTotal + envio;
+                        const subtotal = grandTotal / 1.18;
+                        const igv = grandTotal - subtotal;
+
+                        document.getElementById('confirmSubtotal').innerText = `S/. ${subtotal.toFixed(2)}`;
+                        document.getElementById('confirmIgv').innerText = `S/. ${igv.toFixed(2)}`;
+                        document.getElementById('confirmEnvio').innerText = `S/. ${envio.toFixed(2)}`;
+                        document.getElementById('confirmTotal').innerText = `S/. ${grandTotal.toFixed(2)}`;
+
+                        modalConfirmada.show();
+                    }, 1800);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

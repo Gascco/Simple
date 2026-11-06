@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocina - Simple Market Saludable</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../CSS/cocina.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header class="topbar-nav d-flex align-items-center justify-content-between px-4 py-2">
+        <div class="d-flex align-items-center gap-3">
+            <a href="roles.html" id="navBackBtn" class="text-white text-decoration-none fs-4">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+            <img src="../Img/Logo2 - copia.png" alt="Simple" class="nav-logo">
+            <span class="badge-active-orders" id="navBadge">Pedidos Activos</span>
+        </div>
+        <div class="dropdown user-profile-dropdown">
+            <div class="user-profile d-flex align-items-center gap-3" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                <div class="text-start">
+                    <div class="fw-bold user-name">Usuario</div>
+                    <div class="role-subtitle">Cocina</div>
+                </div>
+                <i class="bi bi-chevron-down toggle-chevron fs-5"></i>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end custom-user-menu border-0 p-3 shadow-lg">
+                <li class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="text-start">
+                        <div class="fw-bold dropdown-user-name">Usuario</div>
+                        <div class="dropdown-role-subtitle">Cocina</div>
+                    </div>
+                    <i class="bi bi-chevron-up text-white fs-5 ms-3"></i>
+                </li>
+                
+                <li><hr class="dropdown-divider-custom my-3"></li>
+                <li>
+                    <a class="dropdown-item logout-link d-flex align-items-center gap-2 p-0" href="login.html">
+                        <i class="bi bi-box-arrow-right logout-icon fs-4"></i>
+                        <span class="logout-text">Cerrar Sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <main class="container-fluid px-4 py-3 flex-grow-1" id="kdsMainView">
+        <div class="row align-items-center mb-4 g-3">
+            <div class="col-12 col-md-4">
+                <div class="search-box position-relative">
+                    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                    <input type="text" id="searchInput" class="form-control rounded-pill ps-5" placeholder="Buscar Pedido">
+                </div>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="d-flex flex-wrap gap-2 justify-content-start justify-content-md-start" id="filterContainer">
+                    <button class="btn btn-filter active" data-filter="all">Todos</button>
+                    <button class="btn btn-filter" data-filter="tienda">Tienda</button>
+                    <button class="btn btn-filter" data-filter="whatsapp">WhatsApp</button>
+                    <button class="btn btn-filter" data-filter="pedidosya">PedidosYa</button>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-12 col-lg-4 kds-column">
+                <div class="column-header mb-3">En Espera</div>
+                <div class="orders-list d-flex flex-column gap-3" id="colEnEspera">
+                    
+                    <div class="card order-card waiting-card clickable-card" data-origin="tienda" data-id="0042">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0042</span>
+                                    <span class="badge badge-tienda">Tienda</span>
+                                </div>
+                                <span class="order-time">Hace 2 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Griego</li>
+                                <li>Frutas: Fresa, Arándano, Mango, Kiwi, Coco</li>
+                                <li>Toppins: Miel, Maní</li>
+                            </ul>
+                            <button class="btn btn-action-gray w-100 btn-start-prep" onclick="event.stopPropagation();">Iniciar Preparación</button>
+                        </div>
+                    </div>
+                    <div class="card order-card waiting-card" data-origin="pedidosya" data-id="0043">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0043</span>
+                                    <span class="badge badge-pedidosya">PedidosYa</span>
+                                </div>
+                                <span class="order-time">Hace 5 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Vainilla</li>
+                                <li>Frutas: Fresa, Mango, Plátano, Papaya, Melocotón</li>
+                            </ul>
+                            <button class="btn btn-action-gray w-100" onclick="event.stopPropagation();">Iniciar Preparación</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 kds-column">
+                <div class="column-header mb-3">En Preparación</div>
+                <div class="orders-list d-flex flex-column gap-3" id="colEnPreparacion">
+                    
+                    <div class="card order-card prep-card" data-origin="whatsapp" data-id="0040">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0040</span>
+                                    <span class="badge badge-whatsapp">WhatsApp</span>
+                                </div>
+                                <span class="order-time">Hace 8 min</span>
+                            </div>
+                            <h6 class="item-title mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3">
+                                <li>Yogurt: Arándano</li>
+                                <li>Frutas: Fresa, Plátano, Kiwi, Mango, Aguaymanto</li>
+                            </ul>
+                            <button class="btn btn-action-dark w-100" onclick="event.stopPropagation();">Marcar como Listo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 kds-column">
+                <div class="column-header header-ready mb-3">Listo</div>
+                <div class="orders-list d-flex flex-column gap-3" id="colListo">
+                    
+                    <div class="card order-card ready-card" data-origin="tienda" data-id="0038">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="order-id">#0038</span>
+                                    <span class="badge badge-tienda">Tienda</span>
+                                </div>
+                                <span class="order-time">Listo hace 1 min</span>
+                            </div>
+                            <h6 class="item-title text-decoration-line-through mb-1">1x Parfait Personalizado</h6>
+                            <ul class="item-details text-muted mb-3 opacity-75">
+                                <li>Yogurt: Griego</li>
+                                <li>Frutas: Fresa, Arándano, Mango, Plátano, Kiwi</li>
+                            </ul>
+                            <button class="btn btn-action-disabled w-100" disabled>Listo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <main class="container py-4 flex-grow-1 d-none recipe-container" id="recipeDetailView">
+        <div class="d-inline-flex align-items-center gap-3 order-detail-header mb-4 px-4 py-2">
+            <span class="fs-4 font-normal">Pedido</span>
+            <span class="fs-4 fw-bold">#0042</span>
+            <span class="badge badge-tienda px-3 py-2">Tienda</span>
+            <span class="fs-4 fw-bold ms-3">Parfait Personalizado</span>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-lg-7">
+                <div class="mb-4">
+                    <h5 class="fw-bold section-label mb-3">Yogurt</h5>
+                    <div class="ingredient-card">
+                        <img src="../Img/Y-Griego.jpg" alt="Griego" class="ingredient-img">
+                        <span class="ingredient-name">Griego</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h5 class="fw-bold section-label mb-3">Frutas</h5>
+                    <div class="d-flex flex-wrap gap-3">
+                        <div class="ingredient-card">
+                            <img src="../Img/Kiwi.jpg" alt="Kiwi" class="ingredient-img">
+                            <span class="ingredient-name">Kiwi</span>
+                        </div>
+                        <div class="ingredient-card">
+                            <img src="../Img/Arandano.jpg" alt="Arándano" class="ingredient-img">
+                            <span class="ingredient-name">Arandano</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h5 class="fw-bold section-label mb-3">Toppins</h5>
+                    <div class="d-flex flex-wrap gap-3">
+                        <div class="ingredient-card">
+                            <img src="../Img/Miel.jpg" alt="Miel de abeja" class="ingredient-img">
+                            <span class="ingredient-name">Miel de abeja</span>
+                        </div>
+                        <div class="ingredient-card">
+                            <img src="../Img/Mani.jpg" alt="Maní" class="ingredient-img">
+                            <span class="ingredient-name">Maní</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label class="fw-bold section-label mb-2">Nota</label>
+                    <input type="text" class="form-control note-input rounded-pill" placeholder="Nota del cliente..." readonly>
+                </div>
+            </div>
+            <div class="col-12 col-lg-5">
+                <h5 class="fw-bold section-label mb-3">Receta</h5>
+                <div class="recipe-box p-4 rounded-4">
+                    <ol class="recipe-steps mb-0 ps-3">
+                        <li class="mb-3">
+                            <strong>Base:</strong> Servir 150g de <em>Yogurt Griego</em> frío en la base del vaso transparente.
+                        </li>
+                        <li class="mb-3">
+                            <strong>Primera capa de frutas:</strong> Agregar una capa uniforme con <em>Fresa</em> y <em>Mango</em> picados en cubos pequeños.
+                        </li>
+                        <li class="mb-3">
+                            <strong>Capa intermedia:</strong> Colocar 30g de <em>Yogurt Griego</em> adicional para separar los sabores.
+                        </li>
+                        <li class="mb-3">
+                            <strong>Segunda capa de frutas:</strong> Añadir las láminas de <em>Kiwi</em>, los <em>Arándanos</em> enteros y las lascas de <em>Coco</em> deshidratado.
+                        </li>
+                        <li class="mb-3">
+                            <strong>Topping final:</strong> Espolvorear 15g de <em>Maní</em> tostado crujiente por la superficie.
+                        </li>
+                        <li>
+                            <strong>Servido:</strong> Decorar vertiendo un hilo de <em>Miel de abeja</em> (10ml) en forma de espiral sobre el parfait.
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-2 pt-0 pb-1">
+            <button class="btn btn-recipe-ready rounded-pill px-5 py-2 me-md-4" id="btnFinishRecipe">Listo</button>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('#filterContainer .btn-filter');
+            const searchInput = document.getElementById('searchInput');
+            const orderCards = document.querySelectorAll('.order-card');
+            
+            const kdsMainView = document.getElementById('kdsMainView');
+            const recipeDetailView = document.getElementById('recipeDetailView');
+            const card0042 = document.querySelector('[data-id="0042"]');
+            const navBackBtn = document.getElementById('navBackBtn');
+            const navBadge = document.getElementById('navBadge');
+            const btnFinishRecipe = document.getElementById('btnFinishRecipe');
+            let currentFilter = 'all';
+            let currentSearch = '';
+
+            function applyFilters() {
+                orderCards.forEach(card => {
+                    const origin = card.getAttribute('data-origin');
+                    const id = card.getAttribute('data-id');
+                    const textContent = card.innerText.toLowerCase();
+                    const matchesFilter = (currentFilter === 'all') || (origin === currentFilter);
+                    const matchesSearch = id.includes(currentSearch) || textContent.includes(currentSearch);
+                    if (matchesFilter && matchesSearch) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.getAttribute('data-filter');
+                    applyFilters();
+                });
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                currentSearch = e.target.value.toLowerCase().trim();
+                applyFilters();
+            });
+
+            function showRecipeView() {
+                kdsMainView.classList.add('d-none');
+                recipeDetailView.classList.remove('d-none');
+                recipeDetailView.classList.add('d-flex', 'flex-column');
+                navBadge.classList.add('d-none');
+            }
+
+            function showKdsView() {
+                recipeDetailView.classList.add('d-none');
+                recipeDetailView.classList.remove('d-flex', 'flex-column');
+                kdsMainView.classList.remove('d-none');
+                navBadge.classList.remove('d-none');
+            }
+
+            if (card0042) {
+                card0042.addEventListener('click', () => {
+                    showRecipeView();
+                });
+            }
+
+            btnFinishRecipe.addEventListener('click', () => {
+                showKdsView();
+            });
+
+            navBackBtn.addEventListener('click', (e) => {
+                if (!recipeDetailView.classList.contains('d-none')) {
+                    e.preventDefault();
+                    showKdsView();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

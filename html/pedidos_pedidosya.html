@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PedidosYa - Simple Market Saludable</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Imprima&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../CSS/caja.css">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <header class="topbar-nav d-flex align-items-center justify-content-between px-4 py-2">
+        <div class="d-flex align-items-center gap-3">
+            <a href="roles.html">
+                <img src="../Img/LogoN - copia.png" alt="Simple" class="nav-logo">
+            </a>
+            <div class="channel-selector d-flex gap-2 ms-3">
+                <a href="caja.html" class="btn btn-channel btn-tienda-channel text-decoration-none">Tienda</a>
+                <a href="pedidos_caja.html" class="btn btn-channel btn-pedidos-channel text-decoration-none" data-channel="pedidos">Pedidos</a>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <div class="d-flex gap-2">
+                <a href="pedidos_whatsapp.html" class="btn btn-platform btn-whatsapp d-flex align-items-center gap-2 text-decoration-none">
+                    <span class="icon-whatsapp"></span>
+                    <span>WhatsApp</span>
+                </a>
+                <button class="btn btn-platform btn-pedidosya btn-pedidosya-active d-flex align-items-center gap-2">
+                    <span class="icon-pedidosya"></span>
+                    <span>PedidosYa</span>
+                </button>
+            </div>
+            <div class="dropdown user-profile-dropdown">
+                <div class="user-profile d-flex align-items-center gap-3" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                    <div class="text-start">
+                        <div class="fw-bold user-name" style="font-size: 16px;">Usuario</div>
+                        <div class="role-subtitle" style="font-size: 14px;">Cajero</div>
+                    </div>
+                    <i class="bi bi-chevron-down toggle-chevron fs-5"></i>
+                </div>
+                <ul class="dropdown-menu dropdown-menu-end custom-user-menu border-0 p-3 shadow-lg">
+                    <li class="d-flex align-items-center justify-content-between mb-2">
+                        <div class="text-start">
+                            <div class="fw-bold dropdown-user-name">Usuario</div>
+                            <div class="dropdown-role-subtitle">Cajero</div>
+                        </div>
+                        <i class="bi bi-chevron-up toggle-chevron-dropdown fs-5 ms-3"></i>
+                    </li>
+                    <li><hr class="dropdown-divider-custom my-3"></li>
+                    <li>
+                        <a class="dropdown-item logout-link d-flex align-items-center gap-2 p-0" href="login.html">
+                            <i class="bi bi-box-arrow-right logout-icon fs-4"></i>
+                            <span class="logout-text">Cerrar Sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid px-0 flex-grow-1">
+        <div class="row g-0 h-100">
+            
+            <div class="col-12 col-md-3 border-end bg-white orders-sidebar">
+                <div class="p-3 d-flex align-items-center justify-content-between border-bottom gap-2">
+                    <div class="input-group input-group-sm search-box">
+                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control border-start-0 shadow-none fs-6" placeholder="Buscar pedido...">
+                    </div>
+                    <button class="btn btn-light btn-sm text-secondary border-0"><i class="bi bi-funnel fs-5"></i></button>
+                </div>
+                <div class="orders-list" id="pyaOrdersList">
+                </div>
+            </div>
+
+            <main class="col-12 col-md-6 px-4 py-3 bg-white d-flex flex-column justify-content-between overflow-auto" style="height: calc(100vh - 65px);">
+                <div>
+                    <div class="order-header-banner p-3 rounded-3 mb-4 d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold m-0" id="orderTitle" style="font-size: 18px;">Pedido #1002 - Juan Pérez</h5>
+                        <span class="fw-bold text-dark fs-6" id="orderPhone">+999 999 999</span>
+                    </div>
+
+                    <div class="card border rounded-4 p-3 mb-4 shadow-sm position-relative">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold m-0" style="font-size: 16px;">Detaller de pedido</h6>
+                            <i class="bi bi-three-dots-vertical fs-5 cursor-pointer"></i>
+                        </div>
+
+                        <div id="pyaProductsContainer" class="d-flex flex-column gap-3">
+                        </div>
+
+                        <div class="mt-4">
+                            <label class="fw-bold mb-1 text-dark" style="font-size: 14px;">Notas para el Restauante</label>
+                            <input type="text" class="form-control rounded-pill px-3 bg-light border-0" id="pyaRestNote" value="Nota del cliente..." placeholder="Escribir nota..." style="font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div class="card border rounded-4 p-3 shadow-sm">
+                        <div class="d-flex justify-content-between align-items-center mb-0 cursor-pointer" id="btnToggleDeliveryState">
+                            <h6 class="fw-bold m-0" style="font-size: 16px;">Estado de Delivery</h6>
+                            <i class="bi bi-chevron-down fs-6" id="iconChevronDelivery"></i>
+                        </div>
+                        
+                        <div class="row align-items-center mt-3 d-none" id="deliveryDetailsBody">
+                            <div class="col-12 col-md-5">
+                                <div class="vertical-timeline">
+                                    <div class="vertical-step completed">
+                                        <div class="fw-bold" style="font-size: 14px;">Recibido</div>
+                                        <div class="text-muted" style="font-size: 14px;">11:00 AM</div>
+                                    </div>
+                                    <div class="vertical-step completed">
+                                        <div class="fw-bold" style="font-size: 14px;">Preparando</div>
+                                        <div class="text-muted" style="font-size: 14px;">11:00 AM</div>
+                                    </div>
+                                    <div class="vertical-step">
+                                        <div class="fw-bold text-muted" style="font-size: 14px;">Recogiendo</div>
+                                    </div>
+                                    <div class="vertical-step">
+                                        <div class="fw-bold text-muted" style="font-size: 14px;">Entregado</div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <small class="fw-bold text-muted d-block mb-1" style="font-size: 14px;">Dirección de Envió</small>
+                                    <input type="text" class="form-control rounded-pill px-3 bg-light border-0" value="Dirección..." readonly style="font-size: 14px;">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-7 text-end mt-3 mt-md-0">
+                                <div class="position-relative rounded-3 overflow-hidden border mb-3" style="height: 140px; background-color: #E5E3DF;">
+                                    <img src="../Img/MapaDelivery.png" alt="Mapa de Delivery" class="w-100 h-100 object-fit-cover position-absolute top-0 start-0">
+                                    
+                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center position-relative z-1">
+                                        <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold" style="font-size: 14px;">
+                                            <i class="bi bi-scooter me-1"></i> Delivery 15m
+                                        </span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-despachar px-4 py-2 rounded-3 fw-bold" id="btnDespacharPedido" style="font-size: 14px;">
+                                    Despachar Pedido
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="col-12 col-md-3 bg-white border-start sidebar-full-height">
+                <div class="bill-summary-card p-4 d-flex flex-column h-100">
+                    <h5 class="fw-bold mb-4" style="font-size: 18px;">Resumen de boleta</h5>
+                    
+                    <div class="bill-items-list mb-4 flex-grow-1 overflow-auto" id="billItemsContainer">
+                    </div>
+
+                    <div class="bill-totals-section pt-3 border-top mt-auto">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted" style="font-size: 14px;">Subtotal</span>
+                            <span class="fw-semibold" id="lblSubtotal" style="font-size: 14px;">S/. 0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted" style="font-size: 14px;">IGV (18%)</span>
+                            <span class="fw-semibold" id="lblIgv" style="font-size: 14px;">S/. 0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted" style="font-size: 14px;">Envío</span>
+                            <span class="fw-semibold" id="lblEnvio" style="font-size: 14px;">S/. 1.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="fw-bold fs-5">Total</span>
+                            <span class="fw-bold fs-4 color-brand" id="lblTotal">S/. 0.00</span>
+                        </div>
+                        
+                        <button class="btn btn-dark w-100 py-3 rounded-3 fw-bold" id="btnConfirmOrderPYA" style="font-size: 15px;">
+                            Confirmar Orden
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalModificarPersonalizado" tabindex="-1" aria-labelledby="modalModificarPersonalizadoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+                <div class="modal-header border-0 pb-0 pt-3 px-4">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 pt-1">
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark mb-3" style="font-size: 16px;">Yogurt Base</h6>
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-yogurt" data-name="Griego">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Y-Griego.jpg" alt="Griego" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Griego</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-yogurt" data-name="Arándano">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Y-Arandano.jpg" alt="Arándano" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Arandano</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-yogurt" data-name="Fresa">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Y-Fresa.jpg" alt="Fresa" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Fresa</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-yogurt" data-name="Cacao">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Y-Cacao.jpg" alt="Cacao" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Cacao</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-3 opacity-25" style="color: var(--color-brand-brown);">
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark mb-3" style="font-size: 16px;">Frutas</h6>
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-2 g-md-3">
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Fresa">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Fresa.jpg" alt="Fresa" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Fresa</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Plátano">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Platano.jpg" alt="Plátano" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Platano</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Kiwi">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Kiwi.jpg" alt="Kiwi" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Kiwi</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Aguaymanto">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Aguaymanto.jpg" alt="Aguaymanto" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Aguaymanto</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-fruta" data-name="Arándano">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Arandano.jpg" alt="Arándano" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Arandano</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-3 opacity-25" style="color: var(--color-brand-brown);">
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark mb-3" style="font-size: 16px;">Toppins</h6>
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-2 g-md-3">
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Granola artesanal">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Granola.jpg" alt="Granola" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Granola artesanal</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Miel de abeja">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Miel.jpg" alt="Miel" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Miel de abeja</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Algarrobina">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Algarrobina.jpg" alt="Algarrobina" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Algarobina</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Almendras">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Almendras.jpg" alt="Almendras" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Alemendras</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-edit-card position-relative p-2 text-center cursor-pointer" data-category="edit-topping" data-name="Maní">
+                                    <span class="custom-radio-circle position-absolute top-2 end-2"></span>
+                                    <img src="../Img/Mani.jpg" alt="Maní" class="img-fluid custom-edit-img mb-2">
+                                    <div class="fw-bold text-dark text-truncate w-100" style="font-size: 14px;">Maní</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-end mt-4">
+                        <button type="button" class="btn btn-confirm-custom px-5 py-2 rounded-pill fw-bold" id="btnConfirmarModificación" style="font-size: 15px;">
+                            Confirmar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container-left">
+        <div id="dynamicToastLeft" class="toast-custom-left">
+            <i class="bi bi-check-circle-fill"></i>
+            <span id="toastMessageLeft">Producto agregado al pedido</span>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalConfirmandoOrden" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
+            <div class="modal-content modal-rounded-custom text-center shadow-lg">
+                <h4 class="fw-bold my-3 text-dark" style="font-size: 22px;">Confirmando Orden</h4>
+                <div class="my-4 py-2">
+                    <div class="loading-spinner-circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalOrdenConfirmada" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
+            <div class="modal-content modal-rounded-custom text-center shadow-lg p-4">
+                <h4 class="fw-bold mb-3 text-dark" style="font-size: 22px;">Orden Confirmada</h4>
+                <div class="mb-3">
+                    <i class="bi bi-check-lg text-success" style="font-size: 50px;"></i>
+                </div>
+                
+                <div class="text-start mb-3" style="font-size: 14px;">
+                    <div class="text-muted fw-semibold" id="confirmOrderNum">N° de Orden: #1001</div>
+                    <div class="fw-bold text-dark fs-6 mt-1">Datos de Cliente</div>
+                    <div class="text-secondary" id="confirmClientName">Nombre: Juan Pérez</div>
+                    <div class="text-secondary" id="confirmClientPhone">Num. Teléfono: +999 999 999</div>
+                    <div class="text-secondary" id="confirmClientAddress">Dirección: Calle Los Cedros 123</div>
+                </div>
+                
+                <hr class="my-2 opacity-25" style="color: #1B4D3E;">
+
+                <div class="modal-items-summary overflow-auto mb-3 pe-1 text-start" id="confirmModalItemsList" style="max-height: 180px;">
+                </div>
+
+                <hr class="my-2 opacity-25" style="color: #1B4D3E;">
+
+                <div class="text-start mb-4" style="font-size: 14px;">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">Subtotal</span>
+                        <span class="fw-semibold" id="confirmSubtotal">S/. 0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">IGV (18%)</span>
+                        <span class="fw-semibold" id="confirmIgv">S/. 0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Envío</span>
+                        <span class="fw-semibold" id="confirmEnvio">S/. 1.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                        <span class="fw-bold fs-5 text-dark">Total</span>
+                        <span class="fw-bold fs-4 text-dark" id="confirmTotal">S/. 0.00</span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-confirm-accept" id="btnModalAceptarConfirmacion" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalConfirmarDespacho" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
+            <div class="modal-content modal-rounded-custom text-center shadow-lg p-4">
+                <h4 class="fw-bold mb-3 text-dark" style="font-size: 20px;">¿Despachar Pedido?</h4>
+                <div class="my-2">
+                    <i class="bi bi-box-seam text-secondary" style="font-size: 48px;"></i>
+                </div>
+                <p class="text-muted px-2 mb-4" style="font-size: 14px;">
+                    El estado cambiará a <strong>"Pedido Despachado"</strong> y se notificará al repartidor.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <button class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-dark rounded-pill px-4 py-2 fw-bold" id="btnAceptarDespachoModal">Sí, Despachar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let pyaOrders = [
+                {
+                    id: '#1001',
+                    client: 'Juan Pérez',
+                    phone: '+999 999 999',
+                    time: '11:00',
+                    code: '442',
+                    status: 'En preparación',
+                    isConfirmed: true,
+                    isDispatched: false, 
+                    products: [
+                        {
+                            name: 'Parfait Personalizado',
+                            price: 19.50,
+                            qty: 1,
+                            img: '../Img/Parfait Clásico.jpg',
+                            isCustom: true,
+                            yogurts: ['Natural (1 Opc)'],
+                            frutas: ['Fresa', 'Platano', 'Kiwi', 'Mango']
+                        },
+                        {
+                            name: 'Jugo probiótico de fresa',
+                            price: 18.50,
+                            qty: 1,
+                            img: '../Img/J-Fresa.jpg',
+                            isCustom: false,
+                            options: ['Jugo (1 Opc)']
+                        }
+                    ]
+                },
+                {
+                    id: '#1002',
+                    client: 'Juan Pérez',
+                    phone: '+999 999 999',
+                    time: '11:00',
+                    code: '123',
+                    status: 'Por Aceptar',
+                    isConfirmed: false,
+                    isDispatched: false,
+                    products: [
+                        {
+                            name: 'Parfait Clásico (Personalizado)',
+                            price: 17.50,
+                            qty: 1,
+                            img: '../Img/Parfait Clásico.jpg',
+                            isCustom: true,
+                            yogurts: ['Cacao (1 Opc)'],
+                            frutas: ['Fresa', 'Kiwi']
+                        },
+                        {
+                            name: 'Jugo probiótico de arandano',
+                            price: 19.90,
+                            qty: 1,
+                            img: '../Img/J-Arandano.jpg',
+                            isCustom: false,
+                            options: ['Jugo (1 Opc)']
+                        }
+                    ]
+                },
+                {
+                    id: '#1003',
+                    client: 'Juan Pérez',
+                    phone: '+999 777 666',
+                    time: '11:00',
+                    code: '456',
+                    status: 'Por Aceptar',
+                    isConfirmed: false,
+                    isDispatched: false,
+                    products: [
+                        {
+                            name: 'Parfait Personalizado',
+                            price: 18.50,
+                            qty: 1,
+                            img: '../Img/Parfait Clásico.jpg',
+                            isCustom: true,
+                            yogurts: ['Griego'],
+                            frutas: ['Fresa', 'Granola artesanal']
+                        }
+                    ]
+                }
+            ];
+
+            let activeOrderIndex = 1;
+
+            const pyaOrdersList = document.getElementById('pyaOrdersList');
+            const pyaProductsContainer = document.getElementById('pyaProductsContainer');
+            const billItemsContainer = document.getElementById('billItemsContainer');
+            const lblSubtotal = document.getElementById('lblSubtotal');
+            const lblIgv = document.getElementById('lblIgv');
+            const lblEnvio = document.getElementById('lblEnvio');
+            const lblTotal = document.getElementById('lblTotal');
+            const btnConfirmOrderPYA = document.getElementById('btnConfirmOrderPYA');
+            const deliveryDetailsBody = document.getElementById('deliveryDetailsBody');
+            const iconChevronDelivery = document.getElementById('iconChevronDelivery');
+            const btnDespachar = document.getElementById('btnDespacharPedido');
+
+            function showLeftToast(message) {
+                const toast = document.getElementById('dynamicToastLeft');
+                const toastMsg = document.getElementById('toastMessageLeft');
+                if (toast && toastMsg) {
+                    toastMsg.innerText = message;
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000);
+                }
+            }
+
+            function renderOrdersSidebar() {
+                pyaOrdersList.innerHTML = '';
+                pyaOrders.forEach((ord, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = `order-item p-3 border-bottom ${index === activeOrderIndex ? 'active-order' : ''}`;
+                    itemDiv.setAttribute('role', 'button');
+                    const badgeClass = ord.isConfirmed ? 'bg-light text-dark border' : 'bg-dark text-white';
+
+                    itemDiv.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold text-dark fs-6">${ord.id}</span>
+                            <span class="text-muted" style="font-size: 14px;">${ord.time}</span>
+                        </div>
+                        <div class="fw-semibold text-dark mb-2" style="font-size: 14px;">${ord.client}</div>
+                        <div class="mb-2">
+                            <span class="badge rounded-pill px-3 py-1 ${badgeClass}" style="font-size: 14px;">${ord.status}</span>
+                        </div>
+                        <small class="text-muted d-block mb-2" style="font-size: 14px;">Codigo de entrega <strong>${ord.code}</strong></small>
+                        <div class="timeline-stepper pt-2">
+                            <div class="timeline-step ${ord.isConfirmed ? 'completed' : ''}">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-label" style="font-size: 14px;">Recibido</div>
+                            </div>
+                            <div class="timeline-step ${ord.isConfirmed ? 'active' : ''}">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-label" style="font-size: 14px;">Preparando</div>
+                            </div>
+                            <div class="timeline-step ${ord.isDispatched ? 'completed' : ''}">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-label" style="font-size: 14px;">Recogido</div>
+                            </div>
+                            <div class="timeline-step">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-label" style="font-size: 14px;">Entregado</div>
+                            </div>
+                        </div>
+                    `;
+
+                    itemDiv.addEventListener('click', () => {
+                        activeOrderIndex = index;
+                        renderOrdersSidebar();
+                        renderActiveOrderDetails();
+                    });
+
+                    pyaOrdersList.appendChild(itemDiv);
+                });
+            }
+
+            function renderActiveOrderDetails() {
+                const currentOrder = pyaOrders[activeOrderIndex];
+                if (!currentOrder) return;
+
+                document.getElementById('orderTitle').innerText = `Pedido ${currentOrder.id} - ${currentOrder.client}`;
+                document.getElementById('orderPhone').innerText = currentOrder.phone;
+
+                pyaProductsContainer.innerHTML = '';
+                billItemsContainer.innerHTML = '';
+                let rawTotal = 0;
+
+                currentOrder.products.forEach((item, index) => {
+                    const itemTotal = item.price * item.qty;
+                    rawTotal += itemTotal;
+
+                    const itemCard = document.createElement('div');
+                    itemCard.className = 'bg-light p-3 rounded-3 position-relative';
+
+                    let optionsHTML = '';
+                    if (item.isCustom) {
+                        optionsHTML = `
+                            <div class="mt-2 pt-2 border-top">
+                                <div class="mb-2">
+                                    <span class="fw-bold text-dark d-block" style="font-size: 14px;">Yogurt</span>
+                                    <small class="text-secondary" style="font-size: 14px;">✓ ${item.yogurts.join(' ')}</small>
+                                </div>
+                                <hr class="my-1 opacity-25">
+                                <div>
+                                    <span class="fw-bold text-dark d-block" style="font-size: 14px;">Frutas</span>
+                                    <small class="text-secondary" style="font-size: 14px;">✓ ${item.frutas.join(' ✓ ')}</small>
+                                </div>
+                            </div>
+                        `;
+                    } else if (item.options) {
+                        optionsHTML = `
+                            <div class="mt-1">
+                                <span class="fw-bold text-dark d-block" style="font-size: 14px;">${item.name}</span>
+                                <small class="text-secondary" style="font-size: 14px;">✓ ${item.options.join(' ')}</small>
+                            </div>
+                        `;
+                    }
+
+                    itemCard.innerHTML = `
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="${item.img}" class="rounded-2" style="width:36px; height:36px; object-fit:cover;" alt="${item.name}">
+                                <span class="fw-bold text-dark" style="font-size: 15px;">${item.name}</span>
+                                <span class="badge bg-white text-dark border" style="font-size: 14px;">${item.qty}x</span>
+                            </div>
+                            ${item.isCustom ? `<button class="btn btn-secondary btn-sm rounded-pill px-3 btn-agregar-modificacion" data-index="${index}" style="font-size: 14px;">+ Agregar Modificacion</button>` : ''}
+                        </div>
+                        ${optionsHTML}
+                    `;
+                    pyaProductsContainer.appendChild(itemCard);
+
+                    const billItem = document.createElement('div');
+                    billItem.className = 'd-flex align-items-start justify-content-between mb-3 pb-3 border-bottom';
+
+                    let billDetails = item.isCustom ? `Yogurt: ${item.yogurts.join(', ')}<br>Frutas: ${item.frutas.join(', ')}` : (item.options ? item.options.join(', ') : '');
+
+                    billItem.innerHTML = `
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-light text-dark border px-2 py-1 align-self-start fw-bold" style="font-size: 14px;">${item.qty}x</span>
+                            <div>
+                                <h6 class="m-0 fw-bold text-dark" style="font-size: 15px;">${item.name}</h6>
+                                <small class="text-muted d-block" style="font-size: 14px;">${billDetails}</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold" style="font-size: 14px;">S/. ${itemTotal.toFixed(2)}</span>
+                            <i class="bi bi-trash text-muted btn-remove-pya-item" data-index="${index}" style="cursor:pointer; font-size: 16px;"></i>
+                        </div>
+                    `;
+                    billItemsContainer.appendChild(billItem);
+                });
+
+                document.querySelectorAll('.btn-remove-pya-item').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        currentOrder.products.splice(idx, 1);
+                        renderActiveOrderDetails();
+                        showLeftToast("Se eliminó un producto del pedido");
+                    });
+                });
+
+                const envioCost = 1.00;
+                const grandTotal = rawTotal + envioCost;
+                const subtotal = grandTotal / 1.18;
+                const igv = grandTotal - subtotal;
+
+                lblSubtotal.innerText = `S/. ${subtotal.toFixed(2)}`;
+                lblIgv.innerText = `S/. ${igv.toFixed(2)}`;
+                lblEnvio.innerText = `S/. ${envioCost.toFixed(2)}`;
+                lblTotal.innerText = `S/. ${grandTotal.toFixed(2)}`;
+
+                if (currentOrder.isDispatched) {
+                    btnDespachar.classList.add('despachado');
+                    btnDespachar.innerText = 'Pedido Despachado';
+                    btnDespachar.disabled = true;
+                } else {
+                    btnDespachar.classList.remove('despachado');
+                    btnDespachar.innerText = 'Despachar Pedido';
+                    btnDespachar.disabled = false;
+                }
+
+                if (currentOrder.isConfirmed) {
+                    btnConfirmOrderPYA.className = "btn btn-secondary w-100 py-3 rounded-3 fw-bold opacity-75";
+                    btnConfirmOrderPYA.innerText = "Orden confirmada";
+                    btnConfirmOrderPYA.disabled = true;
+                    deliveryDetailsBody.classList.remove('d-none');
+                    iconChevronDelivery.className = "bi bi-chevron-up fs-6";
+                } else {
+                    btnConfirmOrderPYA.className = "btn btn-dark w-100 py-3 rounded-3 fw-bold";
+                    btnConfirmOrderPYA.innerText = "Confirmar Orden";
+                    btnConfirmOrderPYA.disabled = false;
+                    deliveryDetailsBody.classList.add('d-none');
+                    iconChevronDelivery.className = "bi bi-chevron-down fs-6";
+                }
+            }
+
+            btnConfirmOrderPYA.addEventListener('click', () => {
+                const currentOrder = pyaOrders[activeOrderIndex];
+                if (currentOrder && !currentOrder.isConfirmed) {
+                    const modalCarga = new bootstrap.Modal(document.getElementById('modalConfirmandoOrden'));
+                    const modalConfirmada = new bootstrap.Modal(document.getElementById('modalOrdenConfirmada'));
+
+                    modalCarga.show();
+
+                    setTimeout(() => {
+                        modalCarga.hide();
+
+                        currentOrder.isConfirmed = true;
+                        currentOrder.status = 'En preparación';
+                        renderOrdersSidebar();
+                        renderActiveOrderDetails();
+
+                        document.getElementById('confirmOrderNum').innerText = `N° de Orden: ${currentOrder.id}`;
+                        document.getElementById('confirmClientName').innerText = `Nombre: ${currentOrder.client}`;
+                        document.getElementById('confirmClientPhone').innerText = `Num. Teléfono: ${currentOrder.phone}`;
+                        document.getElementById('confirmClientAddress').innerText = `Dirección: Delivery PedidosYa`;
+
+                        const listContainer = document.getElementById('confirmModalItemsList');
+                        listContainer.innerHTML = '';
+                        let rawTotal = 0;
+                        currentOrder.products.forEach(item => {
+                            const itemSub = item.price * item.qty;
+                            rawTotal += itemSub;
+                            const row = document.createElement('div');
+                            row.className = 'd-flex justify-content-between align-items-center mb-2';
+                            row.innerHTML = `
+                                <div>
+                                    <span class="badge bg-light text-dark border px-2 py-1 align-self-start fw-bold me-1">${item.qty}x</span>
+                                    <span class="fw-bold">${item.name}</span>
+                                </div>
+                                <span class="fw-bold">S/. ${itemSub.toFixed(2)}</span>
+                            `;
+                            listContainer.appendChild(row);
+                        });
+
+                        const envio = 1.00;
+                        const grandTotal = rawTotal + envio;
+                        const subtotal = grandTotal / 1.18;
+                        const igv = grandTotal - subtotal;
+
+                        document.getElementById('confirmSubtotal').innerText = `S/. ${subtotal.toFixed(2)}`;
+                        document.getElementById('confirmIgv').innerText = `S/. ${igv.toFixed(2)}`;
+                        document.getElementById('confirmEnvio').innerText = `S/. ${envio.toFixed(2)}`;
+                        document.getElementById('confirmTotal').innerText = `S/. ${grandTotal.toFixed(2)}`;
+
+                        modalConfirmada.show();
+                    }, 1800);
+                }
+            });
+
+            const modalDespacho = new bootstrap.Modal(document.getElementById('modalConfirmarDespacho'));
+
+            if (btnDespachar) {
+                btnDespachar.addEventListener('click', () => {
+                    const currentOrder = pyaOrders[activeOrderIndex];
+                    if (currentOrder && !currentOrder.isDispatched) {
+                        modalDespacho.show();
+                    }
+                });
+            }
+
+            const btnAceptarDespachoModal = document.getElementById('btnAceptarDespachoModal');
+            if (btnAceptarDespachoModal) {
+                btnAceptarDespachoModal.addEventListener('click', () => {
+                    const currentOrder = pyaOrders[activeOrderIndex];
+                    if (currentOrder) {
+                        currentOrder.isDispatched = true;
+                        renderOrdersSidebar();
+                        renderActiveOrderDetails();
+                        modalDespacho.hide();
+                        showLeftToast("El pedido ha sido despachado exitosamente");
+                    }
+                });
+            }
+
+            document.getElementById('btnToggleDeliveryState').addEventListener('click', () => {
+                if (deliveryDetailsBody.classList.contains('d-none')) {
+                    deliveryDetailsBody.classList.remove('d-none');
+                    iconChevronDelivery.className = "bi bi-chevron-up fs-6";
+                } else {
+                    deliveryDetailsBody.classList.add('d-none');
+                    iconChevronDelivery.className = "bi bi-chevron-down fs-6";
+                }
+            });
+
+            let activeItemIndex = null;
+            let editSelection = { yogurts: [], frutas: [], toppings: [] };
+
+            document.querySelectorAll('.custom-edit-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.getAttribute('data-category');
+                    const name = card.getAttribute('data-name');
+
+                    if (category === 'edit-yogurt') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            editSelection.yogurts = editSelection.yogurts.filter(y => y !== name);
+                        } else if (editSelection.yogurts.length < 2) {
+                            card.classList.add('selected');
+                            editSelection.yogurts.push(name);
+                        }
+                    } else if (category === 'edit-fruta') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            editSelection.frutas = editSelection.frutas.filter(f => f !== name);
+                        } else if (editSelection.frutas.length < 2) {
+                            card.classList.add('selected');
+                            editSelection.frutas.push(name);
+                        }
+                    } else if (category === 'edit-topping') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            editSelection.toppings = editSelection.toppings.filter(t => t !== name);
+                        } else if (editSelection.toppings.length < 3) {
+                            card.classList.add('selected');
+                            editSelection.toppings.push(name);
+                        }
+                    }
+                });
+            });
+
+            document.body.addEventListener('click', (e) => {
+                const btnMod = e.target.closest('.btn-agregar-modificacion');
+                if (btnMod) {
+                    activeItemIndex = parseInt(btnMod.getAttribute('data-index'));
+                    document.querySelectorAll('.custom-edit-card').forEach(c => c.classList.remove('selected'));
+                    editSelection = { yogurts: [], frutas: [], toppings: [] };
+
+                    const modalEdit = new bootstrap.Modal(document.getElementById('modalModificarPersonalizado'));
+                    modalEdit.show();
+                }
+            });
+
+            document.getElementById('btnConfirmarModificación').addEventListener('click', () => {
+                const currentOrder = pyaOrders[activeOrderIndex];
+                if (activeItemIndex !== null && currentOrder && currentOrder.products[activeItemIndex]) {
+                    currentOrder.products[activeItemIndex].yogurts = editSelection.yogurts.length > 0 ? editSelection.yogurts : ['Griego'];
+                    currentOrder.products[activeItemIndex].frutas = [...editSelection.frutas, ...editSelection.toppings];
+                    renderActiveOrderDetails();
+                    showLeftToast("Se modificó la orden correctamente");
+                }
+
+                const modalEl = document.getElementById('modalModificarPersonalizado');
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) modalInstance.hide();
+            });
+
+            renderOrdersSidebar();
+            renderActiveOrderDetails();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+:root {
+    --color-bg: #FFFFFF;
+    --color-spinner-track: #E5E5E5;
+    --color-spinner-head: #666666;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: var(--color-bg);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+
+.loading-container {
+    min-height: 100vh;
+    width: 100%;
+}
+
+
+.brand-logo {
+    max-width: 260px;
+    height: auto;
+}
+
+
+.custom-spinner {
+    width: 42px;
+    height: 42px;
+    border: 5px solid var(--color-spinner-track);
+    border-top: 5px solid var(--color-spinner-head);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,275 @@
+:root {
+    --color-dark-bg: #111111;
+    --color-white: #FFFFFF;
+    --color-text-dark: #333333;
+    --color-brand-brown: #B17B4A;
+    --color-brand-beige: #D3B8A0;
+    --color-btn-gray: #EAEAEA;
+    --color-error-red: #D93025;
+    --color-success-green: #1E8E3E;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F8F7F5;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--color-text-dark);
+    font-size: 14px;
+}
+
+body, span, small, label, input, button, div, a, p {
+    font-size: 14px;
+}
+
+.topbar-nav {
+    background-image: url('../Img/FondoNav2.png');
+    background-color: var(--color-dark-bg);
+    background-size: cover;
+    background-position: center 20%;
+    color: var(--color-white);
+    min-height: 65px;
+}
+
+.nav-logo {
+    max-height: 42px;
+    width: auto;
+}
+
+.user-profile {
+    border-left: 4px solid var(--color-brand-brown);
+    padding-left: 1.2rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.user-name {
+    font-size: 16px;
+    line-height: 1.1;
+    color: #000000;
+}
+
+.role-subtitle {
+    font-size: 14px;
+    color: #000000;
+    margin-top: 2px;
+}
+
+.toggle-chevron {
+    color: var(--color-brand-brown) !important;
+    font-weight: 900;
+    -webkit-text-stroke: 1.5px var(--color-brand-brown);
+}
+
+.btn-back-caja {
+    background-color: var(--color-white);
+    color: var(--color-text-dark);
+    border: 1px solid #E0E0E0;
+    border-radius: 30px;
+    padding: 0.5rem 1.4rem;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-back-caja:hover {
+    background-color: var(--color-btn-gray);
+    color: var(--color-text-dark);
+}
+
+.btn-method {
+    background-color: var(--color-white);
+    border: 1.5px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--color-text-dark);
+    transition: all 0.2s ease;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-method:hover, .btn-method.active {
+    border-color: var(--color-brand-brown) !important;
+    box-shadow: 0 0 0 1px var(--color-brand-brown);
+    background-color: rgba(177, 123, 74, 0.05);
+}
+
+.yape-plin-icons img {
+    height: 24px;
+    width: auto;
+}
+
+.payment-input-group label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.payment-input {
+    background-color: #EAEAEA;
+    border: 1px solid #CCCCCC;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.payment-input:focus {
+    background-color: #FFFFFF;
+    border-color: var(--color-brand-brown);
+    box-shadow: none;
+}
+
+.numpad-btn {
+    background-color: var(--color-white);
+    border: 1.5px solid #E0E0E0;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.numpad-btn:active {
+    background-color: var(--color-btn-gray);
+    transform: scale(0.98);
+}
+
+.sidebar-full-height {
+    min-height: calc(100vh - 65px);
+}
+
+.bill-summary-card {
+    border: none;
+}
+
+.color-brand {
+    color: var(--color-brand-brown);
+}
+
+.btn-confirm-order {
+    background-color: #5C3D1E;
+    color: var(--color-white);
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.btn-confirm-order:disabled {
+    background-color: #CCCCCC;
+    color: #777777;
+}
+
+.btn-confirm-order:hover:not(:disabled) {
+    background-color: #3E2723;
+    color: var(--color-white);
+}
+
+.modal-custom-content {
+    border-radius: 24px !important;
+    border: none !important;
+    padding: 1.5rem;
+}
+
+.spinner-custom {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #E0E0E0;
+    border-top: 5px solid #888888;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.btn-modal-cancel {
+    border: 2px solid var(--color-error-red);
+    color: var(--color-error-red);
+    background: transparent;
+    border-radius: 30px;
+    padding: 0.5rem 2.5rem;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.btn-modal-cancel:hover {
+    background-color: var(--color-error-red);
+    color: var(--color-white);
+}
+
+.btn-modal-accept {
+    border: 2px solid var(--color-error-red);
+    color: var(--color-error-red);
+    background: transparent;
+    border-radius: 30px;
+    padding: 0.5rem 3rem;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.btn-modal-accept:hover {
+    background-color: var(--color-error-red);
+    color: var(--color-white);
+}
+
+.btn-modal-success {
+    border: 2px solid #1B4D3E;
+    color: #1B4D3E;
+    background: transparent;
+    border-radius: 30px;
+    padding: 0.5rem 3.5rem;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.btn-modal-success:hover {
+    background-color: #1B4D3E;
+    color: var(--color-white);
+}
+
+.error-icon-svg {
+    width: 64px;
+    height: 64px;
+    color: var(--color-error-red);
+}
+
+.success-icon-svg {
+    width: 64px;
+    height: 64px;
+    color: #1B4D3E;
+}
+
+.img-payment-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.btn-method:hover .img-payment-logo {
+    transform: scale(1.05);
+}

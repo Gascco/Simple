@@ -1,0 +1,109 @@
+:root {
+    --color-white: #FFFFFF;
+    --color-text-dark: #818181;
+    --color-black: #000000;
+    --color-brand-brown: #B87E4A;
+    --color-border-gray: #C3C3C3;
+    --color-overlay-bg: rgba(211, 184, 160, 0.50); 
+    --color-card-bg: rgba(255, 255, 255, 0.90);
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+}
+
+.login-bg {
+    background-image: url('../Img/LogoL.png');
+    background-size: 100% auto;
+    background-position: center 58%;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.login-sidebar-overlay {
+    background-color: var(--color-overlay-bg);
+    backdrop-filter: blur(4px);
+    width: 100%;
+    max-width: 560px;
+    min-height: 100vh;
+    padding: 3rem 2.5rem;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+}
+
+.login-card-container {
+    max-width: 440px;
+}
+
+.brand-logo {
+    max-width: 400px;
+    height: auto;
+    margin-top: -250px;
+}
+
+.login-card {
+    background-color: var(--color-card-bg) !important;
+    backdrop-filter: blur(8px);
+    border-radius: 28px !important;
+    padding: 3.5rem 2.5rem !important; 
+}
+
+.custom-input {
+    background-color: var(--color-white) !important;
+    border: 1px solid transparent !important;
+    border-radius: 18px !important;
+    padding: 0.85rem 1.2rem !important;
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+}
+
+.custom-input::placeholder {
+    color: var(--color-border-gray);
+}
+
+.custom-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(184, 126, 74, 0.25) !important;
+    border-color: var(--color-brand-brown) !important;
+}
+
+.password-toggle {
+    color: var(--color-border-gray);
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.custom-checkbox {
+    border-color: var(--color-border-gray);
+    border-radius: 4px;
+}
+
+.custom-checkbox:checked {
+    background-color: var(--color-brand-brown);
+    border-color: var(--color-brand-brown);
+}
+
+.remember-label {
+    color: var(--color-black);
+    font-size: 0.8rem;
+    font-weight: 600;
+    user-select: none;
+}
+
+.btn-custom-submit {
+    background-color: var(--color-brand-brown) !important;
+    color: var(--color-white) !important;
+    border-radius: 18px !important;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-custom-submit:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}

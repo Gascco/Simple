@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caja - Simple Market Saludable</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Imprima&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../CSS/caja.css">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <header class="topbar-nav d-flex align-items-center justify-content-between px-4 py-2">
+        <div class="d-flex align-items-center gap-3">
+            <a href="roles.html">
+                <img src="../Img/LogoN - copia.png" alt="Simple" class="nav-logo">
+            </a>
+            <div class="channel-selector d-flex gap-2 ms-3">
+                <button class="btn btn-channel active-channel" data-channel="tienda">Tienda</button>
+                <a href="pedidos_caja.html" class="btn btn-channel btn-pedidos-channel text-decoration-none" data-channel="pedidos">Pedidos</a>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <div class="d-flex gap-2">
+                <a href="pedidos_whatsapp.html" class="btn btn-platform btn-whatsapp d-flex align-items-center gap-2 text-decoration-none">
+                    <span class="icon-whatsapp"></span>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="pedidos_pedidosya.html" class="btn btn-platform btn-pedidosya d-flex align-items-center gap-2 text-decoration-none">
+                    <span class="icon-pedidosya"></span>
+                    <span>PedidosYa</span>
+                </a>
+            </div>
+            <div class="dropdown user-profile-dropdown">
+                <div class="user-profile d-flex align-items-center gap-3" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                    <div class="text-start">
+                        <div class="fw-bold user-name">Usuario</div>
+                        <div class="role-subtitle">Cajero</div>
+                    </div>
+                    <i class="bi bi-chevron-down toggle-chevron fs-5"></i>
+                </div>
+                <ul class="dropdown-menu dropdown-menu-end custom-user-menu border-0 p-3 shadow-lg">
+                    <li class="d-flex align-items-center justify-content-between mb-2">
+                        <div class="text-start">
+                            <div class="fw-bold dropdown-user-name">Usuario</div>
+                            <div class="dropdown-role-subtitle">Cajero</div>
+                        </div>
+                        <i class="bi bi-chevron-up toggle-chevron-dropdown fs-5 ms-3"></i>
+                    </li>
+                    <li><hr class="dropdown-divider-custom my-2"></li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center gap-2 p-1 text-dark fw-bold text-decoration-none" href="banners_caja.html">
+                            <i class="bi bi-images fs-5"></i>
+                            <span>Banners</span>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider-custom my-2"></li>
+                    <li>
+                        <a class="dropdown-item logout-link d-flex align-items-center gap-2 p-0" href="login.html">
+                            <i class="bi bi-box-arrow-right logout-icon fs-4"></i>
+                            <span class="logout-text">Cerrar Sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid px-0 flex-grow-1">
+        <div class="row g-0 h-100">
+            <main class="col-12 col-xl-8 px-4 py-3">
+                <ul class="nav nav-tabs custom-category-tabs border-0 mb-4 d-flex" id="categoryTabs">
+                    <li class="nav-item flex-fill">
+                        <button class="nav-link active w-100" data-tab="parfaits">Parfaits & Bowls</button>
+                    </li>
+                    <li class="nav-item flex-fill">
+                        <button class="nav-link w-100" data-tab="postres">Postres Thanisfit</button>
+                    </li>
+                    <li class="nav-item flex-fill">
+                        <button class="nav-link w-100" data-tab="yogures">Yogures</button>
+                    </li>
+                    <li class="nav-item flex-fill">
+                        <button class="nav-link w-100" data-tab="bebidas">Bebidas</button>
+                    </li>
+                    <li class="nav-item flex-fill">
+                        <button class="nav-link w-100" data-tab="personalizados">Personalizados</button>
+                    </li>
+                </ul>
+                <div class="tab-content-container">
+                    <div class="tab-pane-custom active" id="tab-parfaits">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Parfait Clásico.jpg" class="card-img-top rounded-3" alt="Parfait Clásico">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Parfait Clásico</h6>
+                                            <span class="product-price">S/. 18.50</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Parfait Clásico" data-price="18.50">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Parfait Clásico">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Parfait Clásico" data-price="18.50" data-details="Yogurt Griego, Fresa, Mango, Miel">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Parfait de Fresa & Griego.jpg" class="card-img-top rounded-3" alt="Parfait Fresa & Griego">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Parfait de Fresa & Griego</h6>
+                                            <span class="product-price">S/. 19.90</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Parfait de Fresa & Griego" data-price="19.90">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Parfait de Fresa & Griego">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Parfait de Fresa & Griego" data-price="19.90" data-details="Yogurt Griego, Fresa, Miel">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Protein Parfait Bowl.jpg" class="card-img-top rounded-3" alt="Protein Parfait Bowl">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Protein Parfait Bowl</h6>
+                                            <span class="product-price">S/. 22.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Protein Parfait Bowl" data-price="22.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Protein Parfait Bowl">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Protein Parfait Bowl" data-price="22.00" data-details="Yogurt Griego, Granola, Arándano">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Açai Power Bowl.jpg" class="card-img-top rounded-3" alt="Açai Power Bowl">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Açai Power Bowl</h6>
+                                            <span class="product-price">S/. 24.50</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Açai Power Bowl" data-price="24.50">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Açai Power Bowl">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Açai Power Bowl" data-price="24.50" data-details="Açai Orgánico, Plátano, Granola">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Yogurt Cacao Bliss.jpg" class="card-img-top rounded-3" alt="Yogurt Cacao Bliss">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Yogurt Cacao Bliss</h6>
+                                            <span class="product-price">S/. 15.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Yogurt Cacao Bliss" data-price="15.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Yogurt Cacao Bliss">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Yogurt Cacao Bliss" data-price="15.00" data-details="Yogurt Natural, Cacao, Plátano">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Salad Fruit Bowl Especial.jpg" class="card-img-top rounded-3" alt="Salad Fruit Bowl Especial">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Salad Fruit Bowl Especial</h6>
+                                            <span class="product-price">S/. 17.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Salad Fruit Bowl Especial" data-price="17.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Salad Fruit Bowl Especial">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Salad Fruit Bowl Especial" data-price="17.00" data-details="Frutas Mixtas, Miel">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane-custom d-none" id="tab-postres">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Carrot cake.jpg" class="card-img-top rounded-3" alt="Carrot cake">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Carrot cake</h6>
+                                            <span class="product-price">S/. 14.50</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Carrot cake" data-price="14.50">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Carrot cake">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Carrot cake" data-price="14.50" data-details="Porción Integral Thanisfit">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Chocovegana.jpg" class="card-img-top rounded-3" alt="Chocovegana">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Chocovegana</h6>
+                                            <span class="product-price">S/. 14.90</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Chocovegana" data-price="14.90">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Chocovegana">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Chocovegana" data-price="14.90" data-details="Sin Azúcar Añadida">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Cheesecake de maracuyá.jpg" class="card-img-top rounded-3" alt="Cheesecake de maracuyá">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Cheesecake de maracuyá</h6>
+                                            <span class="product-price">S/. 15.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Cheesecake de maracuyá" data-price="15.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Cheesecake de maracuyá">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Cheesecake de maracuyá" data-price="15.00" data-details="Base de Almendras">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Cheesecake de frutos rojos.jpg" class="card-img-top rounded-3" alt="Cheesecake de frutos rojos">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Cheesecake de frutos rojos</h6>
+                                            <span class="product-price">S/. 16.50</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Cheesecake de frutos rojos" data-price="16.50">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Cheesecake de frutos rojos">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Cheesecake de frutos rojos" data-price="16.50" data-details="Base de Almendras">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Pye de limón.jpg" class="card-img-top rounded-3" alt="Pye de limón">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Pye de limón</h6>
+                                            <span class="product-price">S/. 12.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Pye de limón" data-price="12.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Pye de limón">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Pye de limón" data-price="12.00" data-details="Masa Artesanal">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Empanada de pavo.jpg" class="card-img-top rounded-3" alt="Empanada de pavo">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Empanada de pavo</h6>
+                                            <span class="product-price">S/. 17.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Empanada de pavo" data-price="17.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Empanada de pavo">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Empanada de pavo" data-price="17.00" data-details="Relleno Jugoso">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane-custom d-none" id="tab-yogures">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Y-Griego.jpg" class="card-img-top rounded-3" alt="Natural sin endulzar">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Natural sin endulzar</h6>
+                                            <div class="badge-size-group my-1 d-flex flex-wrap gap-1">
+                                                <span class="badge badge-size">1/4L 3.50</span>
+                                                <span class="badge badge-size">1/2L 6.00</span>
+                                                <span class="badge badge-size">1L 10.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Natural sin endulzar (1L)" data-price="10.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Natural sin endulzar (1L)">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Natural sin endulzar (1L)" data-price="10.00" data-details="Botella 1 Litro">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Y-Griego.jpg" class="card-img-top rounded-3" alt="Natural endulzado">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Natural endulzado</h6>
+                                            <div class="badge-size-group my-1 d-flex flex-wrap gap-1">
+                                                <span class="badge badge-size">1/4L 3.50</span>
+                                                <span class="badge badge-size">1/2L 6.00</span>
+                                                <span class="badge badge-size">1L 10.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Natural endulzado (1L)" data-price="10.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Natural endulzado (1L)">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Natural endulzado (1L)" data-price="10.00" data-details="Botella 1 Litro">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Y-Griego.jpg" class="card-img-top rounded-3" alt="Griego">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Griego</h6>
+                                            <div class="badge-size-group my-1 d-flex flex-wrap gap-1">
+                                                <span class="badge badge-size">1/4L 3.50</span>
+                                                <span class="badge badge-size">1/2L 6.00</span>
+                                                <span class="badge badge-size">1L 10.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Griego (1L)" data-price="10.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Griego (1L)">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Griego (1L)" data-price="10.00" data-details="Botella 1 Litro Artesanal">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Y-Cacao.jpg" class="card-img-top rounded-3" alt="Cacao">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Cacao</h6>
+                                            <div class="badge-size-group my-1 d-flex flex-wrap gap-1">
+                                                <span class="badge badge-size">1/4L 3.50</span>
+                                                <span class="badge badge-size">1/2L 6.00</span>
+                                                <span class="badge badge-size">1L 10.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Cacao (1L)" data-price="10.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Cacao (1L)">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Cacao (1L)" data-price="10.00" data-details="Botella 1 Litro">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Y-Fresa.jpg" class="card-img-top rounded-3" alt="Fresa">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Fresa</h6>
+                                            <div class="badge-size-group my-1 d-flex flex-wrap gap-1">
+                                                <span class="badge badge-size">1/4L 3.50</span>
+                                                <span class="badge badge-size">1/2L 6.00</span>
+                                                <span class="badge badge-size">1L 10.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Fresa (1L)" data-price="10.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Fresa (1L)">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Fresa (1L)" data-price="10.00" data-details="Botella 1 Litro">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/Y-Arandano.jpg" class="card-img-top rounded-3" alt="Arandano">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Arandano</h6>
+                                            <div class="badge-size-group my-1 d-flex flex-wrap gap-1">
+                                                <span class="badge badge-size">1/4L 3.50</span>
+                                                <span class="badge badge-size">1/2L 6.00</span>
+                                                <span class="badge badge-size">1L 10.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Arandano (1L)" data-price="10.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Arandano (1L)">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Arandano (1L)" data-price="10.00" data-details="Botella 1 Litro">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane-custom d-none" id="tab-bebidas">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/J-Fresa.jpg" class="card-img-top rounded-3" alt="Jugo probiótico de fresa">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Jugo probiotico de fresa</h6>
+                                            <span class="product-price">S/. 24.50</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Jugo probiotico de fresa" data-price="24.50">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Jugo probiotico de fresa">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Jugo probiotico de fresa" data-price="24.50" data-details="Con Kéfir de Agua">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/J-Arandano.jpg" class="card-img-top rounded-3" alt="Jugo probiótico de arándano">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Jugo probiotico de arandano</h6>
+                                            <span class="product-price">S/. 19.90</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Jugo probiotico de arandano" data-price="19.90">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Jugo probiotico de arandano">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Jugo probiotico de arandano" data-price="19.90" data-details="Antioxidante Natural">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/J-Mango.jpg" class="card-img-top rounded-3" alt="Jugo probiótico de mango">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Jugo probiotico de mango</h6>
+                                            <span class="product-price">S/. 22.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Jugo probiotico de mango" data-price="22.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Jugo probiotico de mango">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Jugo probiotico de mango" data-price="22.00" data-details="100% Fruta">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/B-Fresa.jpg" class="card-img-top rounded-3" alt="Batido probiótico de fresa">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Batido probiotico de fresa</h6>
+                                            <span class="product-price">S/. 24.50</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Batido probiotico de fresa" data-price="24.50">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Batido probiotico de fresa">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Batido probiotico de fresa" data-price="24.50" data-details="Proteico Con Kéfir">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/B-Tuna.jpg" class="card-img-top rounded-3" alt="Batido probiótico de tuna">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Batido probiotico de tuna</h6>
+                                            <span class="product-price">S/. 15.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Batido probiotico de tuna" data-price="15.00">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Batido probiotico de tuna">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Batido probiotico de tuna" data-price="15.00" data-details="Digestivo y Probiótico">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="card product-card h-100 border-0 p-2 shadow-sm">
+                                    <img src="../Img/B-Arandano.jpg" class="card-img-top rounded-3" alt="Batido probiótico de arándano">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="product-title m-0">Batido probiotico de arandano</h6>
+                                            <span class="product-price">S/. 24.50</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <div class="modal-qty-pill d-flex align-items-center justify-content-between rounded-pill">
+                                                <button class="btn btn-qty-circle btn-minus" data-name="Batido probiotico de arandano" data-price="24.50">-</button>
+                                                <span class="fw-bold modal-qty-val" id="qty-Batido probiotico de arandano">0</span>
+                                                <button class="btn btn-qty-circle btn-plus" data-name="Batido probiotico de arandano" data-price="24.50" data-details="Superfood Antioxidante">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane-custom d-none" id="tab-personalizados">
+                        <div class="customizer-container p-3 bg-white rounded-3 shadow-sm">
+                            <div class="step-section mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="step-title m-0 fw-bold">1. Yogurt Base <small class="text-muted">(Selecciona 1 o 2)</small></h6>
+                                    <span class="badge bg-secondary step-badge" id="badgeStep1">Paso 1</span>
+                                </div>
+                                <div class="horizontal-scroll-row d-flex gap-3 pb-2" id="rowYogurt">
+                                    <div class="custom-select-card" data-category="yogurt" data-name="Griego">
+                                        <img src="../Img/Y-Griego.jpg" alt="Griego">
+                                        <span>Griego</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="yogurt" data-name="Arándano">
+                                        <img src="../Img/Y-Arandano.jpg" alt="Arándano">
+                                        <span>Arandano</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="yogurt" data-name="Fresa">
+                                        <img src="../Img/Y-Fresa.jpg" alt="Fresa">
+                                        <span>Fresa</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="yogurt" data-name="Cacao">
+                                        <img src="../Img/Y-Cacao.jpg" alt="Cacao">
+                                        <span>Cacao</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="yogurt" data-name="Vainilla">
+                                        <img src="../Img/Y-Griego.jpg" alt="Vainilla">
+                                        <span>Vainilla</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step-section mb-4 step-locked" id="step2Container">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="step-title m-0 fw-bold">2. Frutas <small class="text-muted">(Máximo 2)</small></h6>
+                                    <span class="badge bg-light text-dark step-badge" id="badgeStep2">Bloqueado</span>
+                                </div>
+                                <div class="horizontal-scroll-row d-flex gap-3 pb-2" id="rowFrutas">
+                                    <div class="custom-select-card" data-category="fruta" data-name="Fresa">
+                                        <img src="../Img/Fresa.jpg" alt="Fresa">
+                                        <span>Fresa</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="fruta" data-name="Plátano">
+                                        <img src="../Img/Platano.jpg" alt="Plátano">
+                                        <span>Platano</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="fruta" data-name="Kiwi">
+                                        <img src="../Img/Kiwi.jpg" alt="Kiwi">
+                                        <span>Kiwi</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="fruta" data-name="Aguaymanto">
+                                        <img src="../Img/Aguaymanto.jpg" alt="Aguaymanto">
+                                        <span>Aguaymanto</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="fruta" data-name="Arándano">
+                                        <img src="../Img/Arandano.jpg" alt="Arándano">
+                                        <span>Arandano</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="fruta" data-name="Piña">
+                                        <img src="../Img/Pina.jpg" alt="Piña">
+                                        <span>Piña</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="fruta" data-name="Uva">
+                                        <img src="../Img/Uvas.jpg" alt="Uva">
+                                        <span>Uva</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step-section mb-3 step-locked" id="step3Container">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="step-title m-0 fw-bold">3. Toppins <small class="text-muted">(Máximo 3)</small></h6>
+                                    <span class="badge bg-light text-dark step-badge" id="badgeStep3">Bloqueado</span>
+                                </div>
+                                <div class="horizontal-scroll-row d-flex gap-3 pb-2" id="rowToppins">
+                                    <div class="custom-select-card" data-category="topping" data-name="Granola artesanal">
+                                        <img src="../Img/Granola.jpg" alt="Granola">
+                                        <span>Granola artesanal</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="topping" data-name="Miel de abeja">
+                                        <img src="../Img/Miel.jpg" alt="Miel">
+                                        <span>Miel de abeja</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="topping" data-name="Algarrobina">
+                                        <img src="../Img/Algarrobina.jpg" alt="Algarrobina">
+                                        <span>Algarrobina</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="topping" data-name="Almendras">
+                                        <img src="../Img/Almendras.jpg" alt="Almendras">
+                                        <span>Almendras</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="topping" data-name="Maní">
+                                        <img src="../Img/Mani.jpg" alt="Maní">
+                                        <span>Maní</span>
+                                    </div>
+                                    <div class="custom-select-card" data-category="topping" data-name="Pecanas">
+                                        <img src="../Img/Pecanas.jpg" alt="Pecanas">
+                                        <span>Pecanas</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end mt-3">
+                                <button class="btn btn-add-custom px-4 rounded-pill py-2" id="btnAddCustomItem" disabled>
+                                    Agregar Parfait Personalizado (S/. 18.50)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <aside class="col-12 col-xl-4 bg-white border-start sidebar-full-height">
+                <div class="bill-summary-card p-4 d-flex flex-column h-100">
+                    <h5 class="fw-bold mb-4" style="font-size: 18px;">Resumen de boleta</h5>
+                    <div class="bill-items-list mb-4 flex-grow-1 overflow-auto" id="billItemsContainer">
+                        <div class="text-center text-muted py-5" id="emptyCartMsg">
+                            <i class="bi bi-cart3 fs-1 d-block mb-2 text-secondary"></i>
+                            <span>No hay productos seleccionados</span>
+                        </div>
+                    </div>
+                    <div class="bill-totals-section pt-3 border-top mt-auto">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Subtotal</span>
+                            <span class="fw-semibold" id="lblSubtotal">S/. 0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">IGV (18%)</span>
+                            <span class="fw-semibold" id="lblIgv">S/. 0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="fw-bold fs-5">Total</span>
+                            <span class="fw-bold fs-4 color-brand" id="lblTotal">S/. 0.00</span>
+                        </div>
+                        <button class="btn btn-continue-purchase w-100 py-3 rounded-3 fw-bold" id="btnCheckout" disabled>
+                            Continuar Compra
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('#categoryTabs .nav-link');
+            const tabPanes = document.querySelectorAll('.tab-pane-custom');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabPanes.forEach(p => p.classList.add('d-none'));
+                    tab.classList.add('active');
+                    const targetPane = document.getElementById(`tab-${tab.getAttribute('data-tab')}`);
+                    if (targetPane) targetPane.classList.remove('d-none');
+                });
+            });
+
+            let cart = [];
+
+            function updateCartUI() {
+                const container = document.getElementById('billItemsContainer');
+                const emptyMsg = document.getElementById('emptyCartMsg');
+                const lblSubtotal = document.getElementById('lblSubtotal');
+                const lblIgv = document.getElementById('lblIgv');
+                const lblTotal = document.getElementById('lblTotal');
+                const btnCheckout = document.getElementById('btnCheckout');
+                
+                container.innerHTML = '';
+                if (cart.length === 0) {
+                    container.appendChild(emptyMsg);
+                    emptyMsg.style.display = 'block';
+                    lblSubtotal.innerText = 'S/. 0.00';
+                    lblIgv.innerText = 'S/. 0.00';
+                    lblTotal.innerText = 'S/. 0.00';
+                    btnCheckout.disabled = true;
+                    return;
+                }
+
+                emptyMsg.style.display = 'none';
+                let rawTotal = 0;
+
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.qty;
+                    rawTotal += itemTotal;
+                    const itemRow = document.createElement('div');
+                    itemRow.className = 'bill-item d-flex align-items-start justify-content-between mb-3 pb-2 border-bottom';
+                    itemRow.innerHTML = `
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-light text-dark border px-2 py-1 align-self-start fw-bold">${item.qty}x</span>
+                            <div>
+                                <h6 class="m-0 fw-bold" style="font-size: 15px;">${item.name}</h6>
+                                <small class="text-muted d-block">${item.details}</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold">S/. ${itemTotal.toFixed(2)}</span>
+                            <i class="bi bi-trash text-muted delete-item-btn" style="cursor:pointer;" data-index="${index}"></i>
+                        </div>
+                    `;
+                    container.appendChild(itemRow);
+                });
+
+                const subtotal = rawTotal / 1.18;
+                const igv = rawTotal - subtotal;
+
+                lblSubtotal.innerText = `S/. ${subtotal.toFixed(2)}`;
+                lblIgv.innerText = `S/. ${igv.toFixed(2)}`;
+                lblTotal.innerText = `S/. ${rawTotal.toFixed(2)}`;
+                btnCheckout.disabled = false;
+
+                document.querySelectorAll('.delete-item-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const idx = parseInt(e.target.getAttribute('data-index'));
+                        const removedItem = cart[idx];
+                        cart.splice(idx, 1);
+                        const qtySpan = document.getElementById(`qty-${removedItem.name}`);
+                        if (qtySpan) qtySpan.innerText = '0';
+                        updateCartUI();
+                    });
+                });
+            }
+
+            document.querySelectorAll('.btn-plus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const name = btn.getAttribute('data-name');
+                    const price = parseFloat(btn.getAttribute('data-price'));
+                    const details = btn.getAttribute('data-details') || '';
+                    const existing = cart.find(i => i.name === name);
+
+                    if (existing) {
+                        existing.qty += 1;
+                    } else {
+                        cart.push({ name, price, qty: 1, details });
+                    }
+
+                    const qtySpan = document.getElementById(`qty-${name}`);
+                    if (qtySpan) {
+                        const current = parseInt(qtySpan.innerText) || 0;
+                        qtySpan.innerText = current + 1;
+                    }
+                    updateCartUI();
+                });
+            });
+
+            document.querySelectorAll('.btn-minus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const name = btn.getAttribute('data-name');
+                    const existing = cart.find(i => i.name === name);
+
+                    if (existing) {
+                        existing.qty -= 1;
+                        if (existing.qty <= 0) {
+                            cart = cart.filter(i => i.name !== name);
+                        }
+                        const qtySpan = document.getElementById(`qty-${name}`);
+                        if (qtySpan) {
+                            qtySpan.innerText = existing.qty > 0 ? existing.qty : '0';
+                        }
+                        updateCartUI();
+                    }
+                });
+            });
+
+            let customSelection = { yogurts: [], frutas: [], toppings: [] };
+            const step2Container = document.getElementById('step2Container');
+            const step3Container = document.getElementById('step3Container');
+            const badgeStep2 = document.getElementById('badgeStep2');
+            const badgeStep3 = document.getElementById('badgeStep3');
+            const btnAddCustom = document.getElementById('btnAddCustomItem');
+
+            function updateCustomizerFlow() {
+                if (customSelection.yogurts.length >= 1) {
+                    step2Container.classList.remove('step-locked');
+                    badgeStep2.className = 'badge bg-secondary step-badge';
+                    badgeStep2.innerText = 'Paso 2';
+                } else {
+                    step2Container.classList.add('step-locked');
+                    badgeStep2.className = 'badge bg-light text-dark step-badge';
+                    badgeStep2.innerText = 'Bloqueado';
+                    customSelection.frutas = [];
+                    document.querySelectorAll('[data-category="fruta"]').forEach(c => c.classList.remove('selected'));
+                }
+
+                if (customSelection.frutas.length >= 1) {
+                    step3Container.classList.remove('step-locked');
+                    badgeStep3.className = 'badge bg-secondary step-badge';
+                    badgeStep3.innerText = 'Paso 3';
+                } else {
+                    step3Container.classList.add('step-locked');
+                    badgeStep3.className = 'badge bg-light text-dark step-badge';
+                    badgeStep3.innerText = 'Bloqueado';
+                    customSelection.toppings = [];
+                    document.querySelectorAll('[data-category="topping"]').forEach(c => c.classList.remove('selected'));
+                }
+
+                if (customSelection.yogurts.length >= 1 && customSelection.frutas.length >= 1 && customSelection.toppings.length >= 1) {
+                    btnAddCustom.disabled = false;
+                } else {
+                    btnAddCustom.disabled = true;
+                }
+            }
+
+            document.querySelectorAll('.custom-select-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.getAttribute('data-category');
+                    const name = card.getAttribute('data-name');
+
+                    if (category === 'yogurt') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            customSelection.yogurts = customSelection.yogurts.filter(y => y !== name);
+                        } else {
+                            if (customSelection.yogurts.length < 2) {
+                                card.classList.add('selected');
+                                customSelection.yogurts.push(name);
+                            }
+                        }
+                    } else if (category === 'fruta') {
+                        if (step2Container.classList.contains('step-locked')) return;
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            customSelection.frutas = customSelection.frutas.filter(f => f !== name);
+                        } else {
+                            if (customSelection.frutas.length < 2) {
+                                card.classList.add('selected');
+                                customSelection.frutas.push(name);
+                            }
+                        }
+                    } else if (category === 'topping') {
+                        if (step3Container.classList.contains('step-locked')) return;
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            customSelection.toppings = customSelection.toppings.filter(t => t !== name);
+                        } else {
+                            if (customSelection.toppings.length < 3) {
+                                card.classList.add('selected');
+                                customSelection.toppings.push(name);
+                            }
+                        }
+                    }
+                    updateCustomizerFlow();
+                });
+            });
+
+            btnAddCustom.addEventListener('click', () => {
+                const detailsStr = `Yogurt: ${customSelection.yogurts.join(', ')} | Frutas: ${customSelection.frutas.join(', ')} | Toppins: ${customSelection.toppings.join(', ')}`;
+                
+                cart.push({
+                    name: 'Parfait Personalizado',
+                    price: 18.50,
+                    qty: 1,
+                    details: detailsStr
+                });
+
+                customSelection = { yogurts: [], frutas: [], toppings: [] };
+                document.querySelectorAll('.custom-select-card').forEach(c => c.classList.remove('selected'));
+                updateCustomizerFlow();
+                updateCartUI();
+            });
+
+            const btnCheckout = document.getElementById('btnCheckout');
+            if (btnCheckout) {
+                btnCheckout.addEventListener('click', () => {
+                    if (cart.length === 0) return;
+
+                    localStorage.setItem('simple_cart', JSON.stringify(cart));
+
+                    window.location.href = 'pago.html';
+                });
+            }
+
+        }); 
+</script>
+</body>
+</html>
