@@ -43,7 +43,18 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
     document.getElementById('navBadge').textContent='Pedidos Activos: '+orders.filter(o=>['aceptado','preparando'].includes(o.estado)).length;
   }
-  function showRecipe(order){
+  async function showRecipe(order){
+    if(busy)return;
+    const transition=ui.recipeEntryTransition(order.estado);
+    if(transition){
+      busy=true;
+      try{
+        await Simple.api('/pedidos/'+order.id+'/estado',{method:'PATCH',body:JSON.stringify({estado:transition})});
+        order.estado=transition;
+        draw();
+      }catch(error){alert(error.message);return;}
+      finally{busy=false;}
+    }
     selected=order;
     main.classList.add('d-none');
     detail.classList.remove('d-none');
@@ -59,7 +70,8 @@ document.addEventListener('DOMContentLoaded',()=>{
       '<div class="col-12 col-lg-5"><h5 class="fw-bold section-label mb-3">Receta</h5>'+
       '<div class="recipe-box p-4 rounded-4"><ol class="recipe-steps mb-0 ps-3">'+views.stepsHtml+'</ol></div></div>';
     const action=document.getElementById('btnFinishRecipe');
-    action.textContent=order.estado==='preparando'?'Marcar como Listo':'Volver';
+    action.textContent='Listo';
+    action.disabled=ui.recipeFinishTransition(order.estado)!=='listo';
   }
   function back(){
     selected=null;
@@ -88,19 +100,20 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
       const card=event.target.closest('.order-card[data-id]');
       const order=orders.find(o=>String(o.id)===card?.dataset.id);
-      if(order)showRecipe(order);
+      if(order)void showRecipe(order);
     });
     col.addEventListener('keydown',event=>{
       if(event.target.matches('.order-card')&&['Enter',' '].includes(event.key)){
         event.preventDefault();
         const order=orders.find(o=>String(o.id)===event.target.dataset.id);
-        if(order)showRecipe(order);
+        if(order)void showRecipe(order);
       }
     });
   }
   document.getElementById('btnFinishRecipe').addEventListener('click',()=>{
-    if(selected?.estado==='preparando')setState(selected.id,'listo');
-    else back();
+    if(!selected||busy)return;
+    const transition=ui.recipeFinishTransition(selected.estado);
+    if(transition)void setState(selected.id,transition);
   });
   document.getElementById('navBackBtn').addEventListener('click',event=>{
     if(!detail.classList.contains('d-none')){event.preventDefault();back();}
