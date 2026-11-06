@@ -880,6 +880,465 @@
         </div>
     </div>
     <script src="/js/shared.js"></script>
-<script src="/js/channel-orders.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let activeOrderType = 'delivery';
+            let currentOrderProducts = [];
+            let dbOrders = [];
+            let currentDbOrder = null;
+            function fromDbItem(i){
+                let p=i.personalizacion;
+                if(typeof p==='string'){try{p=JSON.parse(p);}catch{p=null;}}
+                return {name:i.nombre_producto,price:Number(i.precio_unitario),qty:i.cantidad,
+                    img:i.imagen?'../Img/'+i.imagen.split('/').pop():'../Img/Parfait Clásico.jpg',
+                    isCustom:!!p,yogurts:p?.yogurts||[],frutas:[...(p?.frutas||[]),...(p?.toppings||[])],
+                    personalizacion:p,note:i.nota||''};
+            }
+            async function saveOrderItems(){
+                if(!currentDbOrder||!['pendiente','aceptado'].includes(currentDbOrder.estado))throw Error('El pedido ya no permite cambios');
+                await Simple.api('/pedidos/'+currentDbOrder.id+'/items',{method:'PUT',
+                    body:JSON.stringify({items:currentOrderProducts.map(i=>({
+                        name:i.name,qty:i.qty,note:i.note||'',personalizacion:i.personalizacion||null
+                    }))})});
+            }
+            async function loadOrders(){
+                dbOrders=await Simple.api('/pedidos?canal=whatsapp');
+                const list=document.querySelector('.orders-sidebar .orders-list');
+                list.innerHTML=dbOrders.map(o=>'<div class="order-item p-3 border-bottom d-flex align-items-center justify-content-between" role="button" data-db="'+o.id+'" data-type="'+o.entrega+'" data-id="#'+Simple.escape(o.codigo)+'" data-client="'+Simple.escape(o.cliente||'')+'" data-phone="'+Simple.escape(o.telefono||'')+'" data-address="'+Simple.escape(o.direccion||'')+'"><div class="d-flex align-items-center gap-3"><div class="avatar-placeholder rounded-circle"></div><div><div class="fw-bold text-dark">'+Simple.escape(o.telefono||'')+'</div><small class="text-muted">'+Simple.escape(o.cliente||'')+' • #'+Simple.escape(o.codigo)+'</small></div></div><span class="badge bg-secondary">'+Simple.escape(o.estado)+'</span></div>').join('');
+                const first=list.querySelector('.order-item');
+                if(first)first.click();
+                else{currentDbOrder=null;currentOrderProducts=[];renderOrderUI();document.getElementById('orderTitle').innerText='No hay pedidos WhatsApp';}
+            }
+
+            const mainProductsContainer = document.getElementById('mainOrderProductsContainer');
+            const billItemsContainer = document.getElementById('billItemsContainer');
+            const lblSubtotal = document.getElementById('lblSubtotal');
+            const lblIgv = document.getElementById('lblIgv');
+            const lblEnvio = document.getElementById('lblEnvio');
+            const lblTotal = document.getElementById('lblTotal');
+
+            function showLeftToast(message) {
+                const toast = document.getElementById('dynamicToastLeft');
+                const toastMsg = document.getElementById('toastMessageLeft');
+                if (toast && toastMsg) {
+                    toastMsg.innerText = message;
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000);
+                }
+            }
+
+            function renderOrderUI() {
+                mainProductsContainer.innerHTML = '';
+                billItemsContainer.innerHTML = '';
+                let rawTotal = 0;
+
+                currentOrderProducts.forEach((item, index) => {
+                    const itemTotal = item.price * item.qty;
+                    rawTotal += itemTotal;
+
+                    const card = document.createElement('div');
+                    card.className = 'card border rounded-3 p-3 position-relative item-pedido-container';
+
+                    let customHTML = '';
+                    if (item.isCustom) {
+                        customHTML = `
+                            <div class="bg-light p-3 rounded-3 mb-3">
+                                <div class="mb-2">
+                                    <span class="fw-bold d-block">Yogurt</span>
+                                    <small class="text-secondary">✓ ${item.yogurts.join(' ')}</small>
+                                </div>
+                                <hr class="my-2 text-muted">
+                                <div>
+                                    <span class="fw-bold d-block">Frutas & Toppings</span>
+                                    <small class="text-secondary">✓ ${item.frutas.join(' ✓ ')}</small>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    card.innerHTML = `
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="${item.img}" class="rounded-2" style="width:36px; height:36px; object-fit:cover;" alt="${item.name}">
+                                <h6 class="fw-bold m-0 item-nombre" style="font-size: 15px;">${item.name} ${item.qty > 1 ? `(${item.qty}x)` : ''}</h6>
+                            </div>
+                            <div class="d-flex gap-2 align-items-center">
+                                ${item.isCustom ? `<button class="btn btn-secondary btn-sm rounded-pill px-3 btn-agregar-modificacion" data-index="${index}">+ Agregar Modificación</button>` : ''}
+                                <button class="btn btn-outline-danger btn-sm rounded-circle border-0 btn-remove-item" data-index="${index}"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        ${customHTML}
+                        <div>
+                            <label class="fw-bold mb-1">Nota</label>
+                            <input type="text" class="form-control form-control-sm rounded-pill px-3 border note-input" data-index="${index}" value="${item.note || ''}" placeholder="Nota del cliente...">
+                        </div>
+                    `;
+                    mainProductsContainer.appendChild(card);
+
+                    const billItem = document.createElement('div');
+                    billItem.className = 'bill-item d-flex align-items-start justify-content-between mb-3 pb-2 border-bottom';
+
+                    let detailsText = item.isCustom 
+                        ? `Yogurt: ${item.yogurts.join(', ')}<br>Frutas/Toppings: ${item.frutas.join(', ')}` 
+                        : 'Producto Estándar';
+
+                    billItem.innerHTML = `
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-light text-dark border px-2 py-1 align-self-start fw-bold">${item.qty}x</span>
+                            <div>
+                                <h6 class="m-0 fw-bold" style="font-size: 15px;">${item.name}</h6>
+                                <small class="text-muted d-block">${detailsText}</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold">S/. ${itemTotal.toFixed(2)}</span>
+                            <i class="bi bi-trash text-muted btn-remove-item" data-index="${index}" style="cursor:pointer;"></i>
+                        </div>
+                    `;
+                    billItemsContainer.appendChild(billItem);
+                });
+
+                document.querySelectorAll('.btn-remove-item').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        currentOrderProducts.splice(idx, 1);
+                        renderOrderUI();
+                        showLeftToast("Se eliminó un producto del pedido");
+                    });
+                });
+
+                document.querySelectorAll('.note-input').forEach(input => {
+                    input.addEventListener('change', () => {
+                        const idx = parseInt(input.getAttribute('data-index'));
+                        if (currentOrderProducts[idx]) {
+                            currentOrderProducts[idx].note = input.value;
+                        }
+                    });
+                });
+
+                const envioCost = activeOrderType === 'delivery' ? 1.00 : 0.00;
+                const grandTotal = rawTotal + envioCost;
+                const subtotal = grandTotal / 1.18;
+                const igv = grandTotal - subtotal;
+
+                lblSubtotal.innerText = `S/. ${subtotal.toFixed(2)}`;
+                lblIgv.innerText = `S/. ${igv.toFixed(2)}`;
+                lblEnvio.innerText = `S/. ${envioCost.toFixed(2)}`;
+                lblTotal.innerText = `S/. ${grandTotal.toFixed(2)}`;
+            }
+
+            renderOrderUI();
+
+            const orderItems = document.querySelectorAll('.order-item');
+            const orderTitle = document.getElementById('orderTitle');
+            const orderPhone = document.getElementById('orderPhone');
+            const orderAddress = document.getElementById('orderAddress');
+            const orderBadgeType = document.getElementById('orderBadgeType');
+
+            document.querySelector('.orders-sidebar .orders-list').addEventListener('click', (e) => {
+                    const item=e.target.closest('.order-item');if(!item)return;
+                    const orderItems=document.querySelectorAll('.orders-sidebar .orders-list .order-item');
+                    orderItems.forEach(i => i.classList.remove('active-order'));
+                    item.classList.add('active-order');
+                    activeOrderType = item.getAttribute('data-type');
+                    const id = item.getAttribute('data-id');
+                    const client = item.getAttribute('data-client');
+                    const phone = item.getAttribute('data-phone');
+                    const address = item.getAttribute('data-address');
+
+                    orderTitle.innerText = `Pedido ${id} - ${client}`;
+                    orderPhone.innerText = phone;
+                    orderAddress.value = address;
+
+                    if (activeOrderType === 'delivery') {
+                        orderBadgeType.innerText = 'Delivery';
+                        orderBadgeType.className = 'badge bg-dark rounded-pill px-3 py-2';
+                        orderAddress.disabled = false;
+                    } else {
+                        orderBadgeType.innerText = 'Recojo en Tienda';
+                        orderBadgeType.className = 'badge bg-dark rounded-pill px-3 py-2';
+                        orderAddress.disabled = true;
+                    }
+                    currentDbOrder=dbOrders.find(o=>o.id===Number(item.dataset.db))||null;
+                    currentOrderProducts=currentDbOrder?currentDbOrder.items.map(fromDbItem):[];
+                    renderOrderUI();
+                });
+
+            const modalTabs = document.querySelectorAll('.custom-app-tabs .nav-link');
+            const modalPanes = document.querySelectorAll('.modal-pane');
+
+            modalTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    modalTabs.forEach(t => t.classList.remove('active'));
+                    modalPanes.forEach(p => p.classList.add('d-none'));
+                    tab.classList.add('active');
+                    const targetPane = document.getElementById(tab.getAttribute('data-modal-tab'));
+                    if (targetPane) targetPane.classList.remove('d-none');
+                });
+            });
+
+            let modalCart = [];
+            const modalSidebar = document.querySelector('.modal-cart-sidebar');
+            const modalCartList = document.getElementById('modalCartList');
+            const modalCartTotal = document.getElementById('modalCartTotal');
+
+            function renderModalCart() {
+                modalCartList.innerHTML = '';
+                if (modalCart.length === 0) {
+                    modalSidebar.classList.add('d-none');
+                    modalSidebar.classList.remove('d-flex');
+                    return;
+                }
+                modalSidebar.classList.remove('d-none');
+                modalSidebar.classList.add('d-flex');
+                let total = 0;
+                modalCart.forEach((item) => {
+                    const sub = item.price * item.qty;
+                    total += sub;
+                    const el = document.createElement('div');
+                    el.className = 'd-flex justify-content-between align-items-center mb-2 pb-2 border-bottom';
+                    el.innerHTML = `
+                        <div>
+                            <span class="fw-bold">${item.qty}x</span> ${item.name}
+                        </div>
+                        <span class="fw-bold">S/. ${sub.toFixed(2)}</span>
+                    `;
+                    modalCartList.appendChild(el);
+                });
+                modalCartTotal.innerText = `S/. ${total.toFixed(2)}`;
+            }
+
+            document.querySelectorAll('.btn-modal-plus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const name = btn.getAttribute('data-name');
+                    const price = parseFloat(btn.getAttribute('data-price'));
+                    const img = btn.getAttribute('data-img');
+
+                    const item = modalCart.find(i => i.name === name);
+                    if (item) {
+                        item.qty += 1;
+                    } else {
+                        modalCart.push({ name, price, qty: 1, img, isCustom: false });
+                    }
+                    const valSpan = document.getElementById(`mqty-${name}`);
+                    if (valSpan) valSpan.innerText = item ? item.qty : 1;
+                    renderModalCart();
+                });
+            });
+
+            document.querySelectorAll('.btn-modal-minus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const name = btn.getAttribute('data-name');
+                    const item = modalCart.find(i => i.name === name);
+                    if (item) {
+                        item.qty -= 1;
+                        if (item.qty <= 0) {
+                            modalCart = modalCart.filter(i => i.name !== name);
+                        }
+                        const valSpan = document.getElementById(`mqty-${name}`);
+                        if (valSpan) valSpan.innerText = item ? item.qty : 0;
+                        renderModalCart();
+                    }
+                });
+            });
+
+            let modalCustomSelection = { yogurts: [], frutas: [], toppings: [] };
+            const btnModalAddCustom = document.getElementById('btnModalAddCustom');
+            const customCards = document.querySelectorAll('#app-personalizados .custom-select-card');
+
+            customCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.getAttribute('data-category');
+                    const name = card.getAttribute('data-name');
+                    if (category === 'yogurt') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            modalCustomSelection.yogurts = modalCustomSelection.yogurts.filter(y => y !== name);
+                        } else if (modalCustomSelection.yogurts.length < 2) {
+                            card.classList.add('selected');
+                            modalCustomSelection.yogurts.push(name);
+                        }
+                    } else if (category === 'fruta') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            modalCustomSelection.frutas = modalCustomSelection.frutas.filter(f => f !== name);
+                        } else if (modalCustomSelection.frutas.length < 2) {
+                            card.classList.add('selected');
+                            modalCustomSelection.frutas.push(name);
+                        }
+                    } else if (category === 'topping') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            modalCustomSelection.toppings = modalCustomSelection.toppings.filter(t => t !== name);
+                        } else if (modalCustomSelection.toppings.length < 3) {
+                            card.classList.add('selected');
+                            modalCustomSelection.toppings.push(name);
+                        }
+                    }
+
+                    if (modalCustomSelection.yogurts.length >= 1 && modalCustomSelection.frutas.length >= 1 && modalCustomSelection.toppings.length >= 1) {
+                        btnModalAddCustom.disabled = false;
+                    } else {
+                        btnModalAddCustom.disabled = true;
+                    }
+                });
+            });
+
+            if (btnModalAddCustom) {
+                btnModalAddCustom.addEventListener('click', () => {
+                    modalCart.push({
+                        name: 'Parfait Personalizado',
+                        price: 18.50,
+                        qty: 1,
+                        img: '../Img/Parfait Clásico.jpg',
+                        isCustom: true,
+                        yogurts: [...modalCustomSelection.yogurts],
+                        frutas: [...modalCustomSelection.frutas, ...modalCustomSelection.toppings]
+                    });
+                    modalCustomSelection = { yogurts: [], frutas: [], toppings: [] };
+                    customCards.forEach(c => c.classList.remove('selected'));
+                    btnModalAddCustom.disabled = true;
+                    renderModalCart();
+                });
+            }
+
+            document.getElementById('btnConfirmModalSelection').addEventListener('click', () => {
+                modalCart.forEach(mItem => {
+                    const existing = currentOrderProducts.find(p => p.name === mItem.name && !p.isCustom && !mItem.isCustom);
+                    if (existing) {
+                        existing.qty += mItem.qty;
+                    } else {
+                        currentOrderProducts.push({ ...mItem });
+                    }
+                });
+                modalCart = [];
+                document.querySelectorAll('.modal-qty-val').forEach(span => span.innerText = '0');
+                renderModalCart();
+                renderOrderUI();
+                showLeftToast("Se agregaron productos al pedido");
+            });
+
+            let activeItemIndex = null;
+            let editSelection = { yogurts: [], frutas: [], toppings: [] };
+
+            document.querySelectorAll('.custom-edit-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.getAttribute('data-category');
+                    const name = card.getAttribute('data-name');
+
+                    if (category === 'edit-yogurt') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            editSelection.yogurts = editSelection.yogurts.filter(y => y !== name);
+                        } else if (editSelection.yogurts.length < 2) {
+                            card.classList.add('selected');
+                            editSelection.yogurts.push(name);
+                        }
+                    } else if (category === 'edit-fruta') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            editSelection.frutas = editSelection.frutas.filter(f => f !== name);
+                        } else if (editSelection.frutas.length < 2) {
+                            card.classList.add('selected');
+                            editSelection.frutas.push(name);
+                        }
+                    } else if (category === 'edit-topping') {
+                        if (card.classList.contains('selected')) {
+                            card.classList.remove('selected');
+                            editSelection.toppings = editSelection.toppings.filter(t => t !== name);
+                        } else if (editSelection.toppings.length < 3) {
+                            card.classList.add('selected');
+                            editSelection.toppings.push(name);
+                        }
+                    }
+                });
+            });
+
+            document.body.addEventListener('click', (e) => {
+                const btnMod = e.target.closest('.btn-agregar-modificacion');
+                if (btnMod) {
+                    activeItemIndex = parseInt(btnMod.getAttribute('data-index'));
+                    document.querySelectorAll('.custom-edit-card').forEach(c => c.classList.remove('selected'));
+                    editSelection = { yogurts: [], frutas: [], toppings: [] };
+
+                    const modalEdit = new bootstrap.Modal(document.getElementById('modalModificarPersonalizado'));
+                    modalEdit.show();
+                }
+            });
+
+            document.getElementById('btnConfirmarModificación').addEventListener('click', () => {
+                if (activeItemIndex !== null && currentOrderProducts[activeItemIndex]) {
+                    currentOrderProducts[activeItemIndex].yogurts = editSelection.yogurts.length > 0 ? editSelection.yogurts : ['Griego'];
+                    currentOrderProducts[activeItemIndex].frutas = [...editSelection.frutas, ...editSelection.toppings];
+                    renderOrderUI();
+                    showLeftToast("Se modificó el producto correctamente");
+                }
+                const modalEl = document.getElementById('modalModificarPersonalizado');
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) modalInstance.hide();
+            });
+
+            const btnConfirmOrder = document.getElementById('btnConfirmOrder');
+            if (btnConfirmOrder) {
+                btnConfirmOrder.addEventListener('click', async () => {
+                    if (currentOrderProducts.length === 0||!currentDbOrder) return;
+                    try{
+                        if(['pendiente','aceptado'].includes(currentDbOrder.estado))await saveOrderItems();
+                        if(currentDbOrder.estado==='pendiente'){
+                            await Simple.api('/pedidos/'+currentDbOrder.id+'/estado',{method:'PATCH',body:JSON.stringify({estado:'aceptado'})});
+                            currentDbOrder.estado='aceptado';
+                        }
+                    }catch(error){alert(error.message);return;}
+
+                    const modalCarga = new bootstrap.Modal(document.getElementById('modalConfirmandoOrden'));
+                    const modalConfirmada = new bootstrap.Modal(document.getElementById('modalOrdenConfirmada'));
+
+                    modalCarga.show();
+
+                    setTimeout(() => {
+                        modalCarga.hide();
+
+                        document.getElementById('confirmOrderNum').innerText = `N° de Orden: #${document.getElementById('orderTitle').innerText.split('#')[1] || '1001'}`;
+                        document.getElementById('confirmClientName').innerText = `Nombre: ${document.getElementById('orderTitle').innerText.split('-')[1] || 'Juan Pérez'}`;
+                        document.getElementById('confirmClientPhone').innerText = `Num. Teléfono: ${document.getElementById('orderPhone').innerText}`;
+                        document.getElementById('confirmClientAddress').innerText = `Dirección: ${document.getElementById('orderAddress').value}`;
+
+                        const listContainer = document.getElementById('confirmModalItemsList');
+                        listContainer.innerHTML = '';
+                        let rawTotal = 0;
+                        currentOrderProducts.forEach(item => {
+                            const itemSub = item.price * item.qty;
+                            rawTotal += itemSub;
+                            const row = document.createElement('div');
+                            row.className = 'd-flex justify-content-between align-items-center mb-2';
+                            row.innerHTML = `
+                                <div>
+                                    <span class="badge bg-light text-dark border px-2 py-1 align-self-start fw-bold me-1">${item.qty}x</span>
+                                    <span class="fw-bold">${item.name}</span>
+                                </div>
+                                <span class="fw-bold">S/. ${itemSub.toFixed(2)}</span>
+                            `;
+                            listContainer.appendChild(row);
+                        });
+
+                        const envio = activeOrderType === 'delivery' ? 1.00 : 0.00;
+                        const grandTotal = rawTotal + envio;
+                        const subtotal = grandTotal / 1.18;
+                        const igv = grandTotal - subtotal;
+
+                        document.getElementById('confirmSubtotal').innerText = `S/. ${subtotal.toFixed(2)}`;
+                        document.getElementById('confirmIgv').innerText = `S/. ${igv.toFixed(2)}`;
+                        document.getElementById('confirmEnvio').innerText = `S/. ${envio.toFixed(2)}`;
+                        document.getElementById('confirmTotal').innerText = `S/. ${grandTotal.toFixed(2)}`;
+
+                        modalConfirmada.show();
+                    }, 1800);
+                });
+            }
+            loadOrders().catch(error=>alert(error.message));
+        });
+    </script>
 </body>
 </html>
