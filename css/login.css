@@ -1,6 +1,6 @@
 :root {
     --color-white: #FFFFFF;
-    --color-text-dark: #818181;
+    --color-text-dark: #4D4D4D;
     --color-black: #000000;
     --color-brand-brown: #B87E4A;
     --color-border-gray: #C3C3C3;
@@ -62,7 +62,9 @@ body, html {
 }
 
 .custom-input::placeholder {
-    color: var(--color-border-gray);
+    color: #595959 !important;
+    opacity: 1;
+    font-size: 14px;
 }
 
 .custom-input:focus {
@@ -94,7 +96,7 @@ body, html {
 }
 
 .btn-custom-submit {
-    background-color: var(--color-brand-brown) !important;
+    background-color: #623D12 !important;
     color: var(--color-white) !important;
     border-radius: 18px !important;
     font-weight: 600;
@@ -103,7 +105,10 @@ body, html {
     transition: all 0.2s ease-in-out;
 }
 
-.btn-custom-submit:hover {
-    opacity: 0.92;
+.btn-custom-submit:hover,
+.btn-custom-submit:focus-visible {
+    background-color: #492E11 !important;
+    color: #FFFFFF !important;
+    opacity: 1;
     transform: translateY(-1px);
 }
