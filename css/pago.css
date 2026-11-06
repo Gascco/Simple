@@ -75,9 +75,18 @@ body, span, small, label, input, button, div, a, p {
     transition: all 0.2s ease;
 }
 
-.btn-back-caja:hover {
-    background-color: var(--color-btn-gray);
-    color: var(--color-text-dark);
+.btn-back-caja:hover,
+.btn-back-caja:focus-visible {
+    background-color: #EAEAEA !important;
+    border-color: #B17B4A !important;
+    color: #333333 !important;
+    opacity: 1;
+}
+.btn-back-caja:hover span,
+.btn-back-caja:hover i,
+.btn-back-caja:focus-visible span,
+.btn-back-caja:focus-visible i {
+    color: #333333 !important;
 }
 
 .btn-method {
