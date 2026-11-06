@@ -54,3 +54,14 @@ test('Los tableros preservan la estructura original de columnas',()=>{
  assert.ok(kitchen.includes('/js/order-components.js'));
  assert.ok(cash.includes('/js/order-components.js'));
 });
+
+test('abrir receta de pedido aceptado inicia preparacion',()=>{
+ assert.equal(orders.recipeEntryTransition('aceptado'),'preparando');
+ for(const estado of ['pendiente','preparando','listo','entregado'])
+  assert.equal(orders.recipeEntryTransition(estado),null);
+});
+test('boton Listo de receta mueve exclusivamente preparando a listo',()=>{
+ assert.equal(orders.recipeFinishTransition('preparando'),'listo');
+ for(const estado of ['pendiente','aceptado','listo','entregado'])
+  assert.equal(orders.recipeFinishTransition(estado),null);
+});
