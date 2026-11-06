@@ -54,7 +54,7 @@
             const response=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({usuario:document.getElementById('usernameInput').value,password:document.getElementById('passwordInput').value})});
             const result=await response.json();
             if(!response.ok)throw Error(result.error||'No se pudo ingresar');
-            location.href='/roles.html';
+            location.href='/loading.html?dest=roles';
           } catch(err){alert(err.message);btn.disabled=false;}
         });
         const togglePassword = document.querySelector('#togglePassword');
