@@ -23,7 +23,7 @@ Nota: .env está excluido mediante .gitignore. No subas contraseñas ni credenci
 - Login: valida contraseña con bcrypt, sesión almacenada en MySQL y protección de rutas según rol.
 - Roles: administrador puede acceder a Caja y Cocina; caja solo a Caja; cocina solo a Cocina.
 - Caja: productos cargados de MySQL; al continuar se crea un pedido pendiente de pago.
-- Pago: recibe el ID del pedido, consulta importes reales y registra efectivo, recibido y vuelto en MySQL. Tarjeta/Yape/Plin no son procesados automáticamente: exigen verificación manual del cobro y referencia.
+- Pago: recibe el ID del pedido, consulta importes reales y conserva los modales originales. Efectivo se confirma desde el teclado numérico; tarjeta y Yape/Plin simulan el tiempo de espera, éxito automático y error al cancelar. Solo los cobros simulados exitosos quedan registrados en MySQL.
 - Cocina: lista pedidos reales, inicia preparación y marca listo; actualización automática cada 10 segundos.
 - Pedidos de caja: estados de espera, preparación, listo y entregado; historial y filtros; actualización cada 12 segundos.
 - WhatsApp/PedidosYa: recuperan sus diseños originales; muestran pedidos de prueba precargados y permiten confirmar, modificar y despachar según su estado. No reciben mensajes ni órdenes automáticas de estas plataformas.
@@ -46,7 +46,7 @@ PATCH /api/productos/:id; GET /api/usuarios; POST /api/usuarios
 6. Cierra sesión y comprueba que no puedes abrir /caja.html directamente.
 
 ## Limitaciones y seguridad
-No se procesan tarjetas, Yape ni Plin directamente; el registro de un pago externo requiere confirmar previamente el cobro real. No se emiten comprobantes electrónicos SUNAT. Para producción, agregar integración de pagos, documentación fiscal, HTTPS, auditoría de operaciones, respaldos, controles CSRF adicionales y pruebas end-to-end.
+Los pagos de tarjeta, Yape y Plin se simulan únicamente para el curso, sin integración bancaria. El backend admite registros simulados solo cuando NODE_ENV no es production. No se emiten comprobantes electrónicos SUNAT. Para producción, agregar integración de pagos, documentación fiscal, HTTPS, auditoría de operaciones, respaldos, controles CSRF adicionales y pruebas end-to-end.
 
 **No se ha comprobado una conexión a tu servidor MySQL local desde este entorno.** Debes ejecutar instalación y pruebas en tu equipo.
 
@@ -63,3 +63,9 @@ npm start
 La inicialización **no borra pedidos existentes** y añade solo los ejemplos que falten (identificados por DEMO-SIMPLE). Incluye 10 pedidos de muestra repartidos entre Tienda, WhatsApp y PedidosYa en estados distintos, además de 18 tarjetas de banner inicializadas según los estados del diseño original. No debes eliminar tu archivo local .env.
 
 Para un televisor inicia sesión como usuario autorizado y abre /banners_tv.html; puedes usar F11 para pantalla completa.
+
+## Simulación de pagos para el curso
+
+La pantalla de Pago mantiene los modales de espera de tarjeta y Yape/Plin. Tras unos 10 segundos se muestra el éxito y se registra un pago simulado en MySQL. Al pulsar Cancelar se muestra el modal de error y el pedido sigue pendiente de pago. El efectivo también se guarda una sola vez después de confirmar. No existe una pasarela de cobro real.
+
+La boleta de Caja se corrigió para que agregar varias unidades o productos distintos no cause un error cuando se elimina temporalmente el mensaje del carrito vacío.
