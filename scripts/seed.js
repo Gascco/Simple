@@ -79,7 +79,7 @@ async function seed() {
      products:[['Protein Parfait Bowl',1],['Carrot cake',1]] },
    { code:'1101', canal:'whatsapp', entrega:'delivery',estado:'aceptado',
      cliente:{nombre:'Juan Pérez',telefono:'+999 999 999',direccion:'Calle Los Cedros 123'},
-     products:[['Parfait Personalizado',1,{yogurts:['Arándano'],frutas:['Fresa','Platano'],toppings:['Miel de abeja']}]] },
+     products:[['Parfait Personalizado',1,{yogurts:['Arándano'],frutas:['Fresa','Plátano'],toppings:['Miel de abeja']}]] },
    { code:'1102', canal:'whatsapp', entrega:'recojo',estado:'pendiente',
      cliente:{nombre:'Maria Garcia',telefono:'+999 888 777',direccion:'Recojo en Tienda'},
      products:[['Parfait de Fresa & Griego',1],['Yogurt Cacao Bliss',1]] },
