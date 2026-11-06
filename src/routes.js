@@ -175,9 +175,9 @@ router.put('/banners/disponibilidad',caja,wrap(async(req,res)=>{
  const imagen=String(req.body.imagen||'').trim(),titulo=String(req.body.titulo||'').trim();
  if(!imagen.startsWith('/Img/')||imagen.length>350||!titulo||titulo.length>140||typeof req.body.activo!=='boolean')
    throw fail(400,'Datos del banner inválidos');
- const [result]=await pool.execute(
-  'INSERT INTO banners (titulo,imagen,activo) VALUES (?,?,?) ON DUPLICATE KEY UPDATE activo=VALUES(activo),titulo=VALUES(titulo)',
-  [titulo,imagen,req.body.activo?1:0]);
+ const [[existing]]=await pool.execute('SELECT id FROM banners WHERE imagen=? LIMIT 1',[imagen]);
+ if(existing) await pool.execute('UPDATE banners SET titulo=?,activo=? WHERE id=?',[titulo,req.body.activo?1:0,existing.id]);
+ else await pool.execute('INSERT INTO banners (titulo,imagen,activo) VALUES (?,?,?)',[titulo,imagen,req.body.activo?1:0]);
  res.json({ok:true,imagen,activo:req.body.activo});
 }));
 router.post('/banners',requireRole('administrador'),wrap(async(req,res)=>{
