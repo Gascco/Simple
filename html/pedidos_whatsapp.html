@@ -1195,7 +1195,8 @@
                         img: '../Img/Parfait Clásico.jpg',
                         isCustom: true,
                         yogurts: [...modalCustomSelection.yogurts],
-                        frutas: [...modalCustomSelection.frutas, ...modalCustomSelection.toppings]
+                        frutas: [...modalCustomSelection.frutas, ...modalCustomSelection.toppings],
+                        personalizacion: {yogurts:[...modalCustomSelection.yogurts],frutas:[...modalCustomSelection.frutas],toppings:[...modalCustomSelection.toppings]}
                     });
                     modalCustomSelection = { yogurts: [], frutas: [], toppings: [] };
                     customCards.forEach(c => c.classList.remove('selected'));
@@ -1270,8 +1271,14 @@
 
             document.getElementById('btnConfirmarModificación').addEventListener('click', () => {
                 if (activeItemIndex !== null && currentOrderProducts[activeItemIndex]) {
-                    currentOrderProducts[activeItemIndex].yogurts = editSelection.yogurts.length > 0 ? editSelection.yogurts : ['Griego'];
-                    currentOrderProducts[activeItemIndex].frutas = [...editSelection.frutas, ...editSelection.toppings];
+                    const item=currentOrderProducts[activeItemIndex];
+                    item.personalizacion = {
+                        yogurts:editSelection.yogurts.length ? [...editSelection.yogurts] : (item.personalizacion?.yogurts||['Griego']),
+                        frutas:editSelection.frutas.length ? [...editSelection.frutas] : (item.personalizacion?.frutas||[]),
+                        toppings:editSelection.toppings.length ? [...editSelection.toppings] : (item.personalizacion?.toppings||[])
+                    };
+                    item.yogurts=item.personalizacion.yogurts;
+                    item.frutas=[...item.personalizacion.frutas,...item.personalizacion.toppings];
                     renderOrderUI();
                     showLeftToast("Se modificó el producto correctamente");
                 }
