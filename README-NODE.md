@@ -77,3 +77,7 @@ Las dos pantallas conservan sus columnas y clases CSS originales. Las tarjetas s
 Los pedidos pendientes de aceptación de WhatsApp y PedidosYa se muestran solo en «En Espera» de Caja. Cocina **no muestra** pedidos con estado pendiente: aparecen allí una vez aceptados. Los estados de Cocina son aceptado → En Espera, preparando → En Preparación y listo → Listo. Se incluyen estilos para garantizar textos de al menos 14 px.
 
 Para comprobar estados, recetas y estructura, ejecuta `npm test` después de `npm install`. Estas pruebas no reemplazan la validación visual en el navegador.
+
+## Interacción de receta en Cocina
+
+Desde «En Espera», el pedido aceptado puede pasar a «En Preparación» de dos formas: presionando «Iniciar Preparación» en su tarjeta, o pulsando la tarjeta para abrir su receta. En el segundo caso se guarda el estado preparando en MySQL **antes** de mostrar la receta. Dentro de la receta el botón se llama «Listo» y lo mueve a la columna «Listo». Si solo se vuelve al tablero con el botón de navegación, permanece «En Preparación». Los pedidos ya listos permiten consultar la receta sin volver a cambiar de estado.
