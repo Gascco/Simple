@@ -23,7 +23,7 @@ app.use((req,res,next)=>{
 app.use('/api',router);
 for(const folder of ['Img','css','js'])app.use('/'+folder,express.static(path.join(__dirname,'..',folder)));
 app.use('/CSS',express.static(path.join(__dirname,'../css')));
-const pages={'login.html':null,'loading.html':null,'roles.html':['administrador','caja','cocina'],
+const pages={'login.html':null,'loading.html':['administrador','caja','cocina'],'roles.html':['administrador','caja','cocina'],
 'caja.html':['administrador','caja'],'pago.html':['administrador','caja'],
 'pedidos_caja.html':['administrador','caja'],'pedidos_whatsapp.html':['administrador','caja'],
 'pedidos_pedidosya.html':['administrador','caja'],'banners_caja.html':['administrador','caja'],'banners_tv.html':['administrador','caja'],
