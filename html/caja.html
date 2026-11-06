@@ -724,10 +724,11 @@
             });
 
             let cart = [];
+            const emptyCartMessage = document.getElementById('emptyCartMsg');
 
             function updateCartUI() {
                 const container = document.getElementById('billItemsContainer');
-                const emptyMsg = document.getElementById('emptyCartMsg');
+                const emptyMsg = emptyCartMessage;
                 const lblSubtotal = document.getElementById('lblSubtotal');
                 const lblIgv = document.getElementById('lblIgv');
                 const lblTotal = document.getElementById('lblTotal');
