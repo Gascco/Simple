@@ -23,11 +23,11 @@
                 <div class="card login-card border-0 p-4 shadow-sm">
                     <form id="loginForm">
                         <div class="mb-3">
-                            <input type="text" class="form-control custom-input" id="usernameInput" placeholder="Usuario" required>
+                            <input type="text" class="form-control custom-input" id="usernameInput" name="usuario" autocomplete="username" aria-label="Usuario" placeholder="Usuario" required>
                         </div>
 
                         <div class="mb-3 position-relative">
-                            <input type="password" class="form-control custom-input pe-5" id="passwordInput" placeholder="Contraseña" required>
+                            <input type="password" class="form-control custom-input pe-5" id="passwordInput" name="password" autocomplete="current-password" aria-label="Contraseña" placeholder="Contraseña" required>
                             <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3 password-toggle" id="togglePassword"></i>
                         </div>
 
